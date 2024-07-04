@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDb = async ()=>{
     try{
-        let res = await mongoose.connect('mongodb://localhost:27017/LMS');
+        let res = await mongoose.connect(process.env.DB_URL);
         if(res){
             console.log("Successfully Connected to DB");
         }
