@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export const AddBooks = () => {
+export const UpdateBook = () => {
+  const { id } = useParams();
   const navigate = useNavigate();
   const [Name, setName] = useState("");
   const [Author_Name, setAuthorName] = useState("");
@@ -16,8 +17,8 @@ export const AddBooks = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (
-      !["true", "false"].includes(isPhysical.toLowerCase()) ||
-      !["true", "false"].includes(isEbook.toLowerCase())
+      !["true", "false", ""].includes(isPhysical.toLowerCase()) ||
+      !["true", "false", ""].includes(isEbook.toLowerCase())
     ) {
       alert("Enter 'True' or 'False' for P-Book and E-Book Availability.");
       return;
@@ -35,8 +36,8 @@ export const AddBooks = () => {
     };
 
     try {
-      await axios.post("http://localhost:3000/api/books", createBook);
-      navigate("/books");
+      await axios.put(`http://localhost:3000/api/books/${id}`, createBook);
+      navigate(`/books/singlebook/${id}`);
     } catch (error) {
       console.log("Error while adding book: " + error.message);
     }
@@ -44,7 +45,7 @@ export const AddBooks = () => {
 
   return (
     <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">Add Book</h1>
+      <h1 className="text-3xl font-bold mb-6 text-white">Update Book</h1>
       <form
         className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
         onSubmit={handleSubmit}
@@ -59,7 +60,6 @@ export const AddBooks = () => {
             id="name"
             value={Name}
             placeholder="Book Name"
-            required
             className={inputStyle}
             onChange={(e) => {
               setName(e.target.value);
@@ -77,7 +77,6 @@ export const AddBooks = () => {
             id="author_name"
             value={Author_Name}
             placeholder="Author Name"
-            required
             className={inputStyle}
             onChange={(e) => {
               setAuthorName(e.target.value);
@@ -95,7 +94,6 @@ export const AddBooks = () => {
             id="categories"
             value={Categories}
             placeholder="Categories"
-            required
             className={inputStyle}
             onChange={(e) => {
               setCategories(e.target.value);
@@ -113,7 +111,6 @@ export const AddBooks = () => {
             id="isPhysical"
             value={isPhysical}
             placeholder="Enter True or False"
-            required
             className={inputStyle}
             onChange={(e) => {
               setIsPhysical(e.target.value);
@@ -131,7 +128,6 @@ export const AddBooks = () => {
             id="isEbook"
             value={isEbook}
             placeholder="Enter True or False"
-            required
             className={inputStyle}
             onChange={(e) => {
               setIsEbook(e.target.value);
@@ -149,7 +145,6 @@ export const AddBooks = () => {
             id="availability"
             value={Availability}
             placeholder="Total books"
-            required
             className={inputStyle}
             onChange={(e) => {
               setAvailability(e.target.value);
@@ -167,7 +162,6 @@ export const AddBooks = () => {
             id="imageUrl"
             value={ImageUrl}
             placeholder="Enter Image Link"
-            required
             className={inputStyle}
             onChange={(e) => {
               setImageUrl(e.target.value);
@@ -185,7 +179,6 @@ export const AddBooks = () => {
             id="downloadUrl"
             value={DownloadUrl}
             placeholder="Enter Pdf Link"
-            required
             className={inputStyle}
             onChange={(e) => {
               setDownloadUrl(e.target.value);

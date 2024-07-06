@@ -4,7 +4,7 @@ export const BookInventory = () => {
   return (
     <div className="w-11/12">
       {/* Book Inventory Header */}
-      <div className="py-7 px-5 flex justify-start items-center gap-1 bg-slate-700">
+      <div className="py-5 px-5 flex justify-start items-center gap-1 bg-slate-700">
         <BookLink to={"/books"} label="All Books" />
         <BookLink to={"/books/add"} label="Add Book" />
       </div>

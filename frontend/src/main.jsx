@@ -8,6 +8,8 @@ import { Welcome } from "./components/Welcome.jsx";
 import { BookInventory } from "./components/BookInventory.jsx";
 import { AllBooks } from "./components/AllBooks.jsx";
 import { AddBooks } from "./components/AddBooks.jsx";
+import { SingleBook } from "./components/SingleBook.jsx";
+import { UpdateBook } from "./components/UpdateBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ const router = createBrowserRouter([
           {
             path: "add",
             element: <AddBooks />,
+          },
+          {
+            path: "singlebook/:id",
+            element: <SingleBook />,
+          },
+          {
+            path: "update/:id",
+            element: <UpdateBook />,
           },
         ],
       },
