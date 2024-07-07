@@ -6,7 +6,8 @@ const{
     getBorrowById,
     createBorrow,
     deleteBorrow,
-    changeBorrowStatus
+    changeStatustoBorrow,
+    changeStatustoReturn
 } = require('../controllers/borrowController');
 
 router.get('/borrow',getAllBorrow);
@@ -15,7 +16,9 @@ router.get('/borrow/:id',getBorrowById);
 
 router.post('/borrow',createBorrow);
 
-router.patch('/borrow/:id/changeBorrowStatus',changeBorrowStatus);
+router.put('/borrow/:id/changeStatustoBorrow',changeStatustoBorrow);
+
+router.put('/borrow/:id/changeStatustoReturn',changeStatustoReturn)
 
 router.delete('/borrow/:id',deleteBorrow);
 

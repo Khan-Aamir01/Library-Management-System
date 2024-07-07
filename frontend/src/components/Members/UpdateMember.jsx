@@ -7,7 +7,6 @@ export const UpdateMember = () => {
   const navigate = useNavigate();
 
   // Value for Update
-  name, gmail, address, phoneNumber
   const [image, setImage] = useState("");
   const [name, setName] = useState("");
   const [gmail, setGmail] = useState("");

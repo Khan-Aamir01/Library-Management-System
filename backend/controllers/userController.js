@@ -27,11 +27,13 @@ const getUserbyID = async(req,res)=>{
 
 // Create User
 const createUser = async(req,res)=>{
-    const{name,gmail,address,phoneNumber} = req.body;
+    const{name,image,gmail,password,address,phoneNumber} = req.body;
     try{
         const newUser = new User({
            name,
+           image,
            gmail,
+           password,
            address,
            phoneNumber,
         });
@@ -45,14 +47,16 @@ const createUser = async(req,res)=>{
 
 //Update User
 const updateUser = async(req,res)=>{
-    const{name,gmail,address,phoneNumber} = req.body;
+    const{name,image,gmail,password,address,phoneNumber} = req.body;
     try{
         const user = await User.findById(req.params.id);
         if(!user){
             return res.status(404).json({message:"User not found"});
         }
         user.name = name || user.name;
+        user.image = image || user.image;
         user.gmail = gmail || user.gmail;
+        user.password = password || user.password;
         user.address = address || user.address;
         user.phoneNumber = phoneNumber || user.phoneNumber;
 
