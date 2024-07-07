@@ -18,9 +18,11 @@ import { AddBooks } from "./components/Books/AddBooks.jsx";
 import { SingleBook } from "./components/Books/SingleBook.jsx";
 import { UpdateBook } from "./components/Books/UpdateBook.jsx";
 
-// Members Component
+// Members/Users Component
 import { MembersInventory } from "./components/Members/MembersInventory.jsx";
 import { AllMembers } from "./components/Members/AllMembers.jsx";
+import { SingleMember } from "./components/Members/SingleMember.jsx";
+import { UpdateMember } from "./components/Members/UpdateMember.jsx";
 
 const router = createBrowserRouter([
   {
@@ -57,12 +59,20 @@ const router = createBrowserRouter([
       },
       // Roots For Users
       {
-        path: "Members",
+        path: "members",
         element: <MembersInventory />,
         children: [
           {
             path: "",
             element: <AllMembers />,
+          },
+          {
+            path: "singlemember/:id",
+            element: <SingleMember />,
+          },
+          {
+            path: "update/:id",
+            element: <UpdateMember />,
           },
         ],
       },

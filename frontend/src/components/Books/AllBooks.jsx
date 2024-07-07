@@ -27,7 +27,7 @@ export const AllBooks = () => {
       }
     };
     fetchBooks();
-  }, []);
+  }, [books]);
 
   // Loader Page Will Run Untill Book Not Get Fetched
   if (loading) {
@@ -42,10 +42,9 @@ export const AllBooks = () => {
     <>
       <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
         <h1 className="text-3xl font-bold mb-6 text-white">All Book</h1>
+        <p className="font-bold">Total {books.length} Books</p>
         {error && <h1>{error}</h1>}
-        <div className=" px-2 flex flex-wrap justify-center">
-          {/* if there are zero book this code run */}
-          {/* if there are books this code run */}
+        <div className=" px-2 mt-2 flex flex-wrap justify-center">
           {books.map((book, index) => (
             <div
               onClick={() => singleBookHandler(book._id)}

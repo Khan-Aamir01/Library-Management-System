@@ -7,7 +7,6 @@ export const MembersInventory = () => {
       {/* Book Inventory Header(Navigation Menu) */}
       <div className="py-5 px-5 flex justify-start items-center gap-1 bg-slate-700">
         <BookLink to={"/members"} label="All Members" />
-        <BookLink to={"/members/add"} label="Add Member" />
       </div>
       {/* Member Component show here in outlet according to navigation */}
       <Outlet />
