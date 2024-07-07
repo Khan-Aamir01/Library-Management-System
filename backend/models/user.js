@@ -5,8 +5,17 @@ const userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
+    image:{
+        type:String,
+        default:null, // A url of default pfp should be added
+    },
     gmail:{
         type:String,
+    },
+    // Will Hash Later
+    password:{
+        type:String,
+        required:true,
     },
     address:{
         type:String,
