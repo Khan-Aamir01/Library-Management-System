@@ -27,7 +27,9 @@ const userSchema = new mongoose.Schema({
     },
     dateOfJoin:{
         type : Date,
-        default : Date.now,
+        default :()=>{
+            return new Date (Date.now() + 5.5 * 60 * 60 * 1000);
+        },
     }
 });
 

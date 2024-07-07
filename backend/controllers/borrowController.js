@@ -1,3 +1,4 @@
+
 const Borrow = require('../models/borrow.js');
 
 // Get All Borrow 
@@ -57,13 +58,49 @@ const deleteBorrow = async (req,res)=>{
 
 // This will be call by admin to change the borrow status to 'Borrowed'
 
-const changeBorrowStatus = async (req,res)=>{
-    const newStatus = req.body.status;
+const changeStatustoBorrow = async (req,res)=>{
+    const newStatus = 'Borrowed';
+    const borrowDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+    const endTimer = new Date(Date.now()+ 168 + 5.5 * 60 * 60 * 1000); // 168 = 7 days
     try{
-        const updatedBorrow = await Borrow.findByIdAndUpdate(req.params.id,{ status: newStatus },{new:true});
-        if(!updatedBorrow){
+        const borrow = await Borrow.findById(req.params.id);
+        if(!borrow){
             return res.status(404).json({message:'Borrow not found'});
         }
+        borrow.userId = borrow.userId;
+        borrow.bookId = borrow.bookId;
+        borrow.status = newStatus;
+        borrow.startTimer = borrow.startTimer;
+        borrow.endTimer = endTimer;
+        borrow.borrowDate = borrowDate;
+        borrow.returnDate = borrow.returnDate;
+
+        const updatedBorrow = await borrow.save();
+        res.status(200).json(updatedBorrow);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error})
+    }
+}
+
+const changeStatustoReturn = async (req,res)=>{
+    const newStatus = "Returned";
+    const returnDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+
+    try{
+        const borrow = await Borrow.findById(req.params.id);
+        if(!borrow){
+            return res.status(404).json({message:'Borrow not found'});
+        }
+        borrow.userId = borrow.userId;
+        borrow.bookId = borrow.bookId;
+        borrow.status = newStatus;
+        borrow.startTimer = borrow.startTimer;
+        borrow.endTimer = borrow.endTimer;
+        borrow.borrowDate = borrow.borrowDate;
+        borrow.returnDate = returnDate;
+
+        const updatedBorrow = await borrow.save();
         res.status(200).json(updatedBorrow);
     }
     catch(error){
@@ -76,5 +113,6 @@ module.exports = {
     getBorrowById,
     createBorrow,
     deleteBorrow,
-    changeBorrowStatus
+    changeStatustoBorrow,
+    changeStatustoReturn
 };

@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const Borrow = require('../models/borrow');
 
 // This will Run after every 5 min
-const cronJob = cron.schedule('*/5 * * * *', async () => {
+const updateExpiredStatus = cron.schedule('*/5 * * * *', async () => {
     console.log('Running cron job to update expired statuses...');
 
     try {
@@ -24,4 +24,4 @@ const cronJob = cron.schedule('*/5 * * * *', async () => {
     }
 });
 
-module.exports = cronJob;
+module.exports = updateExpiredStatus;

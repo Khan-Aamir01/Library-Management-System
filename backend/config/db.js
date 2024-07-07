@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
-const cronJob = require('../cronJobs/updateExpiredStatus')
+const updateExpiredStatus = require('../cronJobs/updateExpiredStatus')
+const updateNotReturnStatus = require('../cronJobs/updateNotReturnStatus');
 
 const connectDb = async ()=>{
     try{
         let res = await mongoose.connect(process.env.DB_URL);
         if(res){
             console.log("Successfully Connected to DB");
-            cronJob.start();
+            updateExpiredStatus.start();
+            updateNotReturnStatus.start();
         }
     }
     catch(error){

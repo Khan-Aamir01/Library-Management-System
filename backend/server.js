@@ -3,10 +3,10 @@ require('dotenv').config({ path: '../.env' });
 const express = require('express');
 const cors = require('cors');
 const connectDb = require('./config/db.js')
-const cronJob = require('./cronJobs/updateExpiredStatus');
 const bookRoutes = require('./routes/bookRoutes.js')
 const userRoutes = require('./routes/userRoutes.js')
 const borrowRoutes = require('./routes/borrowRoutes.js')
+const fineRoutes = require('./routes/fineRoutes.js')
 
 
 const app = express();
@@ -18,6 +18,7 @@ app.use(cors());
 app.use('/api',bookRoutes);
 app.use('/api',userRoutes);
 app.use('/api',borrowRoutes);
+app.use('/api',fineRoutes);
 
 app.get('/',(req,res)=>{
     res.send('Home Route');
