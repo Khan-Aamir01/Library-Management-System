@@ -1,14 +1,15 @@
 import { Link, Outlet } from "react-router-dom";
 
-export const BookInventory = () => {
+// Navigation Part/Header
+export const MembersInventory = () => {
   return (
     <div className="w-11/12">
-      {/* Book Inventory Header */}
+      {/* Book Inventory Header(Navigation Menu) */}
       <div className="py-5 px-5 flex justify-start items-center gap-1 bg-slate-700">
-        <BookLink to={"/books"} label="All Books" />
-        <BookLink to={"/books/add"} label="Add Book" />
+        <BookLink to={"/members"} label="All Members" />
+        <BookLink to={"/members/add"} label="Add Member" />
       </div>
-      {/* Book Inventory All Book and Add Book Component */}
+      {/* Member Component show here in outlet according to navigation */}
       <Outlet />
     </div>
   );
