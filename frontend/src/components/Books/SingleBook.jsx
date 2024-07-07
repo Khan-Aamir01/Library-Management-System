@@ -3,12 +3,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
-import { Loading } from "./Loading";
+import { Loader } from "../Loader/Loader";
 
 export const SingleBook = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [book, setBooks] = useState(null);
+  // to change the update and delete button while processing
+  const [updating, setUpdating] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const getSingleBook = async () => {
@@ -26,15 +29,17 @@ export const SingleBook = () => {
   }, [id]);
 
   if (!book) {
-    return <Loading />;
+    return <Loader />;
   }
 
   const handleDelete = async (id) => {
+    setDeleting(true);
     await axios.delete(`http://localhost:3000/api/books/${id}`);
     navigate("/books");
   };
 
   const handleUpdate = async (id) => {
+    setUpdating(true);
     navigate(`/books/update/${id}`);
   };
 
@@ -55,7 +60,7 @@ export const SingleBook = () => {
             onClick={() => handleUpdate(book._id)}
             className="w-11/12 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
           >
-            Update
+            {updating ? "Wait" : "Update"}
           </button>
           <button
             onClick={() => {
@@ -63,7 +68,7 @@ export const SingleBook = () => {
             }}
             className="w-11/12 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
           >
-            Delete
+            {deleting ? "Wait" : "Delete"}
           </button>
         </div>
         <div className="">

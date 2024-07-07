@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 
-import { SideBar } from "./components/SideBar";
+// Side Navigation Menu
+import { SideBar } from "./components/SideBar/SideBar";
 
 export default function App() {
   return (

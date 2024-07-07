@@ -1,13 +1,15 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { Loading } from "./Loading";
+import { Loader } from "../Loader/Loader";
 
 export const AllBooks = () => {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
+  // if book load slow then loading work
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -15,9 +17,11 @@ export const AllBooks = () => {
         const response = await axios.get("http://localhost:3000/api/books");
         const bookData = response.data;
         setBooks(bookData);
-        isDataFetched(true);
+        if (bookData.length === 0) {
+          setError("No books available.");
+        }
       } catch (error) {
-        console.log("Error While Fetching Books" + error.message);
+        setError("Error While Fetching Books" + error.message);
       } finally {
         setLoading(false);
       }
@@ -25,8 +29,9 @@ export const AllBooks = () => {
     fetchBooks();
   }, []);
 
+  // Loader Page Will Run Untill Book Not Get Fetched
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   const singleBookHandler = (bookid) => {
@@ -35,9 +40,12 @@ export const AllBooks = () => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center py-8 bg-slate-500 min-h-screen">
+      <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
         <h1 className="text-3xl font-bold mb-6 text-white">All Book</h1>
+        {error && <h1>{error}</h1>}
         <div className=" px-2 flex flex-wrap justify-center">
+          {/* if there are zero book this code run */}
+          {/* if there are books this code run */}
           {books.map((book, index) => (
             <div
               onClick={() => singleBookHandler(book._id)}
