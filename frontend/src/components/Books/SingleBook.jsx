@@ -8,7 +8,7 @@ import { Loader } from "../Loader/Loader";
 export const SingleBook = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [book, setBooks] = useState(null);
+  const [book, setBook] = useState(null);
   // to change the update and delete button while processing
   const [updating, setUpdating] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -20,7 +20,7 @@ export const SingleBook = () => {
           `http://localhost:3000/api/books/${id}`
         );
         const singleBookData = response.data;
-        setBooks(singleBookData);
+        setBook(singleBookData);
       } catch (error) {
         console.log("Error While Fetching Books" + error.message);
       }
