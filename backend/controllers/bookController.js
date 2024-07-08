@@ -1,5 +1,6 @@
 const Book = require('../models/books.js');
 const { findById } = require('../models/books');
+const Borrow = require('../models/borrow.js');
 
 // Get Books
 const getBooks = async (req, res) => {
@@ -92,10 +93,44 @@ const deleteBook = async(req,res)=>{
     }
 }
 
+const latestBook = async (req,res)=>{ // Using Indexing can provide performance boost
+    try{
+        const latestBooks = await Book.find().sort({Date: 1}).exec();
+        res.status(200).json(latestBooks);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+};
+
+const popularBook = async(req,res)=>{
+    try{
+        const popularBooks = await Book.find().sort({Downloads: 1}).exec();
+        res.status(200).json(popularBooks);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+};
+
+const getCategory= async(req,res)=>{
+    const category = req.params.category;
+    try{
+        const categoryBook = await Book.find({ Categories: category}).exec();
+        res.status(200).json(categoryBook);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
+
 module.exports = {
     getBooks,
     getBookbyId,
     createBook,
     updateBook,
     deleteBook,
+    latestBook,
+    popularBook,
+    getCategory,
 };

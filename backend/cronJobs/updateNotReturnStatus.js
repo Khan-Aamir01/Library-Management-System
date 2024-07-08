@@ -3,7 +3,7 @@ const Borrow = require('../models/borrow');
 const Fine = require('../models/fine');
 
 
-// Will Run once per hour //'0
+// Will Run once per hour
 const updateNotReturnStatus = cron.schedule('0 * * * *',async ()=>{
     console.log('Running cron job to update Not Return statuses...');
     try {
@@ -18,8 +18,7 @@ const updateNotReturnStatus = cron.schedule('0 * * * *',async ()=>{
             borrow.status = 'NotReturned';
             await borrow.save();
             await createFine(borrow._id, borrow.userId, borrow.bookId); // This will create a new Fine
-        }));
-        
+        }));       
 
         console.log(`${notReturnBorrows.length} borrows updated to NotReturned.`);
     } catch (error) {
