@@ -15,7 +15,7 @@ connectDb();
 app.use(express.json()); // To get Req is JSON format
 app.use(cors());
 
-app.use('/api',bookRoutes);
+app.use('/api/books',bookRoutes);
 app.use('/api',userRoutes);
 app.use('/api',borrowRoutes);
 app.use('/api',fineRoutes);

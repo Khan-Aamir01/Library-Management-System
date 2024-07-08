@@ -12,21 +12,20 @@ const {
     getCategory
   } = require('../controllers/bookController');
 
-router.get('/books',getBooks);
+router.get('/',getBooks);
 
-router.get('/books/:id',getBookbyId);
+router.get('/latest',latestBook);
 
-router.post('/books',createBook);
+router.get('/popular',popularBook); 
 
-router.put('/books/:id',updateBook);
+router.get('/:id',getBookbyId);
 
-router.delete('/books/:id',deleteBook);
+router.get('/category/:category',getCategory);// ex: category/School  => it will return all School Books
 
-router.get('/latestBook',latestBook); // /books/latestBook is not working for some reason
+router.post('/',createBook);
 
-router.get('/popularBook',popularBook); 
+router.put('/:id',updateBook);
 
-router.get('/category/:category',getCategory); // Same ex: category/School  => it will return all School Books
-//It should be /books/category/:category but its not working 
+router.delete('/:id',deleteBook);
 
 module.exports = router;
