@@ -21,7 +21,7 @@ export const AllBooks = () => {
           setError("No books available.");
         }
       } catch (error) {
-        setError("Error While Fetching Books" + error.message);
+        setError("Error While Fetching Books " + error.message);
       } finally {
         setLoading(false);
       }
@@ -35,7 +35,7 @@ export const AllBooks = () => {
   }
 
   const singleBookHandler = (bookid) => {
-    navigate(`/books/singlebook/${bookid}`);
+    navigate(`/admin/books/singlebook/${bookid}`);
   };
 
   return (
