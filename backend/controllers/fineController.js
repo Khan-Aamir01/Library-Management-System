@@ -76,10 +76,24 @@ const deleteFine = async (req,res)=>{
     }
 }
 
+const getStatus = async (req,res)=>{
+    try{
+        const fineStatus = await Fine.find({ status: req.params.status});
+        if(!fineStatus || fineStatus.length === 0 ){
+            return res.status(404).json({message:'No Book found'});
+        }
+        res.status(200).json(fineStatus);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
+
 module.exports = {
     getAllFine,
     getFineById,
     createFine,
     updateFine,
-    deleteFine
+    deleteFine,
+    getStatus
 };

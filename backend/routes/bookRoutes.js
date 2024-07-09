@@ -7,16 +7,28 @@ const {
     createBook,
     updateBook,
     deleteBook,
+    latestBook,
+    popularBook,
+    getCategory,
+    getStatus
   } = require('../controllers/bookController');
 
-router.get('/books',getBooks);
+router.get('/',getBooks);
 
-router.get('/books/:id',getBookbyId);
+router.get('/latest',latestBook);
 
-router.post('/books',createBook);
+router.get('/popular',popularBook); 
 
-router.put('/books/:id',updateBook);
+router.get('/:id',getBookbyId);
 
-router.delete('/books/:id',deleteBook);
+router.get('/status/:status',getStatus); // /books/status/Waiting => it will return all waiting books
+
+router.get('/category/:category',getCategory);// ex: category/School  => it will return all School Books
+
+router.post('/',createBook);
+
+router.put('/:id',updateBook);
+
+router.delete('/:id',deleteBook);
 
 module.exports = router;
