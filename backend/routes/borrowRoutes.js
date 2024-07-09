@@ -7,10 +7,14 @@ const{
     createBorrow,
     deleteBorrow,
     changeStatustoBorrow,
-    changeStatustoReturn
+    changeStatustoReturn,
+    getStatus
+
 } = require('../controllers/borrowController');
 
 router.get('/borrow',getAllBorrow);
+
+router.get('/borrow/status/:status',getStatus); // /borrow/status/Waiting => it will return all waiting borrows
 
 router.get('/borrow/:id',getBorrowById);
 

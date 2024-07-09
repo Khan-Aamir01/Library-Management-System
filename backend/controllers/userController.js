@@ -1,4 +1,6 @@
 const User = require('../models/user');
+const Fine = require('../models/fine');
+const Borrow = require('../models/borrow')
 
 //Get User
 const getAllUser = async (req,res)=>{
@@ -83,10 +85,73 @@ const deleteUser = async(req,res)=>{
     }
 }
 
+// Get User Fine History
+const getUserFine = async (req,res)=>{
+    try{
+        const fine = await Fine.find({userId : req.params.id});
+        if(!fine || fine.length === 0 ){
+            return res.status(404).json({message:'No Fine found'});
+        }
+        res.status(200).json(fine);
+    }
+    catch(error){
+        res.status(500).json({message:"Server error due to "+ error});
+    }
+}
+
+// Get User Fine History with Status (Paid,unPaid)
+
+const getUserFineStatus = async (req,res)=>{
+    try{
+        const fine = await Fine.find({userId : req.params.id,status: req.params.status});
+        if(!fine || fine.length === 0 ){
+            return res.status(404).json({message:'No Fine found'});
+        }
+        res.status(200).json(fine);
+    }
+    catch(error){
+        res.status(500).json({message:"Server error due to "+ error});
+    }
+}
+
+// Get user Borrow History
+// Can make both function as a single function 
+const getUserBorrow = async (req,res)=>{
+    try{
+        const borrow = await Borrow.find({userId : req.params.id});
+        if(!borrow || borrow.length === 0 ){
+            return res.status(404).json({message:'No Borrow found'});
+        }
+        res.status(200).json(borrow);
+    }
+    catch(error){
+        res.status(500).json({message:"Server error due to "+ error});
+    }
+}
+
+// Get Borrow History with status (Waiting,Expired,Borrowed,Returned,NotReturned)
+
+const getUserBorrowStatus = async (req,res)=>{
+    try{
+        const borrow = await Borrow.find({userId : req.params.id,status:req.params.status});
+        if(!borrow || borrow.length === 0 ){
+            return res.status(404).json({message:'No Borrow found'});
+        }
+        res.status(200).json(borrow);
+    }
+    catch(error){
+        res.status(500).json({message:"Server error due to "+ error});
+    }
+}
+
 module.exports = {
     getAllUser,
     getUserbyID,
     createUser,
     updateUser,
     deleteUser,
+    getUserFine,
+    getUserBorrow,
+    getUserBorrowStatus,
+    getUserFineStatus,
 };

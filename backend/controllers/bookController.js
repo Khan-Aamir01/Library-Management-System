@@ -124,6 +124,19 @@ const getCategory= async(req,res)=>{
     }
 }
 
+const getStatus = async (req,res)=>{
+    try{
+        const statusBook = await Book.find({ status: req.params.status});
+        if(!statusBook || statusBook.length === 0 ){
+            return res.status(404).json({message:'No Book found'});
+        }
+        res.status(200).json(statusBook);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
+
 module.exports = {
     getBooks,
     getBookbyId,
@@ -133,4 +146,5 @@ module.exports = {
     latestBook,
     popularBook,
     getCategory,
+    getStatus,
 };

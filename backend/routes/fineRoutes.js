@@ -6,10 +6,13 @@ const {
     getFineById,
     createFine,
     updateFine,
-    deleteFine
+    deleteFine,
+    getStatus
 } = require('../controllers/fineController');
 
 router.get('/fine',getAllFine);
+
+router.get('/fine/status/:status',getStatus); // Ex. fine/status/Paid => Return all Paid Fines
 
 router.get('/fine/:id',getFineById);
 

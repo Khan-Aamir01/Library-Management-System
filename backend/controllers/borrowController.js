@@ -108,11 +108,25 @@ const changeStatustoReturn = async (req,res)=>{
     }
 }
 
+const getStatus = async (req,res)=>{
+    try{
+        const statusBorrow = await Borrow.find({ status: req.params.status});
+        if(!statusBorrow || statusBorrow.length === 0 ){
+            return res.status(404).json({message:'No Book found'});
+        }
+        res.status(200).json(statusBorrow);
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
+
 module.exports = {
     getAllBorrow,
     getBorrowById,
     createBorrow,
     deleteBorrow,
     changeStatustoBorrow,
-    changeStatustoReturn
+    changeStatustoReturn,
+    getStatus
 };
