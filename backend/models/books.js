@@ -14,6 +14,9 @@ const bookSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    std:{
+        type:String
+    },
     isPhysical :{
         type:Boolean,
         required:true
