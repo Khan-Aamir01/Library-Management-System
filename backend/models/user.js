@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema({
     },
     gmail:{
         type:String,
+        require:true,
+        unique:true,
     },
     // Will Hash Later
     password:{
