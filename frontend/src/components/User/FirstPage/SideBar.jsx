@@ -1,19 +1,18 @@
 import { Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 export const SideBar = () => {
   return (
     <div className="bg-slate-600 flex justify-between p-2">
       <div className="w-1/4 flex flex-col gap-3 mt-2 p-6">
-        <SideBarLink to={"/allbooks"} label={"All"} />
-        <SideBarLink to={"/latest"} label={"Latest"} />
-        <SideBarLink to={"/latest"} label={"Popular"} />
-        <SideBarLink to={"/latest"} label={"School"} />
-        <SideBarLink to={"/latest"} label={"College"} />
-        <SideBarLink to={"/latest"} label={"Higher Edu.."} />
+        <SideBarLink to={"/lms/allbooks"} label={"All"} />
+        <SideBarLink to={"/lms"} label={"Latest"} />
+        <SideBarLink to={"/lms/popular"} label={"Popular"} />
+        <SideBarLink to={"/lms/school"} label={"School"} />
+        <SideBarLink to={"/lms/college"} label={"College"} />
+        <SideBarLink to={"/lms/highereducation"} label={"Higher Edu.."} />
       </div>
-      <div className="w-11/12 bg-slate-500 p-6">
-        <h1>Information</h1>
-      </div>
+      <Outlet />
     </div>
   );
 };

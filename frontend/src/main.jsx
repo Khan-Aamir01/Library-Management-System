@@ -14,9 +14,9 @@ import { Welcome } from "./components/Admin/Welcome/Welcome.jsx";
 
 // Books Component
 import { BookInventory } from "./components/Admin/Books/BookInventory.jsx";
-import { AllBooks } from "./components/Admin/Books/AllBooks.jsx";
+import { AllBooks as AdminAllBooks } from "./components/Admin/Books/AllBooks.jsx";
 import { AddBooks } from "./components/Admin/Books/AddBooks.jsx";
-import { SingleBook } from "./components/Admin/Books/SingleBook.jsx";
+import { SingleBook as AdminSingleBook } from "./components/Admin/Books/SingleBook.jsx";
 import { UpdateBook } from "./components/Admin/Books/UpdateBook.jsx";
 
 // Members/Users Component
@@ -31,9 +31,15 @@ import { AllRequests } from "./components/Admin/Pending Request/AllRequests.jsx"
 
 // Users Components
 // First Page
-import { Header } from "./components/User/Header.jsx";
-import { Introduction } from "./components/User/Introduction.jsx";
-import { SideBar } from "./components/User/SideBar.jsx";
+import { Header } from "./components/User/FirstPage/Header.jsx";
+import { Introduction } from "./components/User/FirstPage/Introduction.jsx";
+import { SideBar } from "./components/User/FirstPage/SideBar.jsx";
+
+// Books
+import { Latest } from "./components/User/Books/Latest.jsx";
+import { Popular } from "./components/User/Books/Popular.jsx";
+import { AllBooks as UserAllBooks } from "./components/User/Books/AllBooks.jsx";
+import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook.jsx";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +59,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <AllBooks />,
+            element: <AdminAllBooks />,
           },
           {
             path: "add",
@@ -61,7 +67,7 @@ const router = createBrowserRouter([
           },
           {
             path: "singlebook/:id",
-            element: <SingleBook />,
+            element: <AdminSingleBook />,
           },
           {
             path: "update/:id",
@@ -113,8 +119,26 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <SideBar />,
+            children: [
+              {
+                path: "",
+                element: <Latest />,
+              },
+              {
+                path: "popular",
+                element: <Popular />,
+              },
+            ],
           },
         ],
+      },
+      {
+        path: "allbooks",
+        element: <UserAllBooks />,
+      },
+      {
+        path: ":bookname/:id",
+        element: <UserSingleBook />,
       },
     ],
   },
