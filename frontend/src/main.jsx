@@ -39,7 +39,16 @@ import { SideBar } from "./components/User/FirstPage/SideBar.jsx";
 import { Latest } from "./components/User/Books/Latest.jsx";
 import { Popular } from "./components/User/Books/Popular.jsx";
 import { AllBooks as UserAllBooks } from "./components/User/Books/AllBooks.jsx";
+
+// Single Book Components with all details and borrow and downloads
 import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook.jsx";
+
+// School Books
+import { SchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
+
+// College Books
+import { CollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
+import { HigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -128,6 +137,18 @@ const router = createBrowserRouter([
                 path: "popular",
                 element: <Popular />,
               },
+              {
+                path: "school",
+                element: <SchoolInventroy />,
+              },
+              {
+                path: "college",
+                element: <CollegeInventroy />,
+              },
+              {
+                path: "highereducation",
+                element: <HigherInventory />,
+              },
             ],
           },
         ],
@@ -138,6 +159,10 @@ const router = createBrowserRouter([
       },
       {
         path: ":bookname/:id",
+        element: <UserSingleBook />,
+      },
+      {
+        path: ":categories/:std",
         element: <UserSingleBook />,
       },
     ],
