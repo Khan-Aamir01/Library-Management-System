@@ -9,6 +9,7 @@ export const AllBooks = () => {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [loader, setLoader] = useState(true);
+  const [notFound, setNotFound] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchBooks = async () => {
@@ -38,6 +39,15 @@ export const AllBooks = () => {
       book.Author_Name.toLowerCase().includes(search.toLowerCase())
   );
 
+  // if the book not found after search
+  useEffect(() => {
+    if (filteredBooks.length === 0 && search !== "") {
+      setNotFound("Book Not Found");
+    } else {
+      setNotFound(null);
+    }
+  }, [filteredBooks, search]);
+
   const singleBookHandler = (bookname, id) => {
     navigate(`/lms/${bookname}/${id}`);
   };
@@ -58,8 +68,9 @@ export const AllBooks = () => {
         </button>
       </div>
 
-      <h1 className="md:float-left md:w-11/12 md:ml-2">All Books</h1>
+      <h1 className="md:float-left md:w-11/12 md:ml-2 font-bold">All Books</h1>
       <div className="mt-2 flex gap-4 flex-wrap md:justify-start justify-center w-11/12">
+        {notFound && <p>{notFound}</p>}
         {filteredBooks.map((book) => (
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}

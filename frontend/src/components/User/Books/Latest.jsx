@@ -17,6 +17,7 @@ export const Latest = () => {
           `http://localhost:3000/api/books/latest`
         );
         const data = response.data;
+        data.reverse();
         const onlySixBook = data.slice(0, 5);
         setLatestBook(onlySixBook);
         setLoader(false);
