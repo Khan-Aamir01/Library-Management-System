@@ -42,11 +42,11 @@ export const SingleMember = () => {
 
   const handleDelete = async () => {
     await axios.delete(`http://localhost:3000/api/user/${userData._id}`);
-    navigate("/members");
+    navigate("/admin/members");
   };
 
   const handleUpdate = async () => {
-    navigate(`/members/update/${userData._id}`);
+    navigate(`/admin/members/update/${userData._id}`);
   };
 
   return (

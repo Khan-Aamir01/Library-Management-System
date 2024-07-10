@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Loader } from "../Loader/Loader";
 
@@ -30,7 +30,7 @@ export const AllMembers = () => {
   }, [users]);
 
   const showProfile = (id) => {
-    navigation(`/members/singlemember/${id}`);
+    navigation(`/admin/members/singlemember/${id}`);
   };
 
   if (error) {

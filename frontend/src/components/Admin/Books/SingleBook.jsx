@@ -35,12 +35,12 @@ export const SingleBook = () => {
   const handleDelete = async (id) => {
     setDeleting(true);
     await axios.delete(`http://localhost:3000/api/books/${id}`);
-    navigate("/books");
+    navigate("/admin/books");
   };
 
   const handleUpdate = async (id) => {
     setUpdating(true);
-    navigate(`/books/update/${id}`);
+    navigate(`/admin/books/update/${id}`);
   };
 
   return (
