@@ -29,12 +29,13 @@ const getBookbyId = async (req, res) => {
 // Create Book
 
 const createBook = async (req, res) => {
-    const { Name, Author_Name, Categories, isPhysical, isEbook, Availability, ImageUrl, DownloadUrl } = req.body;
+    const { Name, Author_Name, Categories,std,isPhysical, isEbook, Availability, ImageUrl, DownloadUrl } = req.body;
     try {
         const newBook = new Book({
             Name,
             Author_Name,
             Categories,
+            std,
             isPhysical,
             isEbook,
             Availability,
@@ -52,7 +53,7 @@ const createBook = async (req, res) => {
 // Update Book
 
 const updateBook = async (req, res) => {
-    const { Name, Author_Name, Categories, isPhysical, isEbook, Downloads, Availability, ImageUrl, DownloadUrl } = req.body;
+    const { Name, Author_Name, Categories,std, isPhysical, isEbook, Availability, ImageUrl, DownloadUrl } = req.body;
     try {
         const book = await Book.findById(req.params.id);
         if (!book) {
@@ -61,6 +62,7 @@ const updateBook = async (req, res) => {
         book.Name = Name || book.Name;
         book.Author_Name = Author_Name || book.Author_Name;
         book.Categories = Categories || book.Categories;
+        book.std = std || book.std;
         book.isPhysical = isPhysical || book.isPhysical;
         book.isEbook = isEbook || book.isEbook;
         book.Availability = Availability || book.Availability;
