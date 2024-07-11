@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { format } from "date-fns";
 
 import { Loader } from "../Loader/Loader";
 
@@ -46,7 +45,7 @@ export const SingleBook = () => {
       <h1 className="text-3xl font-bold mb-6 text-white">Book Information</h1>
       <div
         key={book._id}
-        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-11/12 flex justify-start gap-10"
+        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 flex justify-start gap-10 flex-col"
       >
         <div className="flex flex-col justify-center items-center">
           <img
@@ -56,7 +55,7 @@ export const SingleBook = () => {
           />
           <button
             onClick={() => handleBorrow(book._id)}
-            className="w-11/12 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
+            className="w-36 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
           >
             {borrow ? "Wait" : "Borrow"}
           </button>
@@ -64,7 +63,7 @@ export const SingleBook = () => {
             onClick={() => {
               handleDownload(book._id);
             }}
-            className="w-11/12 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
+            className="w-36 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
           >
             {download ? "Wait" : "Download"}
           </button>

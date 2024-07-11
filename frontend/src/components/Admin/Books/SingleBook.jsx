@@ -48,7 +48,7 @@ export const SingleBook = () => {
       <h1 className="text-3xl font-bold mb-6 text-white">Book Information</h1>
       <div
         key={book._id}
-        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-11/12 flex justify-around gap-10"
+        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-11/12 flex justify-around gap-10 flex-col"
       >
         <div className="flex flex-col justify-center items-center">
           <img
@@ -58,7 +58,7 @@ export const SingleBook = () => {
           />
           <button
             onClick={() => handleUpdate(book._id)}
-            className="w-11/12 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
+            className="w-36 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
           >
             {updating ? "Wait" : "Update"}
           </button>
@@ -66,7 +66,7 @@ export const SingleBook = () => {
             onClick={() => {
               handleDelete(book._id);
             }}
-            className="w-11/12 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
+            className="w-36 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
           >
             {deleting ? "Wait" : "Delete"}
           </button>

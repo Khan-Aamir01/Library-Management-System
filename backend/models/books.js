@@ -39,7 +39,7 @@ const bookSchema = new mongoose.Schema({
     },
     DownloadUrl :{
         type :String,
-        required:true,
+        default:null,
     },
     Date :{
         type:Date,

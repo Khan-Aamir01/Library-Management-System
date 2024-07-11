@@ -12,7 +12,9 @@ export const SideBar = () => {
         <SideBarLink to={"/lms/college"} label={"College"} />
         <SideBarLink to={"/lms/highereducation"} label={"Higher Edu.."} />
       </div>
-      <Outlet />
+      <div className="w-11/12 bg-slate-500 p-6">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -1,26 +1,52 @@
-import { Link } from "react-router-dom";
-export const SchoolInventroy = () => {
+import { useNavigate } from "react-router-dom";
+
+export const SchoolInventory = () => {
+  const navigate = useNavigate();
+
+  const singleClassHandler = (categorise, classId) => {
+    navigate(`/lms/${categorise}/class/${classId}`);
+  };
+
   return (
-    <div className="w-11/12 bg-slate-500 p-6">
-      <h1 className="font-bold text-xl text-white px-4">Select Your Class</h1>
-      <div className="flex justify-start flex-wrap gap-1">
-        <NavigationLink to={"/lms/school/class5"} label={"Class-5"} />
-        <NavigationLink to={"/lms/school/class6"} label={"Class-6"} />
-        <NavigationLink to={"/lms/school/class7"} label={"Class-7"} />
-        <NavigationLink to={"/lms/school/class8"} label={"Class-8"} />
-        <NavigationLink to={"/lms/school/class9"} label={"Class-9"} />
-        <NavigationLink to={"/lms/school/class10"} label={"Class-10"} />
+    <div className="flex flex-col items-center py-8 bg-slate-500 w-11/12">
+      <h1 className="text-3xl font-bold mb-6 text-white">Select Class</h1>
+      <div className="px-2 mt-2 flex flex-wrap justify-center">
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "5th")}
+          label="5th"
+        />
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "6th")}
+          label="6th"
+        />
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "7th")}
+          label="7th"
+        />
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "8th")}
+          label="8th"
+        />
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "9th")}
+          label="9th"
+        />
+        <SchoolNavigation
+          onClick={() => singleClassHandler("school", "10th")}
+          label="10th"
+        />
       </div>
     </div>
   );
 };
-const NavigationLink = ({ to, label }) => {
+
+const SchoolNavigation = ({ onClick, label }) => {
   return (
-    <Link
-      to={to}
-      className="text-white hover:bg-gray-700 px-4 py-2 rounded transition duration-300"
+    <button
+      onClick={onClick}
+      className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all"
     >
       {label}
-    </Link>
+    </button>
   );
 };

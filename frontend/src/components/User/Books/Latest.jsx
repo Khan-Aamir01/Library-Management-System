@@ -38,7 +38,7 @@ export const Latest = () => {
   }
 
   return (
-    <div className="w-11/12 bg-slate-500 p-6">
+    <>
       <h1 className="font-bold text-xl text-white">Latest</h1>
       <div className="flex gap-4 flex-wrap mt-2">
         {error && <h1>{error}</h1>}
@@ -62,6 +62,6 @@ export const Latest = () => {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 };

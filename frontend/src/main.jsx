@@ -2,11 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-// Style Component
 import "./index.css";
 
+// ----------------------------------------------------------------------------------------
 // Admin Components
-// App Component
+// ----------------------------------------------------------------------------------------
 import App from "./App.jsx";
 
 // Welcome Component
@@ -23,6 +23,8 @@ import { UpdateBook } from "./components/Admin/Books/UpdateBook.jsx";
 import { SchoolInventory as AdminSchoolInventory } from "./components/Admin/Books/School/SchoolInventory.jsx";
 import { CollegeInventory as AdminCollegeInventory } from "./components/Admin/Books/College/CollegeInventory.jsx";
 import { HigherEduInventory as AdminHigherEduInventory } from "./components/Admin/Books/HigherEdu/HigherEdu.jsx";
+// All Categories Books Show in this component
+import { Categorised as AdminCategorised } from "./components/Admin/Books/CategorisedBook.jsx";
 
 // Members/Users Component
 import { MembersInventory } from "./components/Admin/Members/MembersInventory.jsx";
@@ -34,7 +36,9 @@ import { UpdateMember } from "./components/Admin/Members/UpdateMember.jsx";
 import { PendingInventory } from "./components/Admin/Pending Request/PendingRequestInventory.jsx";
 import { AllRequests } from "./components/Admin/Pending Request/AllRequests.jsx";
 
+// ----------------------------------------------------------------------------------------
 // Users Components
+// ----------------------------------------------------------------------------------------
 // First Page
 import { Header } from "./components/User/FirstPage/Header.jsx";
 import { Introduction } from "./components/User/FirstPage/Introduction.jsx";
@@ -49,13 +53,20 @@ import { AllBooks as UserAllBooks } from "./components/User/Books/AllBooks.jsx";
 import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook.jsx";
 
 // School Books || College Book || Higher Education User
-import { SchoolInventroy as UserSchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
-import { CollegeInventroy as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
-import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
+import { SchoolInventory as UserSchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
+// import { CollegeInventory as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
+// import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
+
+// All Categories Books Show in this component
+import { Categorised as UserCategorised } from "./components/User/Books/CategorisedBook.jsx";
+
+// ----------------------------------------------------------------------------------------
 
 const router = createBrowserRouter([
   {
+    // ----------------------------------------------------------------------------------------
     // Admin Routes
+    // ----------------------------------------------------------------------------------------
     path: "/admin",
     element: <App />,
     children: [
@@ -97,6 +108,10 @@ const router = createBrowserRouter([
             path: "highereducation",
             element: <AdminHigherEduInventory />,
           },
+          {
+            path: ":categorise/class/:classId",
+            element: <AdminCategorised />,
+          },
         ],
       },
       // Routes For Members/User handle page
@@ -131,7 +146,11 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  // ----------------------------------------------------------------------------------------
   // Users Routes
+  // ----------------------------------------------------------------------------------------
+  // Into Page
   {
     path: "/lms",
     element: <Header />,
@@ -139,10 +158,12 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Introduction />,
+        // SideBar Routes
         children: [
           {
             path: "",
             element: <SideBar />,
+            // SideBar Components/Navigation Routes - this routes will show some books on the home page
             children: [
               {
                 path: "",
@@ -158,16 +179,17 @@ const router = createBrowserRouter([
               },
               {
                 path: "college",
-                element: <UserCollegeInventroy />,
+                // element: <UserCollegeInventroy />,
               },
               {
                 path: "highereducation",
-                element: <UserHigherInventory />,
+                // element: <UserHigherInventory />,
               },
             ],
           },
         ],
       },
+      // Books Routes - this routes will show books on the new page with header
       {
         path: "allbooks",
         element: <UserAllBooks />,
@@ -175,6 +197,10 @@ const router = createBrowserRouter([
       {
         path: ":bookname/:id",
         element: <UserSingleBook />,
+      },
+      {
+        path: ":categorise/class/:classId",
+        element: <UserCategorised />,
       },
     ],
   },
