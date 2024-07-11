@@ -7,6 +7,7 @@ export const AddBooks = () => {
   const [Name, setName] = useState("");
   const [Author_Name, setAuthorName] = useState("");
   const [Categories, setCategories] = useState("");
+  const [std, setStd] = useState("");
   const [isPhysical, setIsPhysical] = useState("");
   const [isEbook, setIsEbook] = useState("");
   const [Availability, setAvailability] = useState("");
@@ -31,6 +32,7 @@ export const AddBooks = () => {
       Name,
       Author_Name,
       Categories,
+      std,
       isPhysical: isPhysical.toLowerCase(),
       isEbook: isEbook.toLowerCase(),
       Availability,
@@ -100,11 +102,28 @@ export const AddBooks = () => {
             name="Categories"
             id="categories"
             value={Categories}
-            placeholder="Categories"
+            placeholder="Categories (Ex: School)"
             required
             className={inputStyle}
             onChange={(e) => {
               setCategories(e.target.value);
+            }}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="std" className={labelStyle}>
+            Standard
+          </label>
+          <input
+            type="text"
+            name="std"
+            id="std"
+            value={std}
+            placeholder="Enter Standar (Ex: 10th) or Empty"
+            className={inputStyle}
+            onChange={(e) => {
+              setStd(e.target.value);
             }}
           />
         </div>

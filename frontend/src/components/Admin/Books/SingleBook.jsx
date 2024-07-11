@@ -78,6 +78,12 @@ export const SingleBook = () => {
           <br />
           <b>Categories:</b> {book.Categories}
           <br />
+          {book.std && (
+            <>
+              <b>Class - </b> {book.std}
+              <br />
+            </>
+          )}
           <b>P-Book:</b> {book.isPhysical.toString()}
           <br />
           <b>E-Book:</b> {book.isEbook.toString()}

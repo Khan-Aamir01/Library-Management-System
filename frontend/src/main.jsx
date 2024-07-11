@@ -19,6 +19,11 @@ import { AddBooks } from "./components/Admin/Books/AddBooks.jsx";
 import { SingleBook as AdminSingleBook } from "./components/Admin/Books/SingleBook.jsx";
 import { UpdateBook } from "./components/Admin/Books/UpdateBook.jsx";
 
+// School Books || College Book || Higher Education Admin
+import { SchoolInventory as AdminSchoolInventory } from "./components/Admin/Books/School/SchoolInventory.jsx";
+import { CollegeInventory as AdminCollegeInventory } from "./components/Admin/Books/College/CollegeInventory.jsx";
+import { HigherEduInventory as AdminHigherEduInventory } from "./components/Admin/Books/HigherEdu/HigherEdu.jsx";
+
 // Members/Users Component
 import { MembersInventory } from "./components/Admin/Members/MembersInventory.jsx";
 import { AllMembers } from "./components/Admin/Members/AllMembers.jsx";
@@ -43,12 +48,10 @@ import { AllBooks as UserAllBooks } from "./components/User/Books/AllBooks.jsx";
 // Single Book Components with all details and borrow and downloads
 import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook.jsx";
 
-// School Books
-import { SchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
-
-// College Books
-import { CollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
-import { HigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
+// School Books || College Book || Higher Education User
+import { SchoolInventroy as UserSchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
+import { CollegeInventroy as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
+import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -81,6 +84,18 @@ const router = createBrowserRouter([
           {
             path: "update/:id",
             element: <UpdateBook />,
+          },
+          {
+            path: "school",
+            element: <AdminSchoolInventory />,
+          },
+          {
+            path: "college",
+            element: <AdminCollegeInventory />,
+          },
+          {
+            path: "highereducation",
+            element: <AdminHigherEduInventory />,
           },
         ],
       },
@@ -139,15 +154,15 @@ const router = createBrowserRouter([
               },
               {
                 path: "school",
-                element: <SchoolInventroy />,
+                element: <UserSchoolInventroy />,
               },
               {
                 path: "college",
-                element: <CollegeInventroy />,
+                element: <UserCollegeInventroy />,
               },
               {
                 path: "highereducation",
-                element: <HigherInventory />,
+                element: <UserHigherInventory />,
               },
             ],
           },
@@ -159,10 +174,6 @@ const router = createBrowserRouter([
       },
       {
         path: ":bookname/:id",
-        element: <UserSingleBook />,
-      },
-      {
-        path: ":categories/:std",
         element: <UserSingleBook />,
       },
     ],
