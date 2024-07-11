@@ -54,11 +54,15 @@ import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook
 
 // School Books || College Book || Higher Education User
 import { SchoolInventory as UserSchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
-// import { CollegeInventory as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
-// import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu.jsx/HigherInventory.jsx";
+import { CollegeInventory as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
+import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu/HigherInventory.jsx";
 
 // All Categories Books Show in this component
 import { Categorised as UserCategorised } from "./components/User/Books/CategorisedBook.jsx";
+
+// Login/Registration
+import { Login } from "./components/User/Login/Login.jsx";
+import { Registration } from "./components/User/Registration/Registration.jsx";
 
 // ----------------------------------------------------------------------------------------
 
@@ -179,11 +183,11 @@ const router = createBrowserRouter([
               },
               {
                 path: "college",
-                // element: <UserCollegeInventroy />,
+                element: <UserCollegeInventroy />,
               },
               {
                 path: "highereducation",
-                // element: <UserHigherInventory />,
+                element: <UserHigherInventory />,
               },
             ],
           },
@@ -201,6 +205,15 @@ const router = createBrowserRouter([
       {
         path: ":categorise/class/:classId",
         element: <UserCategorised />,
+      },
+      // Login/Registration Routes
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "registration",
+        element: <Registration />,
       },
     ],
   },

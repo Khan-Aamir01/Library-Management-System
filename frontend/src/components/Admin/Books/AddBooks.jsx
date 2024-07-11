@@ -102,7 +102,7 @@ export const AddBooks = () => {
             name="Categories"
             id="categories"
             value={Categories}
-            placeholder="Categories (Ex: School)"
+            placeholder="Categories (Ex: School, Collge, Higher or Others)"
             required
             className={inputStyle}
             onChange={(e) => {

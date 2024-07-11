@@ -1,31 +1,31 @@
 import { useNavigate } from "react-router-dom";
 
-export const HigherEduInventory = () => {
+export const HigherInventory = () => {
   const navigate = useNavigate();
 
   const singleClassHandler = (categorise, classId) => {
-    navigate(`/admin/books/${categorise}/class/${classId}`);
+    navigate(`/lms/${categorise}/class/${classId}`);
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col items-center py-8 bg-slate-500 w-11/12">
       <h1 className="text-3xl font-bold mb-6 text-white">Select Class</h1>
       <div className="px-2 mt-2 flex flex-wrap justify-center">
         <SchoolNavigation
-          onClick={() => singleClassHandler("highereducation", "mbbs")}
+          onClick={() => singleClassHandler("higher", "mbbs")}
           label="MBBS"
         />
         <SchoolNavigation
-          onClick={() => singleClassHandler("highereducation", "aiml")}
+          onClick={() => singleClassHandler("higher", "aiml")}
           label="AiMl"
         />
         <SchoolNavigation
-          onClick={() => singleClassHandler("highereducation", "be")}
+          onClick={() => singleClassHandler("higher", "BE")}
           label="BE"
         />
         <SchoolNavigation
-          onClick={() => singleClassHandler("highereducation", "bscit")}
-          label="BSC-IT"
+          onClick={() => singleClassHandler("higher", "bscit")}
+          label="BSC-It"
         />
       </div>
     </div>
