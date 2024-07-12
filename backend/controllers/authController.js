@@ -1,5 +1,24 @@
 const User = require('../models/user')
 const bcrypt = require('bcryptjs')
+
+const login = async (req, res)=>{
+    const{gmail,password} = req.body;
+    try{
+        const user = await User.findOne({gmail:gmail}); 
+        if(!user){
+            return res.status(404).json({message:'Invalid Credentials'});
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(isMatch){
+            return res.status(200).json(user);
+        }
+        res.status(404).json({message:'Invalid Credentials'});
+    }
+    catch(error){
+        res.status(500).json({message:'server error due to ' + error});
+    }
+};
+
 const register = async (req, res)=>{
     const {name,image,gmail,password,address,phoneNumber} = req.body;
     try{
@@ -35,5 +54,8 @@ const hashPassword = async (password)=>{
         throw error //Add throw error for security
     }
 }
-module.exports = register;
+module.exports = {
+    register,
+    login,
+};
 
