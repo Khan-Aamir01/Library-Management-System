@@ -31,7 +31,7 @@ export default function AddBooks() {
     const createBook = {
       Name,
       Author_Name,
-      Categories,
+      Categories: Categories.toLowerCase().trim(),
       std: std.toLowerCase().trim(),
       isPhysical: isPhysical.toLowerCase().trim(),
       isEbook: isEbook.toLowerCase().trim(),
@@ -217,15 +217,12 @@ export default function AddBooks() {
             }}
           />
         </div>
-
-        <div className="flex items-center justify-between">
-          <button
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
-          >
-            {loading ? "Adding..." : "Submit"}
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+        >
+          {loading ? "Adding..." : "Submit"}
+        </button>
       </form>
     </div>
   );

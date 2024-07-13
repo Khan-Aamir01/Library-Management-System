@@ -93,11 +93,13 @@ const UserHigherInventory = withSuspense(
 const UserCategorised = withSuspense(
   lazy(() => import("./components/User/Books/CategorisedBook.jsx"))
 );
+
+// Lazy Registration/Login Components
 const Login = withSuspense(
-  lazy(() => import("./components/User/Login/Login.jsx"))
+  lazy(() => import("./components/Login-Registration/Login.jsx"))
 );
 const Registration = withSuspense(
-  lazy(() => import("./components/User/Registration/Registration.jsx"))
+  lazy(() => import("./components/Login-Registration/Registration.jsx"))
 );
 
 const router = createBrowserRouter([

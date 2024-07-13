@@ -21,6 +21,9 @@ export default function Latest() {
         const onlySixBook = data.slice(0, 5);
         setLatestBook(onlySixBook);
         setLoader(false);
+        if (onlySixBook.length === 0) {
+          setError("0 Books");
+        }
       } catch (e) {
         setError("Error While Fetching Data " + e.message);
         setLoader(false);
@@ -40,7 +43,7 @@ export default function Latest() {
   return (
     <>
       <h1 className="font-bold text-xl text-white">Latest</h1>
-      <div className="flex gap-4 flex-wrap mt-2">
+      <div className="flex gap-4 flex-wrap mt-2 justify-center md:justify-normal">
         {error && <h1>{error}</h1>}
         {latestBook.map((book, index) => (
           <div

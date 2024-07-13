@@ -40,9 +40,7 @@ export default function Categorised() {
 
   return (
     <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-2 text-white">
-        {`${categorise.charAt(0).toUpperCase()}${categorise.slice(1)}`} Books
-      </h1>
+      <h1 className="text-3xl font-bold mb-2 text-white">{classId} Books</h1>
       {loader && <Loader />}
       {message && <b className="mb-1">{message}</b>}
       {error && <b className="mb-1">{error}</b>}
