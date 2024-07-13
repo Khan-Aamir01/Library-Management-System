@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const AllBooks = () => {
+export default function AllBooks() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   // if book load slow then loading work
@@ -70,4 +70,4 @@ export const AllBooks = () => {
       </div>
     </>
   );
-};
+}

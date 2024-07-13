@@ -1,7 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 
 // Navigation Part/Header
-export const BookInventory = () => {
+export default function BookInventory() {
   return (
     <div className="w-11/12">
       {/* Book Inventory Header(Navigation Menu) */}
@@ -16,7 +16,7 @@ export const BookInventory = () => {
       <Outlet />
     </div>
   );
-};
+}
 
 // Styling for single navigation link button
 const BookLink = ({ to, label }) => {

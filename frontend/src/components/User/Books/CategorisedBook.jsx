@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const Categorised = () => {
+export default function Categorised() {
   const navigate = useNavigate();
   const { categorise, classId } = useParams();
   const [books, setBooks] = useState([]);
   const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(true);
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -21,18 +23,16 @@ export const Categorised = () => {
           book.std.toLowerCase().includes(classId.toLocaleLowerCase())
         );
         setBooks(filteredBooks);
+        setLoader(false);
         // Set Total Books
         setMessage(`Total ${filteredBooks.length} Books`);
       } catch (e) {
-        console.log(e.message);
+        setLoader(false);
+        setError("Server Error");
       }
     };
     fetchBook();
   }, []);
-
-  if (!books) {
-    return <Loader />;
-  }
 
   const singleBookHandler = (bookname, id) => {
     navigate(`/lms/${bookname}/${id}`);
@@ -43,7 +43,9 @@ export const Categorised = () => {
       <h1 className="text-3xl font-bold mb-2 text-white">
         {`${categorise.charAt(0).toUpperCase()}${categorise.slice(1)}`} Books
       </h1>
+      {loader && <Loader />}
       {message && <b className="mb-1">{message}</b>}
+      {error && <b className="mb-1">{error}</b>}
       <div className="px-2 mt-2 flex flex-wrap justify-center">
         {books.map((book) => (
           <div
@@ -69,4 +71,4 @@ export const Categorised = () => {
       </div>
     </div>
   );
-};
+}

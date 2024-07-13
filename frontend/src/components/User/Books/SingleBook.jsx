@@ -2,9 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const SingleBook = () => {
+export default function SingleBook() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [book, setBook] = useState(null);
@@ -86,4 +86,4 @@ export const SingleBook = () => {
       </div>
     </div>
   );
-};
+}

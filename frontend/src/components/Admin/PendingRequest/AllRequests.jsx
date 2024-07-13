@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const AllRequests = () => {
+export default function AllRequests() {
   const [requests, setRequests] = useState([]);
   const [books, setBooks] = useState({});
   const [users, setUsers] = useState({});
@@ -82,4 +82,4 @@ export const AllRequests = () => {
       </div>
     </div>
   );
-};
+}

@@ -1,85 +1,115 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { lazy } from "react";
 
 import "./index.css";
+import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 
-// ----------------------------------------------------------------------------------------
-// Admin Components
-// ----------------------------------------------------------------------------------------
-import App from "./App.jsx";
+// Lazy loading Admin Components
+const App = withSuspense(lazy(() => import("./App.jsx")));
+const Welcome = withSuspense(
+  lazy(() => import("./components/Admin/Welcome/Welcome.jsx"))
+);
+const BookInventory = withSuspense(
+  lazy(() => import("./components/Admin/Books/BookInventory.jsx"))
+);
+const AdminAllBooks = withSuspense(
+  lazy(() => import("./components/Admin/Books/AllBooks.jsx"))
+);
+const AddBooks = withSuspense(
+  lazy(() => import("./components/Admin/Books/AddBooks.jsx"))
+);
+const AdminSingleBook = withSuspense(
+  lazy(() => import("./components/Admin/Books/SingleBook.jsx"))
+);
+const UpdateBook = withSuspense(
+  lazy(() => import("./components/Admin/Books/UpdateBook.jsx"))
+);
+const AdminSchoolInventory = withSuspense(
+  lazy(() => import("./components/Admin/Books/School/SchoolInventory.jsx"))
+);
+const AdminCollegeInventory = withSuspense(
+  lazy(() => import("./components/Admin/Books/College/CollegeInventory.jsx"))
+);
+const AdminHigherEduInventory = withSuspense(
+  lazy(() => import("./components/Admin/Books/HigherEdu/HigherEdu.jsx"))
+);
+const AdminCategorised = withSuspense(
+  lazy(() => import("./components/Admin/Books/CategorisedBook.jsx"))
+);
+const MembersInventory = withSuspense(
+  lazy(() => import("./components/Admin/Members/MembersInventory.jsx"))
+);
+const AllMembers = withSuspense(
+  lazy(() => import("./components/Admin/Members/AllMembers.jsx"))
+);
+const SingleMember = withSuspense(
+  lazy(() => import("./components/Admin/Members/SingleMember.jsx"))
+);
+const UpdateMember = withSuspense(
+  lazy(() => import("./components/Admin/Members/UpdateMember.jsx"))
+);
+const PendingInventory = withSuspense(
+  lazy(() =>
+    import("./components/Admin/PendingRequest/PendingRequestInventory.jsx")
+  )
+);
+const AllRequests = withSuspense(
+  lazy(() => import("./components/Admin/PendingRequest/AllRequests.jsx"))
+);
 
-// Welcome Component
-import { Welcome } from "./components/Admin/Welcome/Welcome.jsx";
-
-// Books Component
-import { BookInventory } from "./components/Admin/Books/BookInventory.jsx";
-import { AllBooks as AdminAllBooks } from "./components/Admin/Books/AllBooks.jsx";
-import { AddBooks } from "./components/Admin/Books/AddBooks.jsx";
-import { SingleBook as AdminSingleBook } from "./components/Admin/Books/SingleBook.jsx";
-import { UpdateBook } from "./components/Admin/Books/UpdateBook.jsx";
-
-// School Books || College Book || Higher Education Admin
-import { SchoolInventory as AdminSchoolInventory } from "./components/Admin/Books/School/SchoolInventory.jsx";
-import { CollegeInventory as AdminCollegeInventory } from "./components/Admin/Books/College/CollegeInventory.jsx";
-import { HigherEduInventory as AdminHigherEduInventory } from "./components/Admin/Books/HigherEdu/HigherEdu.jsx";
-// All Categories Books Show in this component
-import { Categorised as AdminCategorised } from "./components/Admin/Books/CategorisedBook.jsx";
-
-// Members/Users Component
-import { MembersInventory } from "./components/Admin/Members/MembersInventory.jsx";
-import { AllMembers } from "./components/Admin/Members/AllMembers.jsx";
-import { SingleMember } from "./components/Admin/Members/SingleMember.jsx";
-import { UpdateMember } from "./components/Admin/Members/UpdateMember.jsx";
-
-// Pending Request Components
-import { PendingInventory } from "./components/Admin/Pending Request/PendingRequestInventory.jsx";
-import { AllRequests } from "./components/Admin/Pending Request/AllRequests.jsx";
-
-// ----------------------------------------------------------------------------------------
-// Users Components
-// ----------------------------------------------------------------------------------------
-// First Page
-import { Header } from "./components/User/FirstPage/Header.jsx";
-import { Introduction } from "./components/User/FirstPage/Introduction.jsx";
-import { SideBar } from "./components/User/FirstPage/SideBar.jsx";
-
-// Books
-import { Latest } from "./components/User/Books/Latest.jsx";
-import { Popular } from "./components/User/Books/Popular.jsx";
-import { AllBooks as UserAllBooks } from "./components/User/Books/AllBooks.jsx";
-
-// Single Book Components with all details and borrow and downloads
-import { SingleBook as UserSingleBook } from "./components/User/Books/SingleBook.jsx";
-
-// School Books || College Book || Higher Education User
-import { SchoolInventory as UserSchoolInventroy } from "./components/User/Books/School/SchoolInventory.jsx";
-import { CollegeInventory as UserCollegeInventroy } from "./components/User/Books/College/CollegeInventory.jsx";
-import { HigherInventory as UserHigherInventory } from "./components/User/Books/HigherEdu/HigherInventory.jsx";
-
-// All Categories Books Show in this component
-import { Categorised as UserCategorised } from "./components/User/Books/CategorisedBook.jsx";
-
-// Login/Registration
-import { Login } from "./components/User/Login/Login.jsx";
-import { Registration } from "./components/User/Registration/Registration.jsx";
-
-// ----------------------------------------------------------------------------------------
+// Lazy loading User Components
+const Header = withSuspense(
+  lazy(() => import("./components/User/FirstPage/Header.jsx"))
+);
+const Introduction = withSuspense(
+  lazy(() => import("./components/User/FirstPage/Introduction.jsx"))
+);
+const SideBar = withSuspense(
+  lazy(() => import("./components/User/FirstPage/SideBar.jsx"))
+);
+const Latest = withSuspense(
+  lazy(() => import("./components/User/Books/Latest.jsx"))
+);
+const Popular = withSuspense(
+  lazy(() => import("./components/User/Books/Popular.jsx"))
+);
+const UserAllBooks = withSuspense(
+  lazy(() => import("./components/User/Books/AllBooks.jsx"))
+);
+const UserSingleBook = withSuspense(
+  lazy(() => import("./components/User/Books/SingleBook.jsx"))
+);
+const UserSchoolInventory = withSuspense(
+  lazy(() => import("./components/User/Books/School/SchoolInventory.jsx"))
+);
+const UserCollegeInventory = withSuspense(
+  lazy(() => import("./components/User/Books/College/CollegeInventory.jsx"))
+);
+const UserHigherInventory = withSuspense(
+  lazy(() => import("./components/User/Books/HigherEdu/HigherInventory.jsx"))
+);
+const UserCategorised = withSuspense(
+  lazy(() => import("./components/User/Books/CategorisedBook.jsx"))
+);
+const Login = withSuspense(
+  lazy(() => import("./components/User/Login/Login.jsx"))
+);
+const Registration = withSuspense(
+  lazy(() => import("./components/User/Registration/Registration.jsx"))
+);
 
 const router = createBrowserRouter([
+  // Admin Routes
   {
-    // ----------------------------------------------------------------------------------------
-    // Admin Routes
-    // ----------------------------------------------------------------------------------------
     path: "/admin",
     element: <App />,
     children: [
-      // Routes For WelcomePage
       {
         path: "/admin",
         element: <Welcome />,
       },
-      // Routes For Books
       {
         path: "books",
         element: <BookInventory />,
@@ -118,7 +148,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // Routes For Members/User handle page
       {
         path: "members",
         element: <MembersInventory />,
@@ -137,7 +166,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // Routes for Pending Request
       {
         path: "bookrequest",
         element: <PendingInventory />,
@@ -151,10 +179,7 @@ const router = createBrowserRouter([
     ],
   },
 
-  // ----------------------------------------------------------------------------------------
-  // Users Routes
-  // ----------------------------------------------------------------------------------------
-  // Into Page
+  // User Routes
   {
     path: "/lms",
     element: <Header />,
@@ -162,12 +187,10 @@ const router = createBrowserRouter([
       {
         path: "",
         element: <Introduction />,
-        // SideBar Routes
         children: [
           {
             path: "",
             element: <SideBar />,
-            // SideBar Components/Navigation Routes - this routes will show some books on the home page
             children: [
               {
                 path: "",
@@ -179,11 +202,11 @@ const router = createBrowserRouter([
               },
               {
                 path: "school",
-                element: <UserSchoolInventroy />,
+                element: <UserSchoolInventory />,
               },
               {
                 path: "college",
-                element: <UserCollegeInventroy />,
+                element: <UserCollegeInventory />,
               },
               {
                 path: "highereducation",
@@ -193,7 +216,6 @@ const router = createBrowserRouter([
           },
         ],
       },
-      // Books Routes - this routes will show books on the new page with header
       {
         path: "allbooks",
         element: <UserAllBooks />,
@@ -206,7 +228,6 @@ const router = createBrowserRouter([
         path: ":categorise/class/:classId",
         element: <UserCategorised />,
       },
-      // Login/Registration Routes
       {
         path: "login",
         element: <Login />,

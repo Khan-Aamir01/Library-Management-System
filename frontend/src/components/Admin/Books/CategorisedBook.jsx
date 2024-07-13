@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export const Categorised = () => {
+export default function Categorised() {
   const navigate = useNavigate();
   const { categorise, classId } = useParams();
   const [books, setBooks] = useState([]);
@@ -63,4 +63,4 @@ export const Categorised = () => {
       </div>
     </div>
   );
-};
+}

@@ -2,7 +2,7 @@ import { IoBookSharp } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
-export const SideBar = () => {
+export default function SideBar() {
   return (
     <div className="flex">
       <div className="w-1/4 bg-gray-600 flex flex-col gap-10 p-6 justify-start items-center min-h-screen">
@@ -28,7 +28,7 @@ export const SideBar = () => {
       <Outlet />
     </div>
   );
-};
+}
 
 // Style for single navigation link button
 const SideBarLink = ({ to, label }) => {

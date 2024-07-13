@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const CollegeInventory = () => {
+export default function CollegeInventory() {
   const navigate = useNavigate();
 
   const singleClassHandler = (categorise, classId) => {
@@ -22,7 +22,7 @@ export const CollegeInventory = () => {
       </div>
     </div>
   );
-};
+}
 
 const SchoolNavigation = ({ onClick, label }) => {
   return (

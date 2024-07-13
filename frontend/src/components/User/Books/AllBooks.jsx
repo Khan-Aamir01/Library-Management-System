@@ -3,13 +3,14 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import { GiArchiveResearch } from "react-icons/gi";
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const AllBooks = () => {
+export default function AllBooks() {
   const [books, setBooks] = useState([]);
   const [search, setSearch] = useState("");
   const [loader, setLoader] = useState(true);
   const [notFound, setNotFound] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchBooks = async () => {
@@ -21,11 +22,13 @@ export const AllBooks = () => {
         const sortedBooks = data.sort((a, b) => a.Name.localeCompare(b.Name));
 
         setLoader(false);
-
         setBooks(sortedBooks);
+        if (sortedBooks.length === 0) {
+          setError("There are zero books");
+        }
       } catch (error) {
-        console.error("Error fetching books:", error);
         setLoader(false);
+        setError("Server Problem");
       }
     };
 
@@ -71,6 +74,7 @@ export const AllBooks = () => {
       <h1 className="md:float-left md:w-11/12 md:ml-2 font-bold">All Books</h1>
       <div className="mt-2 flex gap-4 flex-wrap md:justify-start justify-center w-11/12">
         {notFound && <p>{notFound}</p>}
+        {error && <p>{error}</p>}
         {filteredBooks.map((book) => (
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
@@ -95,4 +99,4 @@ export const AllBooks = () => {
       </div>
     </div>
   );
-};
+}

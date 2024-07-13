@@ -3,7 +3,7 @@ import { RiMapPinUserFill } from "react-icons/ri";
 import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-export const Header = () => {
+export default function Header() {
   const navigate = useNavigate();
   const onLogoClick = () => {
     navigate("/lms");
@@ -25,4 +25,4 @@ export const Header = () => {
       <Outlet />
     </>
   );
-};
+}

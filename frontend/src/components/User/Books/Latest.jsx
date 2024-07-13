@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const Latest = () => {
+export default function Latest() {
   const [latestBook, setLatestBook] = useState([]);
   const [error, setError] = useState(null);
   const [loader, setLoader] = useState(true);
@@ -64,4 +64,4 @@ export const Latest = () => {
       </div>
     </>
   );
-};
+}

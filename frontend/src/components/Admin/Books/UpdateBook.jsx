@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
-export const UpdateBook = () => {
+export default function UpdateBook() {
   const { id } = useParams();
 
   const navigate = useNavigate();
@@ -229,7 +229,7 @@ export const UpdateBook = () => {
       </form>
     </div>
   );
-};
+}
 
 // Common Styles for label and input tags
 const labelStyle = "block text-gray-700 text-sm font-bold mb-2";

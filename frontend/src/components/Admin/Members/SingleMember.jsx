@@ -5,7 +5,7 @@ import { format } from "date-fns";
 import { TiUserDelete } from "react-icons/ti";
 import { GrUpdate } from "react-icons/gr";
 
-export const SingleMember = () => {
+export default function SingleMember() {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -96,4 +96,4 @@ export const SingleMember = () => {
       </div>
     </div>
   );
-};
+}

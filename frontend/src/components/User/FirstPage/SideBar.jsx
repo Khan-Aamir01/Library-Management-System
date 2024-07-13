@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
-export const SideBar = () => {
+export default function SideBar() {
   return (
     <div className="bg-slate-600 flex justify-between p-2">
       <div className="w-1/4 flex flex-col gap-3 mt-2 p-6">
@@ -17,7 +17,7 @@ export const SideBar = () => {
       </div>
     </div>
   );
-};
+}
 
 const SideBarLink = ({ to, label }) => {
   return (

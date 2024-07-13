@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from "react-router-dom";
 import { GiArchiveResearch } from "react-icons/gi";
 
-export const Introduction = () => {
+export default function Introduction() {
   const navigate = useNavigate();
   const onSearchClick = () => {
     navigate("/lms/allbooks");
@@ -34,4 +34,4 @@ export const Introduction = () => {
       <Outlet />
     </>
   );
-};
+}

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export const HigherEduInventory = () => {
+export default function HigherEduInventory() {
   const navigate = useNavigate();
 
   const singleClassHandler = (categorise, classId) => {
@@ -30,7 +30,7 @@ export const HigherEduInventory = () => {
       </div>
     </div>
   );
-};
+}
 
 const SchoolNavigation = ({ onClick, label }) => {
   return (

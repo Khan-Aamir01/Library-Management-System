@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const AddBooks = () => {
+export default function AddBooks() {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
   const [Author_Name, setAuthorName] = useState("");
@@ -229,7 +229,7 @@ export const AddBooks = () => {
       </form>
     </div>
   );
-};
+}
 
 // Common Styles for label and input tags
 const labelStyle = "block text-gray-700 text-sm font-bold mb-2";

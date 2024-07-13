@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Loader } from "../Loader/Loader";
+import Loader from "../Loader/Loader";
 
-export const AllMembers = () => {
+export default function AllMembers() {
   const [users, setUsers] = useState([]);
   const [error, setError] = useState(null);
   const navigation = useNavigate();
@@ -81,4 +81,4 @@ export const AllMembers = () => {
       </div>
     </div>
   );
-};
+}
