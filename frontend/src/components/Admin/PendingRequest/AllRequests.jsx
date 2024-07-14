@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+import { useNavigate } from "react-router-dom";
+
+// Icons
+import { AiOutlineFileDone } from "react-icons/ai";
+import { MdIncompleteCircle } from "react-icons/md";
+import { RiPassExpiredLine } from "react-icons/ri";
 
 export default function AllRequests() {
   const [requests, setRequests] = useState([]);
@@ -8,6 +14,8 @@ export default function AllRequests() {
   const [users, setUsers] = useState({});
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
+  const [clickedRequests, setClickedRequests] = useState({});
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -19,14 +27,12 @@ export default function AllRequests() {
         ]);
 
         setRequests(borrowRes.data);
-        // Transform the array of book objects into an object where each book's ID is the key and the book's name is the value
         setBooks(
           booksRes.data.reduce((acc, book) => {
             acc[book._id] = book.Name;
             return acc;
           }, {})
         );
-        // Transform the array of user objects into an object where each user's ID is the key and the user's name is the value
         setUsers(
           usersRes.data.reduce((acc, user) => {
             acc[user._id] = user.name;
@@ -45,6 +51,32 @@ export default function AllRequests() {
   if (loader) {
     return <Loader />;
   }
+
+  const handleBorrowRequest = async (id) => {
+    try {
+      await axios.put(
+        `http://localhost:3000/api/borrow/${id}/changeStatustoBorrow`
+      );
+      // Fetch updated requests data
+      const { data } = await axios.get(`http://localhost:3000/api/borrow`);
+      setRequests(data);
+    } catch (e) {
+      console.log(e);
+      setError("Error updating status: " + e.message);
+    }
+  };
+
+  const handleStatusClick = (request) => {
+    if (request.status === "Waiting") {
+      handleBorrowRequest(request._id);
+    } else {
+      const statusMessage = request.status;
+      setClickedRequests(() => ({ [request._id]: statusMessage }));
+      setTimeout(() => {
+        setClickedRequests(() => ({ [request._id]: false }));
+      }, 2000);
+    }
+  };
 
   return (
     <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
@@ -78,7 +110,29 @@ export default function AllRequests() {
                   {users[request.userId] || request.userId}
                 </td>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {request.status}
+                  {request.status === "Waiting" && (
+                    <MdIncompleteCircle
+                      className="cursor-pointer w-full text-4xl"
+                      onClick={() => handleStatusClick(request)}
+                    />
+                  )}
+                  {request.status === "Borrowed" && (
+                    <AiOutlineFileDone
+                      className="cursor-pointer w-full text-4xl"
+                      onClick={() => handleStatusClick(request)}
+                    />
+                  )}
+                  {request.status === "Expired" && (
+                    <RiPassExpiredLine
+                      className="cursor-pointer w-full text-4xl"
+                      onClick={() => handleStatusClick(request)}
+                    />
+                  )}
+                  {clickedRequests[request._id] && (
+                    <div className="text-red-500 mt-2">
+                      {`Book Already ${clickedRequests[request._id]}`}
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}
