@@ -19,15 +19,14 @@ export default function AllRequests() {
         ]);
 
         setRequests(borrowRes.data);
-        // This reduce function transforms the array of book objects (booksRes.data) into an object (books) where each book's ID is used as the key
-        // and the book's name (from the 'Name' property of each book object) is used as the corresponding value.
-        // Example result: { id1: 'name1', id2: 'name2', ... }
+        // Transform the array of book objects into an object where each book's ID is the key and the book's name is the value
         setBooks(
           booksRes.data.reduce((acc, book) => {
             acc[book._id] = book.Name;
             return acc;
           }, {})
         );
+        // Transform the array of user objects into an object where each user's ID is the key and the user's name is the value
         setUsers(
           usersRes.data.reduce((acc, user) => {
             acc[user._id] = user.name;
@@ -50,7 +49,7 @@ export default function AllRequests() {
   return (
     <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-white">All Requests</h1>
-      <div className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-11/12 flex flex-col text-center">
+      <div className="bg-slate-300 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-11/12 flex flex-col text-center">
         <table className="w-full">
           <caption className="font-bold mb-2">
             Total {requests.length} Requests
@@ -58,21 +57,27 @@ export default function AllRequests() {
           </caption>
           <thead>
             <tr>
-              <th className="px-4 py-2 border border-black">Book</th>
-              <th className="px-4 py-2 border border-black">Member</th>
-              <th className="px-4 py-2 border border-black">Status</th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+                Book
+              </th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+                Member
+              </th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+                Status
+              </th>
             </tr>
           </thead>
           <tbody>
             {requests.map((request) => (
               <tr key={request._id}>
-                <td className="border px-4 py-2 border-slate-400 flex flex-col items-center">
+                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
                   {books[request.bookId] || request.bookId}
                 </td>
-                <td className="border px-4 py-2 border-slate-400">
+                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
                   {users[request.userId] || request.userId}
                 </td>
-                <td className="border px-4 py-2 border-slate-400">
+                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
                   {request.status}
                 </td>
               </tr>

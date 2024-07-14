@@ -8,7 +8,7 @@ export default function SingleBook() {
   const navigate = useNavigate();
   const { id } = useParams();
   const [book, setBook] = useState(null);
-  // to change the update and delete button while processing
+  // to change the borrow and download button while processing
   const [borrow, setBorrow] = useState(false);
   const [download, setDownload] = useState(false);
 
@@ -31,12 +31,19 @@ export default function SingleBook() {
     return <Loader />;
   }
 
-  const handleBorrow = async (id) => {
-    setBorrow(true);
-    navigate(``);
+  const userId = "66926a48ef3aa95a8c19ccaa";
+  const handleBorrow = async (bookId) => {
+    try {
+      await axios.post(`http://localhost:3000/api/borrow`, {userId, bookId});
+      setBorrow(true);
+      // navigate(``);
+    } catch (e) {
+      console.log(e.message);
+      setBorrow(false);
+    }
   };
 
-  const handleDownload = async (id) => {
+  const handleDownload = () => {
     setDownload(true);
   };
 
