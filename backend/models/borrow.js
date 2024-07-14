@@ -24,7 +24,7 @@ const borrowSchema = new mongoose.Schema({
     endTimer: {
         type: Date,
         default: function() {
-            return new Date(Date.now() + 5.5 * 61 * 60 * 1000); // Added 3 hour timer on it
+            return new Date(Date.now() + 8.5 * 60 * 60 * 1000); // Added 3 hour timer on it
         }
     },
     borrowDate:{
