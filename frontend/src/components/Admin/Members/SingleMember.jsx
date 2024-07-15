@@ -10,10 +10,11 @@ export default function SingleMember() {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [books, setBooks] = useState({});
-  const [borrowData, setBorrowData] = useState(null);
-  const [fine, setFine] = useState(null);
+  const [borrowData, setBorrowData] = useState([]);
+  const [fines, setFines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +34,7 @@ export default function SingleMember() {
             return acc;
           }, {})
         );
-        setFine(fineRes);
+        setFines(fineRes.data);
         setLoading(false);
       } catch (e) {
         setError("User Not Found: " + e.message);
@@ -50,8 +51,6 @@ export default function SingleMember() {
       </div>
     );
   }
-
-  console.log(fine);
 
   if (error) {
     return (
@@ -89,7 +88,8 @@ export default function SingleMember() {
             <strong>Phone No:</strong> {userData.phoneNumber}
           </p>
           <p>
-            <strong>Fine:</strong> 20$
+            <strong>Fine:</strong>{" "}
+            {fines.reduce((acc, fine) => acc + fine.amount, 0)}$
           </p>
           <p>
             <strong>Email:</strong> {userData.gmail}
@@ -139,26 +139,31 @@ export default function SingleMember() {
             </tr>
           </thead>
           <tbody>
-            {borrowData.map((borrow) => (
-              <tr key={borrow._id}>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {books[borrow.bookId] || borrow.bookId}
-                </td>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {borrow.borrowDate
-                    ? format(new Date(borrow.borrowDate), "dd-MM-yy")
-                    : borrow.status}
-                </td>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {borrow.returnDate
-                    ? format(new Date(borrow.returnDate), "dd-MM-yy")
-                    : borrow.status}
-                </td>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  fine
-                </td>
-              </tr>
-            ))}
+            {borrowData.map((borrow) => {
+              const fine = fines.find(
+                (fine) => fine.bookId === borrow.bookId && fine.userId === id
+              );
+              return (
+                <tr key={borrow._id}>
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                    {books[borrow.bookId] || borrow.bookId}
+                  </td>
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                    {borrow.borrowDate
+                      ? format(new Date(borrow.borrowDate), "dd-MM-yy")
+                      : borrow.status}
+                  </td>
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                    {borrow.returnDate
+                      ? format(new Date(borrow.returnDate), "dd-MM-yy")
+                      : borrow.status}
+                  </td>
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                    {fine ? `${fine.amount}$` : "N/A"}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
