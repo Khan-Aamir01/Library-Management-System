@@ -62,7 +62,7 @@ export default function AllMembers() {
           <thead>
             <tr>
               <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
-                Image
+                Profile
               </th>
               <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
                 Name

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 // Icons
 import { AiOutlineFileDone } from "react-icons/ai";
 import { MdIncompleteCircle } from "react-icons/md";
 import { RiPassExpiredLine } from "react-icons/ri";
+import { MdReportProblem } from "react-icons/md";
 
 export default function AllRequests() {
   const [requests, setRequests] = useState([]);
@@ -15,7 +16,7 @@ export default function AllRequests() {
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
   const [clickedRequests, setClickedRequests] = useState({});
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -128,9 +129,15 @@ export default function AllRequests() {
                       onClick={() => handleStatusClick(request)}
                     />
                   )}
+                  {request.status === "NotReturned" && (
+                    <MdReportProblem
+                      className="cursor-pointer w-full text-4xl"
+                      onClick={() => handleStatusClick(request)}
+                    />
+                  )}
                   {clickedRequests[request._id] && (
                     <div className="text-red-500 mt-2">
-                      {`Book Already ${clickedRequests[request._id]}`}
+                      {`Book ${clickedRequests[request._id]}`}
                     </div>
                   )}
                 </td>
