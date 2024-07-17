@@ -60,8 +60,8 @@ const deleteBorrow = async (req,res)=>{
 
 const changeStatustoBorrow = async (req,res)=>{
     const newStatus = 'Borrowed';
-    const borrowDate = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
-    const endTimer = new Date(Date.now()+ 168 + 5.5 * 60 * 60 * 1000); // 168 = 7 days
+    const currentTime = new Date(Date.now() + 5.5 * 60 * 60 * 1000);
+    const endTimer = new Date(Date.now()+ (168 + 5.5) * 60 * 60 * 1000); // 168 = 7 days
     try{
         const borrow = await Borrow.findById(req.params.id);
         if(!borrow){
@@ -70,9 +70,9 @@ const changeStatustoBorrow = async (req,res)=>{
         borrow.userId = borrow.userId;
         borrow.bookId = borrow.bookId;
         borrow.status = newStatus;
-        borrow.startTimer = borrow.startTimer;
+        borrow.startTimer = currentTime;
         borrow.endTimer = endTimer;
-        borrow.borrowDate = borrowDate;
+        borrow.borrowDate = currentTime;
         borrow.returnDate = borrow.returnDate;
 
         const updatedBorrow = await borrow.save();
