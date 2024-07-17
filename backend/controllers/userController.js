@@ -89,9 +89,6 @@ const deleteUser = async(req,res)=>{
 const getUserFine = async (req,res)=>{
     try{
         const fine = await Fine.find({userId : req.params.id});
-        if(!fine || fine.length === 0 ){
-            return res.status(404).json({message:'No Fine found'});
-        }
         res.status(200).json(fine);
     }
     catch(error){
@@ -104,9 +101,6 @@ const getUserFine = async (req,res)=>{
 const getUserFineStatus = async (req,res)=>{
     try{
         const fine = await Fine.find({userId : req.params.id,status: req.params.status});
-        if(!fine || fine.length === 0 ){
-            return res.status(404).json({message:'No Fine found'});
-        }
         res.status(200).json(fine);
     }
     catch(error){
@@ -119,9 +113,6 @@ const getUserFineStatus = async (req,res)=>{
 const getUserBorrow = async (req,res)=>{
     try{
         const borrow = await Borrow.find({userId : req.params.id});
-        if(!borrow || borrow.length === 0 ){
-            return res.status(404).json({message:'No Borrow found'});
-        }
         res.status(200).json(borrow);
     }
     catch(error){
@@ -134,9 +125,6 @@ const getUserBorrow = async (req,res)=>{
 const getUserBorrowStatus = async (req,res)=>{
     try{
         const borrow = await Borrow.find({userId : req.params.id,status:req.params.status});
-        if(!borrow || borrow.length === 0 ){
-            return res.status(404).json({message:'No Borrow found'});
-        }
         res.status(200).json(borrow);
     }
     catch(error){
