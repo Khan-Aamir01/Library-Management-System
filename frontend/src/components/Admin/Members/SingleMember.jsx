@@ -42,7 +42,7 @@ export default function SingleMember() {
       }
     };
     fetchUser();
-  }, [id]);
+  }, [id, borrowData]);
 
   if (loading) {
     return (
@@ -89,7 +89,7 @@ export default function SingleMember() {
           </p>
           <p>
             <strong>Fine:</strong>{" "}
-            {fines.reduce((acc, fine) => acc + fine.amount, 0)}$
+            {fines.reduce((acc, fine) => acc + fine.amount, 0)}₹
           </p>
           <p>
             <strong>Email:</strong> {userData.gmail}
@@ -159,7 +159,7 @@ export default function SingleMember() {
                       : borrow.status}
                   </td>
                   <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                    {fine ? `${fine.amount}$` : "N/A"}
+                    {fine ? `${fine.amount}₹` : "N/A"}
                   </td>
                 </tr>
               );
