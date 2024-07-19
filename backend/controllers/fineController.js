@@ -32,17 +32,17 @@ const createFine = async (req,res)=>{
         const bookName = await Book.findById(bookId);
         // Later Change this with error
         if(!userName){
-            userName = 'User Name not found';
+            userName.name = 'User Name not found';
         }
         if(!bookName){
-            bookName = 'book Name not found';
+            bookName.Name = 'book Name not found';
         }
         const newFine = new Fine({
             borrowId,
             userId,
-            userName,
+            userName : userName.name,
             bookId,
-            bookName,
+            bookName : bookName.Name,
             status,
             amount,
             paidDate

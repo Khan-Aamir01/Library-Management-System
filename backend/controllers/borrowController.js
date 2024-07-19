@@ -35,16 +35,16 @@ const createBorrow = async (req,res)=>{
         const bookName = await Book.findById(bookId);
         // Later Change this with error 
         if(!userName){
-            userName = "UserName not Found";
+            userName.name = "UserName not Found";
         }
         if(!bookName){
-            bookName = 'BookName not Found';
+            bookName.Name = 'BookName not Found';
         }
         const borrow = new Borrow({
             userId,
-            userName,
+            userName : userName.name,
             bookId,
-            bookName,
+            bookName : bookName.Name,
         });
         const createdBorrow = await borrow.save();
         res.status(201).json(createdBorrow)
