@@ -1,6 +1,8 @@
 const cron = require('node-cron');
 const Borrow = require('../models/borrow');
+const User = require('../models/user');
 const Fine = require('../models/fine');
+const Book = require('../models/books');
 
 
 // Will Run once per hour
@@ -28,12 +30,26 @@ const updateNotReturnStatus = cron.schedule('0 * * * *',async ()=>{
 
 // Function that create new Fine
 const createFine = async(borrowId,userId,bookId)=>{
-
-    await Fine.insertMany({
-        borrowId : borrowId,
-        userId : userId,
-        bookId : bookId,     
-    });
+    try{
+        const userName = await User.findById(userId);
+        const bookName = await Book.findById(bookId);
+        // Later Change this with error
+        if(!userName){
+            userName.name = 'User Name not found';
+        }
+        if(!bookName){
+            bookName.Name = 'book Name not found';
+        }
+        await Fine.insertMany({
+            borrowId : borrowId,
+            userId : userId,
+            userName : userName.name,
+            bookId : bookId,
+            bookName : bookName.Name,     
+        });
+    }catch(error){
+        console.log(error);
+    }    
 }
 
 module.exports = updateNotReturnStatus;

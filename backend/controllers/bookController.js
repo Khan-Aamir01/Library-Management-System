@@ -123,6 +123,20 @@ const getCategory= async(req,res)=>{
         res.status(500).json({message:'server error due to '+ error});
     }
 }
+// Call these API when user Download or Borrow a Book 
+const updateDownload = async(req,res)=>{
+    try{
+        const book = await Book.findById(req.params.id);
+        if(!book){
+            return res.status(404).json({message:"Book not found"});
+        }
+        book.Downloads += 1;
+        await book.save();
+        res.status(200).json({message:"Download Incremented"});
+    }catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
 
 module.exports = {
     getBooks,
@@ -133,4 +147,5 @@ module.exports = {
     latestBook,
     popularBook,
     getCategory,
+    updateDownload,
 };

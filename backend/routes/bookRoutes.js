@@ -9,7 +9,8 @@ const {
     deleteBook,
     latestBook,
     popularBook,
-    getCategory
+    getCategory,
+    updateDownload,
   } = require('../controllers/bookController');
 
 router.get('/',getBooks);
@@ -23,6 +24,8 @@ router.get('/:id',getBookbyId);
 router.get('/category/:category',getCategory);// ex: category/School  => it will return all School Books
 
 router.post('/',createBook);
+
+router.put('/:id/updateDownload',updateDownload);
 
 router.put('/:id',updateBook);
 
