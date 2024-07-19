@@ -16,12 +16,12 @@ export default function SideBar() {
         </div>
 
         {/* Navigation Links Section */}
-        <div className="flex flex-col gap-3 mt-2">
+        <div className="flex flex-col gap-3 mt-2 w-full">
           <SideBarLink to={"/admin"} label="Welcome" />
           <SideBarLink to={"/admin/books"} label="Book Inventory" />
           <SideBarLink to={"/admin/members"} label="Library Members" />
           <SideBarLink to={"/admin/bookrequest"} label="Pending Requests" />
-          <SideBarLink to={"/admin/borrowed"} label="Books on Loan" />
+          <SideBarLink to={"/admin/borrowed"} label="Loaned Books" />
           <SideBarLink to={"/admin/fine"} label="Late Fees" />
         </div>
       </div>
@@ -35,7 +35,7 @@ const SideBarLink = ({ to, label }) => {
   return (
     <Link
       to={to}
-      className="text-white hover:bg-gray-700 px-4 py-2 rounded transition duration-300"
+      className="text-white hover:bg-black bg-gray-700 px-4 py-2 rounded transition duration-300"
     >
       {label}
     </Link>

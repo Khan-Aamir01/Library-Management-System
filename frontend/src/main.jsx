@@ -11,6 +11,8 @@ const App = withSuspense(lazy(() => import("./App.jsx")));
 const Welcome = withSuspense(
   lazy(() => import("./components/Admin/Welcome/Welcome.jsx"))
 );
+
+// Books
 const BookInventory = withSuspense(
   lazy(() => import("./components/Admin/Books/BookInventory.jsx"))
 );
@@ -26,6 +28,8 @@ const AdminSingleBook = withSuspense(
 const UpdateBook = withSuspense(
   lazy(() => import("./components/Admin/Books/UpdateBook.jsx"))
 );
+
+// Books Categories
 const AdminSchoolInventory = withSuspense(
   lazy(() => import("./components/Admin/Books/School/SchoolInventory.jsx"))
 );
@@ -38,6 +42,8 @@ const AdminHigherEduInventory = withSuspense(
 const AdminCategorised = withSuspense(
   lazy(() => import("./components/Admin/Books/CategorisedBook.jsx"))
 );
+
+// Total members section
 const MembersInventory = withSuspense(
   lazy(() => import("./components/Admin/Members/MembersInventory.jsx"))
 );
@@ -50,6 +56,8 @@ const SingleMember = withSuspense(
 const UpdateMember = withSuspense(
   lazy(() => import("./components/Admin/Members/UpdateMember.jsx"))
 );
+
+// Request for book
 const PendingInventory = withSuspense(
   lazy(() =>
     import("./components/Admin/PendingRequest/PendingRequestInventory.jsx")
@@ -57,6 +65,22 @@ const PendingInventory = withSuspense(
 );
 const AllRequests = withSuspense(
   lazy(() => import("./components/Admin/PendingRequest/AllRequests.jsx"))
+);
+
+// Books on loan
+const BooksOnLoanInventory = withSuspense(
+  lazy(() => import("./components/Admin/bookOnLoan/BookOnLoanInventory.jsx"))
+);
+const BooksOnLoan = withSuspense(
+  lazy(() => import("./components/Admin/bookOnLoan/BookOnLoan.jsx"))
+);
+
+// Late fine books
+const LateFeesInventory = withSuspense(
+  lazy(() => import("./components/Admin/LateFeesBooks/LateFeesInventory.jsx"))
+);
+const LateFeesBooks = withSuspense(
+  lazy(() => import("./components/Admin/LateFeesBooks/AllLateFees.jsx"))
 );
 
 // Lazy loading User Components
@@ -175,6 +199,26 @@ const router = createBrowserRouter([
           {
             path: "",
             element: <AllRequests />,
+          },
+        ],
+      },
+      {
+        path: "borrowed",
+        element: <BooksOnLoanInventory />,
+        children: [
+          {
+            path: "",
+            element: <BooksOnLoan />,
+          },
+        ],
+      },
+      {
+        path: "fine",
+        element: <LateFeesInventory />,
+        children: [
+          {
+            path: "",
+            element: <LateFeesBooks />,
           },
         ],
       },

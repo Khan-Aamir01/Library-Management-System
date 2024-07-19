@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Loader from "../Loader/Loader";
-// import { useNavigate } from "react-router-dom";
 
 // Icons
 import { AiOutlineFileDone } from "react-icons/ai";
@@ -16,7 +15,6 @@ export default function AllRequests() {
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
   const [clickedRequests, setClickedRequests] = useState({});
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -67,9 +65,14 @@ export default function AllRequests() {
     }
   };
 
+  const handleDownloadCount = () => {
+    console.log("1");
+  };
+
   const handleStatusClick = (request) => {
     if (request.status === "Waiting") {
       handleBorrowRequest(request._id);
+      handleDownloadCount();
     } else {
       const statusMessage = request.status;
       setClickedRequests(() => ({ [request._id]: statusMessage }));
