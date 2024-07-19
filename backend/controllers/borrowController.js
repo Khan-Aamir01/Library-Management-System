@@ -1,5 +1,7 @@
 
 const Borrow = require('../models/borrow.js');
+const Book = require('../models/books.js')
+const User = require('../models/user.js')
 
 // Get All Borrow 
 const getAllBorrow = async (req,res)=>{
@@ -29,9 +31,20 @@ const getBorrowById = async (req,res)=>{
 const createBorrow = async (req,res)=>{
     const{userId,bookId} = req.body;
     try{
+        const userName = await User.findById(userId);
+        const bookName = await Book.findById(bookId);
+        // Later Change this with error 
+        if(!userName){
+            userName = "UserName not Found";
+        }
+        if(!bookName){
+            bookName = 'BookName not Found';
+        }
         const borrow = new Borrow({
             userId,
-            bookId
+            userName,
+            bookId,
+            bookName,
         });
         const createdBorrow = await borrow.save();
         res.status(201).json(createdBorrow)
@@ -68,7 +81,9 @@ const changeStatustoBorrow = async (req,res)=>{
             return res.status(404).json({message:'Borrow not found'});
         }
         borrow.userId = borrow.userId;
+        borrow.userName = borrow.userName;
         borrow.bookId = borrow.bookId;
+        borrow.bookName = borrow.bookName;
         borrow.status = newStatus;
         borrow.startTimer = currentTime;
         borrow.endTimer = endTimer;
@@ -93,7 +108,9 @@ const changeStatustoReturn = async (req,res)=>{
             return res.status(404).json({message:'Borrow not found'});
         }
         borrow.userId = borrow.userId;
+        borrow.userName = borrow.userName;
         borrow.bookId = borrow.bookId;
+        borrow.bookName = borrow.bookName;
         borrow.status = newStatus;
         borrow.startTimer = borrow.startTimer;
         borrow.endTimer = borrow.endTimer;
@@ -111,9 +128,6 @@ const changeStatustoReturn = async (req,res)=>{
 const getStatus = async (req,res)=>{
     try{
         const statusBorrow = await Borrow.find({ status: req.params.status});
-        if(!statusBorrow || statusBorrow.length === 0 ){
-            return res.status(404).json({message:'No Book found'});
-        }
         res.status(200).json(statusBorrow);
     }
     catch(error){

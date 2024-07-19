@@ -1,4 +1,6 @@
 const Fine = require('../models/fine');
+const User = require('../models/user');
+const Book = require('../models/books');
 
 const getAllFine = async (req,res) =>{
     try{
@@ -26,10 +28,21 @@ const getFineById = async (req,res)=>{
 const createFine = async (req,res)=>{
     const{borrowId,userId,bookId,status,amount,paidDate} = req.body;
     try{
+        const userName = await User.findById(userId);
+        const bookName = await Book.findById(bookId);
+        // Later Change this with error
+        if(!userName){
+            userName = 'User Name not found';
+        }
+        if(!bookName){
+            bookName = 'book Name not found';
+        }
         const newFine = new Fine({
             borrowId,
             userId,
+            userName,
             bookId,
+            bookName,
             status,
             amount,
             paidDate
@@ -51,7 +64,9 @@ const updateFine = async(req,res)=>{
         }
         fine.borrowId = fine.borrowId;
         fine.userId = fine.userId;
+        fine.userName = fine.userName;
         fine.bookId = fine.bookId;
+        fine.bookName = fine.bookName;
         fine.status = newStatus ?? fine.status;
         fine.amount = newAmount ?? fine.amount;
         fine.paidDate = paidDate ?? fine.paidDate;
