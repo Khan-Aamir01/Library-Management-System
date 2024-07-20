@@ -1,10 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { lazy } from "react";
 
 import "./index.css";
 import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
+
+const isLoggedIn = !!localStorage.getItem("userToken");
 
 // Lazy loading Admin Components
 const App = withSuspense(lazy(() => import("./App.jsx")));
@@ -130,7 +136,7 @@ const router = createBrowserRouter([
   // Admin Routes
   {
     path: "/admin",
-    element: <App />,
+    element: isLoggedIn ? <App /> : <Navigate to={"/lms/login"} />,
     children: [
       {
         path: "/admin",

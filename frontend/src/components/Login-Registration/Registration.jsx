@@ -27,7 +27,7 @@ const Registration = () => {
 
     try {
       await axios.post("http://localhost:3000/api/auth/register", user);
-      navigate("/lms");
+      navigate("/lms/login");
     } catch (error) {
       setError(`Server error: ${error.message}`);
     }

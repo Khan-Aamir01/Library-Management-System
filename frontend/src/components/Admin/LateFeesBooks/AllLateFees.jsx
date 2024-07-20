@@ -36,6 +36,17 @@ export default function LateFeesBooks() {
     navigate(`/admin/books/singlebook/${id}`);
   };
 
+  // Function to handle the pay the late fee process
+  const handlePay = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3000/api/fine/${id}`);
+      const { data } = await axios.get(`http://localhost:3000/api/fine`);
+      setFineBooks(data);
+    } catch (e) {
+      setError(e.message);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-white">All Late Books</h1>
@@ -55,6 +66,9 @@ export default function LateFeesBooks() {
               <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
                 Fine
               </th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+                Pay
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -64,16 +78,22 @@ export default function LateFeesBooks() {
                   className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
                   onClick={() => showBookDetails(book.bookId)}
                 >
-                  {book.bookId}
+                  {book.bookName}
                 </td>
                 <td
                   className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
                   onClick={() => showProfile(book.userId)}
                 >
-                  {book.userId}
+                  {book.userName}
                 </td>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {format(new Date(book.borrowDate), "dd-MM-yyyy")}
+                  {book.amount}
+                </td>
+                <td
+                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
+                  onClick={() => handlePay(book._id)}
+                >
+                  Pay
                 </td>
               </tr>
             ))}

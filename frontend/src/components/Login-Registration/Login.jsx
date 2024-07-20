@@ -21,9 +21,10 @@ export default function Login() {
     e.preventDefault();
     try {
       await axios.post("http://localhost:3000/api/auth/login", user);
-      navigate("/lms");
+      localStorage.setItem("userToken", "dummyToken");
+      navigate("/admin");
     } catch (error) {
-      setError(`Server error: ${error.message}`);
+      setError(`Login failed. Please check your email and password.`);
     }
   };
 
@@ -78,7 +79,7 @@ export default function Login() {
         >
           Log in
         </button>
-        {error && <b>Enter Correct Information</b>}
+        {error && <b className="text-red-500">{error}</b>}
       </form>
     </div>
   );

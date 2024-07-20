@@ -3,41 +3,21 @@ import axios from "axios";
 import Loader from "../Loader/Loader";
 
 // Icons
-import { AiOutlineFileDone } from "react-icons/ai";
 import { MdIncompleteCircle } from "react-icons/md";
-import { RiPassExpiredLine } from "react-icons/ri";
-import { MdReportProblem } from "react-icons/md";
 
 export default function AllRequests() {
   const [requests, setRequests] = useState([]);
-  const [books, setBooks] = useState({});
-  const [users, setUsers] = useState({});
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
-  const [clickedRequests, setClickedRequests] = useState({});
 
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const [borrowRes, booksRes, usersRes] = await Promise.all([
-          axios.get(`http://localhost:3000/api/borrow`),
-          axios.get(`http://localhost:3000/api/books`),
-          axios.get(`http://localhost:3000/api/user`),
-        ]);
-
-        setRequests(borrowRes.data);
-        setBooks(
-          booksRes.data.reduce((acc, book) => {
-            acc[book._id] = book.Name;
-            return acc;
-          }, {})
+        const borrowRes = await axios.get(
+          `http://localhost:3000/api/borrow/status/Waiting`
         );
-        setUsers(
-          usersRes.data.reduce((acc, user) => {
-            acc[user._id] = user.name;
-            return acc;
-          }, {})
-        );
+        const data = borrowRes.data;
+        setRequests(data);
         setLoader(false);
       } catch (e) {
         setError("Error fetching data: " + e.message);
@@ -51,34 +31,34 @@ export default function AllRequests() {
     return <Loader />;
   }
 
+  // Function to handle the waiting to borrow process
   const handleBorrowRequest = async (id) => {
     try {
       await axios.put(
         `http://localhost:3000/api/borrow/${id}/changeStatustoBorrow`
       );
       // Fetch updated requests data
-      const { data } = await axios.get(`http://localhost:3000/api/borrow`);
+      const { data } = await axios.get(
+        `http://localhost:3000/api/borrow/status/Waiting`
+      );
       setRequests(data);
     } catch (e) {
-      console.log(e);
       setError("Error updating status: " + e.message);
     }
   };
 
-  const handleDownloadCount = () => {
-    console.log("1");
+  // Function to handle the download count/popular to increase process
+  const handleDownloadCount = async (id) => {
+    await axios.put(`http://localhost:3000/api/books/${id}/updateDownload`);
+    console.log(id);
   };
 
   const handleStatusClick = (request) => {
     if (request.status === "Waiting") {
       handleBorrowRequest(request._id);
-      handleDownloadCount();
+      handleDownloadCount(request.bookId);
     } else {
-      const statusMessage = request.status;
-      setClickedRequests(() => ({ [request._id]: statusMessage }));
-      setTimeout(() => {
-        setClickedRequests(() => ({ [request._id]: false }));
-      }, 2000);
+      setError("Book Already Borrowed");
     }
   };
 
@@ -108,41 +88,16 @@ export default function AllRequests() {
             {requests.map((request) => (
               <tr key={request._id}>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {books[request.bookId] || request.bookId}
+                  {request.bookName}
                 </td>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {users[request.userId] || request.userId}
+                  {request.userName}
                 </td>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                  {request.status === "Waiting" && (
-                    <MdIncompleteCircle
-                      className="cursor-pointer w-full text-4xl"
-                      onClick={() => handleStatusClick(request)}
-                    />
-                  )}
-                  {request.status === "Borrowed" && (
-                    <AiOutlineFileDone
-                      className="cursor-pointer w-full text-4xl"
-                      onClick={() => handleStatusClick(request)}
-                    />
-                  )}
-                  {request.status === "Expired" && (
-                    <RiPassExpiredLine
-                      className="cursor-pointer w-full text-4xl"
-                      onClick={() => handleStatusClick(request)}
-                    />
-                  )}
-                  {request.status === "NotReturned" && (
-                    <MdReportProblem
-                      className="cursor-pointer w-full text-4xl"
-                      onClick={() => handleStatusClick(request)}
-                    />
-                  )}
-                  {clickedRequests[request._id] && (
-                    <div className="text-red-500 mt-2">
-                      {`Book ${clickedRequests[request._id]}`}
-                    </div>
-                  )}
+                  <MdIncompleteCircle
+                    className="cursor-pointer w-full text-4xl"
+                    onClick={() => handleStatusClick(request)}
+                  />
                 </td>
               </tr>
             ))}

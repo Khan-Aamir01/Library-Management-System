@@ -9,31 +9,23 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 export default function SingleMember() {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
-  const [books, setBooks] = useState({});
   const [borrowData, setBorrowData] = useState([]);
   const [fines, setFines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [message, setMessage] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const [userRes, booksRes, borrowRes, fineRes] = await Promise.all([
+        const [userRes, borrowRes, fineRes] = await Promise.all([
           axios.get(`http://localhost:3000/api/user/${id}`),
-          axios.get(`http://localhost:3000/api/books`),
           axios.get(`http://localhost:3000/api/user/${id}/borrow`),
           axios.get(`http://localhost:3000/api/user/${id}/fine`),
         ]);
+
         setUserData(userRes.data);
         setBorrowData(borrowRes.data);
-        setBooks(
-          booksRes.data.reduce((acc, book) => {
-            acc[book._id] = book.Name;
-            return acc;
-          }, {})
-        );
         setFines(fineRes.data);
         setLoading(false);
       } catch (e) {
@@ -88,8 +80,8 @@ export default function SingleMember() {
             <strong>Phone No:</strong> {userData.phoneNumber}
           </p>
           <p>
-            <strong>Fine:</strong>{" "}
-            ₹{fines.reduce((acc, fine) => acc + fine.amount, 0)}
+            <strong>Fine:</strong> ₹
+            {fines.reduce((acc, fine) => acc + fine.amount, 0)}
           </p>
           <p>
             <strong>Email:</strong> {userData.gmail}
@@ -146,7 +138,7 @@ export default function SingleMember() {
               return (
                 <tr key={borrow._id}>
                   <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
-                    {books[borrow.bookId] || borrow.bookId}
+                    {borrow.bookName}
                   </td>
                   <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
                     {borrow.borrowDate
