@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cors": "^2.8.5",
-    "node-cron": "^3.0.3"
-  }
-}
