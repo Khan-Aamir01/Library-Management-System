@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Loader from "../Loader/Loader";
 
 export default function SingleBook() {
-  const navigate = useNavigate();
   const { id } = useParams();
   const [book, setBook] = useState(null);
   // to change the borrow and download button while processing
@@ -21,7 +20,7 @@ export default function SingleBook() {
         const singleBookData = response.data;
         setBook(singleBookData);
       } catch (error) {
-        console.log("Error While Fetching Books" + error.message);
+        alert("Book Not Found");
       }
     };
     getSingleBook();
@@ -32,19 +31,49 @@ export default function SingleBook() {
   }
 
   const userId = "66926a48ef3aa95a8c19ccaa";
-  const handleBorrow = async (bookId) => {
-    try {
-      await axios.post(`http://localhost:3000/api/borrow`, {userId, bookId});
+
+  const handleBorrow = async (book, bookId) => {
+    if (book.isPhysical === true) {
       setBorrow(true);
-      // navigate(``);
-    } catch (e) {
-      console.log(e.message);
-      setBorrow(false);
+      try {
+        const response = await axios.post(`http://localhost:3000/api/borrow`, {
+          userId,
+          bookId,
+        });
+        if (response.status === 201) {
+          // Successful borrow
+          setTimeout(() => {
+            setBorrow(false);
+          }, 2000);
+          alert("Book borrowed successfully");
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 400) {
+          // Book already borrowed
+          alert(error.response.data.message || "Book already borrowed");
+        } else if (error.response && error.response.status === 404) {
+          // User or book not found
+          alert(error.response.data.message || "User or book not found");
+        } else {
+          // Other errors
+          alert("An error occurred. Please try again later.");
+        }
+        setBorrow(false);
+      }
+    } else {
+      alert("Book is not available");
     }
   };
 
-  const handleDownload = () => {
-    setDownload(true);
+  const handleDownload = (book) => {
+    if (book.isEbook === false) {
+      alert("E-Book not available");
+    } else {
+      setDownload(true);
+      setTimeout(() => {
+        setDownload(false);
+      }, 2000);
+    }
   };
 
   return (
@@ -61,19 +90,19 @@ export default function SingleBook() {
             className="w-36 h-48 object-cover rounded-t-lg border-2 border-red-400"
           />
           <button
-            onClick={() => handleBorrow(book._id)}
+            onClick={() => handleBorrow(book)}
             className="w-36 bg-green-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-green-600 transition-all "
           >
-            {borrow ? "Wait" : "Borrow"}
+            {borrow ? "Waiting" : "Borrow"}
           </button>
-          <button
-            onClick={() => {
-              handleDownload(book._id);
-            }}
-            className="w-36 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all"
+          <a
+            href={book.Download}
+            download
+            onClick={() => handleDownload(book, book._id)}
+            className="w-36 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all text-center"
           >
-            {download ? "Wait" : "Download"}
-          </button>
+            {download ? "Downloading" : "Download"}
+          </a>
         </div>
         <div className="">
           <b>Name:</b> {book.Name}

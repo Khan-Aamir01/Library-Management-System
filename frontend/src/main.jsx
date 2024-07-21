@@ -10,6 +10,7 @@ import { lazy } from "react";
 import "./index.css";
 import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 
+// check the logged in or not
 const isLoggedIn = !!localStorage.getItem("userToken");
 
 // Lazy loading Admin Components
@@ -130,6 +131,11 @@ const Login = withSuspense(
 );
 const Registration = withSuspense(
   lazy(() => import("./components/Login-Registration/Registration.jsx"))
+);
+
+// Lazy UserProfile
+const UserProfile = withSuspense(
+  lazy(() => import("./components/User/UserProfile/UserProfile.jsx"))
 );
 
 const router = createBrowserRouter([
@@ -287,6 +293,10 @@ const router = createBrowserRouter([
       {
         path: "registration",
         element: <Registration />,
+      },
+      {
+        path: "profile/:id",
+        element: <UserProfile />,
       },
     ],
   },
