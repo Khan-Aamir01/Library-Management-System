@@ -42,7 +42,11 @@ const createBorrow = async (req, res) => {
     }
 
     // Check if the book is already borrowed by the user
-    const existingBorrow = await Borrow.findOne({ userId, bookId });
+    const existingBorrow = await Borrow.findOne({
+      userId,
+      bookId,
+      status: { $ne: "Returned" },
+    });
     if (existingBorrow) {
       return res
         .status(400)

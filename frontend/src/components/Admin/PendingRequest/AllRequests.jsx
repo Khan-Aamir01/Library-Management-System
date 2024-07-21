@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Loader from "../Loader/Loader";
 
 // Icons
@@ -9,6 +10,7 @@ export default function AllRequests() {
   const [requests, setRequests] = useState([]);
   const [loader, setLoader] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRequests = async () => {
@@ -47,12 +49,13 @@ export default function AllRequests() {
     }
   };
 
-  // Function to handle the download count/popular to increase process
-  const handleDownloadCount = async (id) => {
-    await axios.put(`http://localhost:3000/api/books/${id}/updateDownload`);
-    console.log(id);
+  // Function to handle the download count increase and availability to dicrease process
+  const handleDownloadCount = (id) => {
+    axios.put(`http://localhost:3000/api/books/${id}/updateDownload`);
+    axios.put(`http://localhost:3000/api/books/${id}/decrement`);
   };
 
+  // Function to handle the Waiting to Borrowed process
   const handleStatusClick = (request) => {
     if (request.status === "Waiting") {
       handleBorrowRequest(request._id);
@@ -60,6 +63,16 @@ export default function AllRequests() {
     } else {
       setError("Book Already Borrowed");
     }
+  };
+
+  // Function to navigate to the user's profile page
+  const showProfile = (id) => {
+    navigate(`/admin/members/singlemember/${id}`);
+  };
+
+  // Function to navigate to the book detail page
+  const showBookDetails = (id) => {
+    navigate(`/admin/books/singlebook/${id}`);
   };
 
   return (
@@ -87,10 +100,16 @@ export default function AllRequests() {
           <tbody>
             {requests.map((request) => (
               <tr key={request._id}>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                <td
+                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
+                  onClick={() => showBookDetails(request.bookId)}
+                >
                   {request.bookName}
                 </td>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                <td
+                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
+                  onClick={() => showProfile(request.userId)}
+                >
                   {request.userName}
                 </td>
                 <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">

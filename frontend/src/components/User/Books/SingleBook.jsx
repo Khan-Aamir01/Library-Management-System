@@ -24,7 +24,7 @@ export default function SingleBook() {
       }
     };
     getSingleBook();
-  }, [id]);
+  }, []);
 
   if (!book) {
     return <Loader />;
@@ -32,13 +32,13 @@ export default function SingleBook() {
 
   const userId = "66926a48ef3aa95a8c19ccaa";
 
-  const handleBorrow = async (book, bookId) => {
-    if (book.isPhysical === true) {
+  const handleBorrow = async (book) => {
+    if (book.isPhysical === true || book.Availability === 0) {
       setBorrow(true);
       try {
         const response = await axios.post(`http://localhost:3000/api/borrow`, {
           userId,
-          bookId,
+          bookId: book._id,
         });
         if (response.status === 201) {
           // Successful borrow
@@ -66,13 +66,17 @@ export default function SingleBook() {
   };
 
   const handleDownload = (book) => {
-    if (book.isEbook === false) {
-      alert("E-Book not available");
-    } else {
-      setDownload(true);
-      setTimeout(() => {
-        setDownload(false);
-      }, 2000);
+    try {
+      if (book.isEbook === false) {
+        alert("E-Book not available");
+      } else {
+        setDownload(true);
+        setTimeout(() => {
+          setDownload(false);
+        }, 5000);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -95,10 +99,11 @@ export default function SingleBook() {
           >
             {borrow ? "Waiting" : "Borrow"}
           </button>
+
           <a
-            href={book.Download}
+            href={book.DownloadUrl}
             download
-            onClick={() => handleDownload(book, book._id)}
+            onClick={() => handleDownload(book)}
             className="w-36 bg-red-400 my-1 p-2 rounded border font-bold border-blue-600 hover:bg-red-600 transition-all text-center"
           >
             {download ? "Downloading" : "Download"}
@@ -114,8 +119,6 @@ export default function SingleBook() {
           <b>P-Book:</b> {book.isPhysical.toString()}
           <br />
           <b>E-Book:</b> {book.isEbook.toString()}
-          <br />
-          <b>Downloads:</b> {book.Downloads}
           <br />
           <b>Available:</b> {book.Availability}
         </div>
