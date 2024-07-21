@@ -137,6 +137,26 @@ const updateDownload = async(req,res)=>{
         res.status(500).json({message:'server error due to '+ error});
     }
 }
+const changeAvailability = async (req,res)=>{
+    const id = req.params.id;
+    const status = req.params.status;
+    try{
+        const book = await Book.findById(id)
+        if(!book){
+            return res.status(404).json({message:'Book not found'})
+        }
+        else if(status === 'increment'){
+            book.Availability += 1;
+        }
+        else if(status === 'decrement'){
+            book.Availability -= 1;
+        } 
+        await book.save();
+        res.status(200).json({message:'Availability '+ status })
+    }catch(error){
+        res.status(500).json({message:'server error due to '+ error});
+    }
+}
 
 module.exports = {
     getBooks,
@@ -148,4 +168,5 @@ module.exports = {
     popularBook,
     getCategory,
     updateDownload,
+    changeAvailability,
 };
