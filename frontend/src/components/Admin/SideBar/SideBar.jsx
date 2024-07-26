@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 
 export default function SideBar() {
   const handleLogout = () => {
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("adminToken");
   };
 
   return (
@@ -28,7 +28,7 @@ export default function SideBar() {
           <SideBarLink to={"/admin/borrowed"} label="Loaned Books" />
           <SideBarLink to={"/admin/fine"} label="Late Fees" />
           <SideBarLink
-            to={"/lms/login"}
+            to={"/admin/login"}
             label="Logout"
             onClick={handleLogout}
           />
