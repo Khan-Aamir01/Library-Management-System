@@ -13,93 +13,59 @@ import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 const isLoggedInAdmin = !!localStorage.getItem("adminToken");
 const isLoggedInUser = !!localStorage.getItem("userToken");
 
-// Lazy loading Admin Components
-const App = withSuspense(lazy(() => import("./App.jsx")));
-const Welcome = withSuspense(
-  lazy(() => import("./components/Admin/Welcome/Welcome.jsx"))
-);
+// Admin Components
+import App from "./App.jsx";
+import Welcome from "./components/Admin/Welcome/Welcome.jsx";
 
 // Books
-const BookInventory = withSuspense(
-  lazy(() => import("./components/Admin/Books/BookInventory.jsx"))
-);
+import BookInventory from "./components/Admin/Books/BookInventory.jsx";
 const AdminAllBooks = withSuspense(
   lazy(() => import("./components/Admin/Books/AllBooks.jsx"))
 );
-const AddBooks = withSuspense(
-  lazy(() => import("./components/Admin/Books/AddBooks.jsx"))
-);
-const AdminSingleBook = withSuspense(
-  lazy(() => import("./components/Admin/Books/SingleBook.jsx"))
-);
-const UpdateBook = withSuspense(
-  lazy(() => import("./components/Admin/Books/UpdateBook.jsx"))
-);
+import AddBooks from "./components/Admin/Books/AddBooks.jsx";
+import AdminSingleBook from "./components/Admin/Books/SingleBook.jsx";
+
+import UpdateBook from "./components/Admin/Books/UpdateBook.jsx";
 
 // Books Categories
-const AdminSchoolInventory = withSuspense(
-  lazy(() => import("./components/Admin/Books/School/SchoolInventory.jsx"))
-);
-const AdminCollegeInventory = withSuspense(
-  lazy(() => import("./components/Admin/Books/College/CollegeInventory.jsx"))
-);
-const AdminHigherEduInventory = withSuspense(
-  lazy(() => import("./components/Admin/Books/HigherEdu/HigherEdu.jsx"))
-);
+import AdminSchoolInventory from "./components/Admin/Books/School/SchoolInventory.jsx";
+import AdminCollegeInventory from "./components/Admin/Books/College/CollegeInventory.jsx";
+import AdminHigherEduInventory from "./components/Admin/Books/HigherEdu/HigherEdu.jsx";
 const AdminCategorised = withSuspense(
   lazy(() => import("./components/Admin/Books/CategorisedBook.jsx"))
 );
 
 // Total members section
-const MembersInventory = withSuspense(
-  lazy(() => import("./components/Admin/Members/MembersInventory.jsx"))
-);
+import MembersInventory from "./components/Admin/Members/MembersInventory.jsx";
 const AllMembers = withSuspense(
   lazy(() => import("./components/Admin/Members/AllMembers.jsx"))
 );
-const SingleMember = withSuspense(
-  lazy(() => import("./components/Admin/Members/SingleMember.jsx"))
-);
-const UpdateMember = withSuspense(
-  lazy(() => import("./components/Admin/Members/UpdateMember.jsx"))
-);
+import SingleMember from "./components/Admin/Members/SingleMember.jsx";
+import UpdateMember from "./components/Admin/Members/UpdateMember.jsx";
 
 // Request for book
-const PendingInventory = withSuspense(
-  lazy(() =>
-    import("./components/Admin/PendingRequest/PendingRequestInventory.jsx")
-  )
-);
+import PendingInventory from "./components/Admin/PendingRequest/PendingRequestInventory.jsx";
 const AllRequests = withSuspense(
   lazy(() => import("./components/Admin/PendingRequest/AllRequests.jsx"))
 );
 
 // Books on loan
-const BooksOnLoanInventory = withSuspense(
-  lazy(() => import("./components/Admin/bookOnLoan/BookOnLoanInventory.jsx"))
-);
+import BooksOnLoanInventory from "./components/Admin/bookOnLoan/BookOnLoanInventory.jsx";
 const BooksOnLoan = withSuspense(
   lazy(() => import("./components/Admin/bookOnLoan/BookOnLoan.jsx"))
 );
 
 // Late fine books
-const LateFeesInventory = withSuspense(
-  lazy(() => import("./components/Admin/LateFeesBooks/LateFeesInventory.jsx"))
-);
+import LateFeesInventory from "./components/Admin/LateFeesBooks/LateFeesInventory.jsx";
 const LateFeesBooks = withSuspense(
   lazy(() => import("./components/Admin/LateFeesBooks/AllLateFees.jsx"))
 );
 
-// Lazy loading User Components
-const Header = withSuspense(
-  lazy(() => import("./components/User/FirstPage/Header.jsx"))
-);
-const Introduction = withSuspense(
-  lazy(() => import("./components/User/FirstPage/Introduction.jsx"))
-);
-const SideBar = withSuspense(
-  lazy(() => import("./components/User/FirstPage/SideBar.jsx"))
-);
+//User Components
+import Header from "./components/User/FirstPage/Header.jsx";
+import Introduction from "./components/User/FirstPage/Introduction.jsx";
+import SideBar from "./components/User/FirstPage/SideBar.jsx";
+
 const Latest = withSuspense(
   lazy(() => import("./components/User/Books/Latest.jsx"))
 );
@@ -109,37 +75,26 @@ const Popular = withSuspense(
 const UserAllBooks = withSuspense(
   lazy(() => import("./components/User/Books/AllBooks.jsx"))
 );
-const UserSingleBook = withSuspense(
-  lazy(() => import("./components/User/Books/SingleBook.jsx"))
-);
-const UserSchoolInventory = withSuspense(
-  lazy(() => import("./components/User/Books/School/SchoolInventory.jsx"))
-);
-const UserCollegeInventory = withSuspense(
-  lazy(() => import("./components/User/Books/College/CollegeInventory.jsx"))
-);
-const UserHigherInventory = withSuspense(
-  lazy(() => import("./components/User/Books/HigherEdu/HigherInventory.jsx"))
-);
+import UserSingleBook from "./components/User/Books/SingleBook.jsx";
+import UserSchoolInventory from "./components/User/Books/School/SchoolInventory.jsx";
+import UserCollegeInventory from "./components/User/Books/College/CollegeInventory.jsx";
+import UserHigherInventory from "./components/User/Books/HigherEdu/HigherInventory.jsx";
 const UserCategorised = withSuspense(
   lazy(() => import("./components/User/Books/CategorisedBook.jsx"))
 );
 
-// Lazy Registration/Login Components
-// const AdminLogin = require("./components/Admin/Login-Registration/Login.jsx");
-import AdminLogin from "./components/Admin/Login-Registration/Login.jsx";
-const UserLogin = withSuspense(
-  lazy(() => import("./components/Login-Registration/Login.jsx"))
-);
-const UserRegistration = withSuspense(
-  lazy(() => import("./components/Login-Registration/Registration.jsx"))
-);
+// Admin Login
+import AdminLogin from "./components/Admin/Login/Login.jsx";
 
-// Lazy UserProfile
-const UserProfile = withSuspense(
-  lazy(() => import("./components/User/UserProfile/UserProfile.jsx"))
-);
+// User Login
+import UserLogin from "./components/User/Login-Registration/Login.jsx";
 
+import UserRegistration from "./components/User/Login-Registration/Registration.jsx";
+
+// UserProfile
+import UserProfile from "./components/User/UserProfile/UserProfile.jsx";
+
+// Routes
 const router = createBrowserRouter([
   // Admin Routes
   {
