@@ -6,12 +6,12 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { lazy } from "react";
-
 import "./index.css";
 import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 
-// check the logged in or not
-const isLoggedIn = !!localStorage.getItem("userToken");
+// Check if logged in
+const isLoggedInAdmin = !!localStorage.getItem("adminToken");
+const isLoggedInUser = !!localStorage.getItem("userToken");
 
 // Lazy loading Admin Components
 const App = withSuspense(lazy(() => import("./App.jsx")));
@@ -126,10 +126,12 @@ const UserCategorised = withSuspense(
 );
 
 // Lazy Registration/Login Components
-const Login = withSuspense(
+// const AdminLogin = require("./components/Admin/Login-Registration/Login.jsx");
+import AdminLogin from "./components/Admin/Login-Registration/Login.jsx";
+const UserLogin = withSuspense(
   lazy(() => import("./components/Login-Registration/Login.jsx"))
 );
-const Registration = withSuspense(
+const UserRegistration = withSuspense(
   lazy(() => import("./components/Login-Registration/Registration.jsx"))
 );
 
@@ -141,11 +143,15 @@ const UserProfile = withSuspense(
 const router = createBrowserRouter([
   // Admin Routes
   {
+    path: "/admin/login",
+    element: <AdminLogin />,
+  },
+  {
     path: "/admin",
-    element: isLoggedIn ? <App /> : <Navigate to={"/lms/login"} />,
+    element: isLoggedInAdmin ? <App /> : <Navigate to={"/admin/login"} />,
     children: [
       {
-        path: "/admin",
+        path: "",
         element: <Welcome />,
       },
       {
@@ -288,11 +294,11 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
-        element: <Login />,
+        element: <UserLogin />,
       },
       {
         path: "registration",
-        element: <Registration />,
+        element: <UserRegistration />,
       },
       {
         path: "profile/:id",
@@ -301,7 +307,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />

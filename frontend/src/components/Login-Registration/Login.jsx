@@ -21,11 +21,21 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/auth/login", user);
-      localStorage.setItem("userToken", "dummyToken");
-      navigate("/admin");
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        user
+      );
+      const id = response.data._id;
+      localStorage.setItem("userToken", response.data.token);
+
+      if (role === "user") {
+        navigate(`/lms/profile/${id}`);
+      } else if (role === "admin") {
+        navigate(`/admin`);
+        console.log(localStorage);
+      }
     } catch (error) {
-      setError(`Login failed. Please check your email and password.`);
+      setError("Login failed. Please check your email and password.");
     }
   };
 
@@ -67,31 +77,6 @@ export default function Login() {
             className={inputStyle}
             onChange={handleChange}
           />
-        </div>
-        <div className="mb-4">
-          <span className="text-gray-700 text-sm font-bold mb-2">Login as</span>
-          <div className="flex items-center mt-2">
-            <label className="flex items-center mr-4">
-              <input
-                type="radio"
-                value="user"
-                checked={role === "user"}
-                onChange={(e) => setRole(e.target.value)}
-                className="form-radio h-4 w-4 text-blue-500 transition duration-150 ease-in-out"
-              />
-              <span className="ml-2">User</span>
-            </label>
-            <label className="flex items-center">
-              <input
-                type="radio"
-                value="admin"
-                checked={role === "admin"}
-                onChange={(e) => setRole(e.target.value)}
-                className="form-radio h-4 w-4 text-blue-500 transition duration-150 ease-in-out"
-              />
-              <span className="ml-2">Admin</span>
-            </label>
-          </div>
         </div>
         <Link
           to={"/lms/registration"}
