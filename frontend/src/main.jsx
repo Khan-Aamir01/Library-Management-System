@@ -13,6 +13,9 @@ import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 const isLoggedInAdmin = !!localStorage.getItem("adminToken");
 const isLoggedInUser = !!localStorage.getItem("userToken");
 
+// Home page
+import Index from "./components/Index.jsx";
+
 // Admin Components
 import App from "./App.jsx";
 import Welcome from "./components/Admin/Welcome/Welcome.jsx";
@@ -96,6 +99,11 @@ import UserProfile from "./components/User/UserProfile/UserProfile.jsx";
 
 // Routes
 const router = createBrowserRouter([
+  // Home Page
+  {
+    path: "/",
+    element: <Index />,
+  },
   // Admin Routes
   {
     path: "/admin/login",
