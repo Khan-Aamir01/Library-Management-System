@@ -1,11 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
-  return (
-    <div className="bg-gray-500 min-h-screen flex items-center justify-center w-11/12 p-5 ">
-      <div className="px-6 py-8 bg-gray-400 shadow-lg rounded-lg ">
+  const [admin, setAdmin] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const adminProfile = async () => {
+      const token = localStorage.getItem("adminAuth");
+      if (!token) {
+        navigate("/admin/login");
+        return;
+      }
+
+      try {
+        const response = await axios.get(
+          "http://localhost:3000/api/auth/adminProfile",
+          {
+            headers: { "admin-Token": token },
+          }
+        );
+        setAdmin(response.data);
+      } catch (error) {
+        localStorage.removeItem("adminAuth");
+        navigate("/admin/login");
+      } finally {
+        setLoading(false);
+      }
+    };
+    adminProfile();
+  }, [navigate]);
+  
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        Loading...
+      </div>
+    );
+  }
+
+  return admin ? (
+    <div className="bg-gray-500 min-h-screen flex items-center justify-center w-11/12 p-5">
+      <div className="px-6 py-8 bg-gray-400 shadow-lg rounded-lg">
         <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-          Welcome, Admin!
+          Welcome, {admin.name}!
         </h2>
         <p className="text-gray-800 mb-6">
           You are now logged in as an administrator of the library management
@@ -28,5 +68,5 @@ export default function Welcome() {
         </p>
       </div>
     </div>
-  );
+  ) : null;
 }

@@ -12,10 +12,23 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!admin.gmail || !admin.password) {
+      setError("Please fill in all fields.");
+      return;
+    }
     try {
-      await axios.post("http://localhost:3000/api/adminAuth/adminlogin", admin);
-      localStorage.setItem("adminToken", "admin");
-      navigate("/admin");
+      localStorage.removeItem("adminAuth");
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/adminlogin",
+        admin
+      );
+      const token = response.data.token;
+      if (token) {
+        localStorage.setItem("adminAuth", token);
+        navigate("/admin");
+      } else {
+        setError("Login failed. Please check your email and password.");
+      }
     } catch (error) {
       setError("Login failed. Please check your email and password.");
     }

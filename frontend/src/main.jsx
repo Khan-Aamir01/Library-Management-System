@@ -10,8 +10,8 @@ import "./index.css";
 import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 
 // Check if logged in
-const isLoggedInAdmin = !!localStorage.getItem("adminToken");
-const isLoggedInUser = !!localStorage.getItem("userToken");
+const isLoggedInAdmin = !!localStorage.getItem("adminAuth");
+const isLoggedInUser = !!localStorage.getItem("userAuth");
 
 // Home page
 import Index from "./components/Index.jsx";
@@ -107,11 +107,11 @@ const router = createBrowserRouter([
   // Admin Routes
   {
     path: "/admin/login",
-    element: <AdminLogin />,
+    element: !isLoggedInAdmin ? <AdminLogin /> : <Navigate to={"/admin"} />,
   },
   {
     path: "/admin",
-    element: isLoggedInAdmin ? <App /> : <Navigate to={"/admin/login"} />,
+    element: isLoggedInAdmin ? <App /> : <Navigate to={"login"} />,
     children: [
       {
         path: "",

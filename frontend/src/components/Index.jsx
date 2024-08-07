@@ -12,7 +12,7 @@ export default function Index() {
           User
         </Link>
         <Link
-          to="/admin"
+          to="/admin/login"
           className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
         >
           Admin

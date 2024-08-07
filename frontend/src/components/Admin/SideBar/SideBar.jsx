@@ -1,10 +1,12 @@
 import { IoBookSharp } from "react-icons/io5";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 
 export default function SideBar() {
+  const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("adminToken");
+    localStorage.removeItem("adminAuth");
+    navigate("/admin/login");
   };
 
   return (
