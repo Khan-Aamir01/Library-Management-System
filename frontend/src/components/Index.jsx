@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 
 export default function Index() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-900">
-      <h1 className="text-4xl font-bold mb-8 text-gray-400">Welcome to LMS</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-slate-500">
+      <h1 className="text-4xl font-bold mb-8 text-white">Welcome to LMS</h1>
       <div className="space-x-4">
         <Link
           to="/lms"

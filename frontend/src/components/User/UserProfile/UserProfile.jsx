@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
+
+// icons
 import { TiUserDelete } from "react-icons/ti";
 import { GrUpdate } from "react-icons/gr";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { IoLogOut } from "react-icons/io5";
 
 export default function UserProfile() {
-  const { id } = useParams();
   const [userData, setUserData] = useState(null);
   const [borrowData, setBorrowData] = useState([]);
   const [fines, setFines] = useState([]);
@@ -17,24 +19,40 @@ export default function UserProfile() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      try {
-        const [userRes, borrowRes, fineRes] = await Promise.all([
-          axios.get(`http://localhost:3000/api/user/${id}`),
-          axios.get(`http://localhost:3000/api/user/${id}/borrow`),
-          axios.get(`http://localhost:3000/api/user/${id}/fine`),
-        ]);
+      const token = localStorage.getItem("userToken");
+      if (token) {
+        try {
+          const profileRes = await axios.get(
+            `http://localhost:3000/api/auth/userProfile`,
+            {
+              headers: { "user-Token": token },
+            }
+          );
+          const id = profileRes.data._id;
 
-        setUserData(userRes.data);
-        setBorrowData(borrowRes.data);
-        setFines(fineRes.data);
-        setLoading(false);
-      } catch (e) {
-        setError("User Not Found");
-        setLoading(false);
+          const [userRes, borrowRes, fineRes] = await Promise.all([
+            axios.get(`http://localhost:3000/api/user/${id}`),
+            axios.get(`http://localhost:3000/api/user/${id}/borrow`),
+            axios.get(`http://localhost:3000/api/user/${id}/fine`),
+          ]);
+          setUserData(userRes.data);
+          setBorrowData(borrowRes.data);
+          setFines(fineRes.data);
+          setLoading(false);
+        } catch (e) {
+          setError("User Not Found");
+          setLoading(false);
+          console.log("Error : ", e.message);
+          localStorage.removeItem("userToken");
+          localStorage.removeItem("userId");
+          navigate("/lms/login");
+        }
+      } else {
+        navigate("/lms/login");
       }
     };
     fetchUser();
-  }, []);
+  }, [navigate]);
 
   if (loading) {
     return (
@@ -55,14 +73,20 @@ export default function UserProfile() {
   const handleDelete = async () => {
     if (borrowData === "" && fines === "") {
       await axios.delete(`http://localhost:3000/api/user/${userData._id}`);
-      navigate("/lms/profile");
+      navigate("/lms");
     } else {
-      alert("PLease Return All Books or Pay Fine");
+      alert("Please return all books or pay the fine");
     }
   };
 
   const handleUpdate = () => {
     alert("Please Contact With Librarian");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("userToken");
+    localStorage.removeItem("userId");
+    navigate("/lms");
   };
 
   return (
@@ -98,18 +122,25 @@ export default function UserProfile() {
             {format(new Date(userData.dateOfJoin), "dd-MM-yyyy")}
           </p>
           <button
+            title="Update Account"
             onClick={handleUpdate}
             className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-bold mt-2 mb-2 rounded"
-            aria-label="Update User"
           >
             <GrUpdate />
           </button>
           <button
+            title="Delete Account"
             onClick={handleDelete}
             className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-bold m-2 rounded"
-            aria-label="Delete User"
           >
             <TiUserDelete />
+          </button>
+          <button
+            title="Logout"
+            onClick={handleLogout}
+            className="bg-yellow-400 hover:bg-yellow-600 transition px-3 py-2 font-bold rounded"
+          >
+            <IoLogOut />
           </button>
         </div>
       </div>

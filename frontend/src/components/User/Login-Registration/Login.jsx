@@ -9,7 +9,6 @@ export default function Login() {
     gmail: "",
     password: "",
   });
-  const [role, setRole] = useState("user");
 
   const handleChange = (e) => {
     setUser({
@@ -25,16 +24,13 @@ export default function Login() {
         "http://localhost:3000/api/auth/login",
         user
       );
-      const id = response.data._id;
-      localStorage.setItem("userToken", response.data.token);
-
-      if (role === "user") {
-        navigate(`/lms/profile/${id}`);
-      } else if (role === "admin") {
-        navigate(`/admin`);
-        console.log(localStorage);
-      }
+      const { token, userId } = response.data;
+      localStorage.setItem("userToken", token);
+      localStorage.setItem("userId", userId);
+      navigate(`/lms/profile`);
     } catch (error) {
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userId");
       setError("Login failed. Please check your email and password.");
     }
   };

@@ -9,10 +9,6 @@ import { lazy } from "react";
 import "./index.css";
 import withSuspense from "./components/Suspense-Loader/WithSuspense.jsx";
 
-// Check if logged in
-const isLoggedInAdmin = !!localStorage.getItem("adminAuth");
-const isLoggedInUser = !!localStorage.getItem("userAuth");
-
 // Home page
 import Index from "./components/Index.jsx";
 
@@ -107,11 +103,11 @@ const router = createBrowserRouter([
   // Admin Routes
   {
     path: "/admin/login",
-    element: !isLoggedInAdmin ? <AdminLogin /> : <Navigate to={"/admin"} />,
+    element: <AdminLogin />,
   },
   {
     path: "/admin",
-    element: isLoggedInAdmin ? <App /> : <Navigate to={"login"} />,
+    element: <App />,
     children: [
       {
         path: "",
@@ -264,7 +260,7 @@ const router = createBrowserRouter([
         element: <UserRegistration />,
       },
       {
-        path: "profile/:id",
+        path: "profile",
         element: <UserProfile />,
       },
     ],

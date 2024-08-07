@@ -4,6 +4,7 @@ import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const isLogin = !!localStorage.getItem("userToken");
   const navigate = useNavigate();
   return (
     <>
@@ -17,7 +18,9 @@ export default function Header() {
         </div>
         <div className="flex items-center">
           <PiAddressBookLight
-            onClick={() => navigate("/lms/login")}
+            onClick={() => {
+              !isLogin ? navigate("/lms/login") : navigate("/lms/profile");
+            }}
             className="text-3xl text-white cursor-pointer"
           />
         </div>

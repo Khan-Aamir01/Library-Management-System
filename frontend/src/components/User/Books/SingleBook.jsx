@@ -6,6 +6,7 @@ import Loader from "../Loader/Loader";
 
 export default function SingleBook() {
   const { id } = useParams();
+  const userId = localStorage.getItem("userId");
   const [book, setBook] = useState(null);
   // to change the borrow and download button while processing
   const [borrow, setBorrow] = useState(false);
@@ -30,10 +31,8 @@ export default function SingleBook() {
     return <Loader />;
   }
 
-  const userId = "66926a48ef3aa95a8c19ccaa";
-
   const handleBorrow = async (book) => {
-    if (book.isPhysical === true || book.Availability === 0) {
+    if (book.isPhysical === true || book.Availability > 0) {
       setBorrow(true);
       try {
         const response = await axios.post(`http://localhost:3000/api/borrow`, {
@@ -56,7 +55,7 @@ export default function SingleBook() {
           alert(error.response.data.message || "User or book not found");
         } else {
           // Other errors
-          alert("An error occurred. Please try again later.");
+          alert("Please login");
         }
         setBorrow(false);
       }
