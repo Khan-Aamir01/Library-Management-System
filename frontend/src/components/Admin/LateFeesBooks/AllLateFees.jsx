@@ -48,9 +48,9 @@ export default function LateFeesBooks() {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col justify-start items-center py-8 bg-slate-500 px-2">
       <h1 className="text-3xl font-bold mb-6 text-white">All Late Books</h1>
-      <div className="bg-slate-300 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-11/12 flex flex-col text-center">
+      <div className="bg-slate-300 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-full flex flex-col text-center">
         <table className="w-full">
           <caption className="font-bold mb-2">
             Total {fineBooks.length} Books

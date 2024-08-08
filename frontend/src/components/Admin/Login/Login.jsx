@@ -42,7 +42,7 @@ export default function Login() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col items-center py-8 bg-slate-500 ">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white">
         LMS Admin Login
       </h1>

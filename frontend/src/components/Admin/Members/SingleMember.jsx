@@ -34,11 +34,11 @@ export default function SingleMember() {
       }
     };
     fetchUser();
-  }, [id, borrowData]);
+  }, []);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
+      <div className="flex justify-center items-center">
         <AiOutlineLoading3Quarters className="animate-spin text-4xl text-white" />
       </div>
     );

@@ -27,7 +27,7 @@ export default function AllBooks() {
       }
     };
     fetchBooks();
-  }, [books]);
+  }, []);
 
   // Loader Page Will Run Untill Book Not Get Fetched
   if (loading) {
@@ -40,7 +40,7 @@ export default function AllBooks() {
 
   return (
     <>
-      <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
+      <div className="flex flex-col justify-start items-center py-8 bg-slate-500">
         <h1 className="text-3xl font-bold mb-6 text-white">All Book</h1>
         <p className="font-bold">Total {books.length} Books</p>
         {error && <h1>{error}</h1>}

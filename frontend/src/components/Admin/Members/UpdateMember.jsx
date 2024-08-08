@@ -40,7 +40,7 @@ export default function UpdateMember() {
       }
     };
     fetchUserOldData();
-  }, [id]);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

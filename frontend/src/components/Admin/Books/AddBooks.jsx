@@ -19,14 +19,6 @@ export default function AddBooks() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (
-      !["true", "false"].includes(isPhysical.toLowerCase()) ||
-      !["true", "false"].includes(isEbook.toLowerCase())
-    ) {
-      alert("Enter 'True' or 'False' for P-Book and E-Book Availability.");
-      setLoading(false);
-      return;
-    }
 
     const createBook = {
       Name,
@@ -42,7 +34,7 @@ export default function AddBooks() {
 
     try {
       await axios.post("http://localhost:3000/api/books", createBook);
-      setLoading(true);
+      setLoading(false);
       navigate("/admin/books");
     } catch (error) {
       console.log("Error while adding book: " + error.message);
@@ -102,7 +94,7 @@ export default function AddBooks() {
             name="Categories"
             id="categories"
             value={Categories}
-            placeholder="Categories (Ex: School, Collge, Higher or Others)"
+            placeholder="Categories (Ex: School, College, Higher or Others)"
             required
             className={inputStyle}
             onChange={(e) => {
@@ -120,7 +112,7 @@ export default function AddBooks() {
             name="std"
             id="std"
             value={std}
-            placeholder="Enter Standar (Ex: 10th) or Empty"
+            placeholder="Enter Standard (Ex: 10th) or Empty"
             className={inputStyle}
             onChange={(e) => {
               setStd(e.target.value);
@@ -129,39 +121,55 @@ export default function AddBooks() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="isPhysical" className={labelStyle}>
-            P-Book Available
-          </label>
-          <input
-            type="text"
-            name="isPhysical"
-            id="isPhysical"
-            value={isPhysical}
-            placeholder="Enter True or False"
-            required
-            className={inputStyle}
-            onChange={(e) => {
-              setIsPhysical(e.target.value);
-            }}
-          />
+          <label className={labelStyle}>P-Book Available</label>
+          <div className="flex">
+            <label className="mr-4">
+              <input
+                type="radio"
+                name="isPhysical"
+                value="true"
+                checked={isPhysical === "true"}
+                onChange={(e) => setIsPhysical(e.target.value)}
+              />{" "}
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isPhysical"
+                value="false"
+                checked={isPhysical === "false"}
+                onChange={(e) => setIsPhysical(e.target.value)}
+              />{" "}
+              No
+            </label>
+          </div>
         </div>
 
         <div className="mb-4">
-          <label htmlFor="isEbook" className={labelStyle}>
-            E-Book Available
-          </label>
-          <input
-            type="text"
-            name="isEbook"
-            id="isEbook"
-            value={isEbook}
-            placeholder="Enter True or False"
-            required
-            className={inputStyle}
-            onChange={(e) => {
-              setIsEbook(e.target.value);
-            }}
-          />
+          <label className={labelStyle}>E-Book Available</label>
+          <div className="flex">
+            <label className="mr-4">
+              <input
+                type="radio"
+                name="isEbook"
+                value="true"
+                checked={isEbook === "true"}
+                onChange={(e) => setIsEbook(e.target.value)}
+              />{" "}
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isEbook"
+                value="false"
+                checked={isEbook === "false"}
+                onChange={(e) => setIsEbook(e.target.value)}
+              />{" "}
+              No
+            </label>
+          </div>
         </div>
 
         <div className="mb-4">

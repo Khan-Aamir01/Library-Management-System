@@ -15,6 +15,7 @@ import Index from "./components/Index.jsx";
 // Admin Components
 import App from "./App.jsx";
 import Welcome from "./components/Admin/Welcome/Welcome.jsx";
+import ProtectedRoute from "./components/Admin/protectedRoutes/ProtectedRoute.jsx";
 
 // Books
 import BookInventory from "./components/Admin/Books/BookInventory.jsx";
@@ -23,7 +24,6 @@ const AdminAllBooks = withSuspense(
 );
 import AddBooks from "./components/Admin/Books/AddBooks.jsx";
 import AdminSingleBook from "./components/Admin/Books/SingleBook.jsx";
-
 import UpdateBook from "./components/Admin/Books/UpdateBook.jsx";
 
 // Books Categories
@@ -87,7 +87,6 @@ import AdminLogin from "./components/Admin/Login/Login.jsx";
 
 // User Login
 import UserLogin from "./components/User/Login-Registration/Login.jsx";
-
 import UserRegistration from "./components/User/Login-Registration/Registration.jsx";
 
 // UserProfile
@@ -107,95 +106,95 @@ const router = createBrowserRouter([
   },
   {
     path: "/admin",
-    element: <App />,
+    element: <ProtectedRoute element={<App />} />,
     children: [
       {
         path: "",
-        element: <Welcome />,
+        element: <ProtectedRoute element={<Welcome />} />,
       },
       {
         path: "books",
-        element: <BookInventory />,
+        element: <ProtectedRoute element={<BookInventory />} />,
         children: [
           {
             path: "",
-            element: <AdminAllBooks />,
+            element: <ProtectedRoute element={<AdminAllBooks />} />,
           },
           {
             path: "add",
-            element: <AddBooks />,
+            element: <ProtectedRoute element={<AddBooks />} />,
           },
           {
             path: "singlebook/:id",
-            element: <AdminSingleBook />,
+            element: <ProtectedRoute element={<AdminSingleBook />} />,
           },
           {
             path: "update/:id",
-            element: <UpdateBook />,
+            element: <ProtectedRoute element={<UpdateBook />} />,
           },
           {
             path: "school",
-            element: <AdminSchoolInventory />,
+            element: <ProtectedRoute element={<AdminSchoolInventory />} />,
           },
           {
             path: "college",
-            element: <AdminCollegeInventory />,
+            element: <ProtectedRoute element={<AdminCollegeInventory />} />,
           },
           {
             path: "highereducation",
-            element: <AdminHigherEduInventory />,
+            element: <ProtectedRoute element={<AdminHigherEduInventory />} />,
           },
           {
             path: ":categorise/class/:classId",
-            element: <AdminCategorised />,
+            element: <ProtectedRoute element={<AdminCategorised />} />,
           },
         ],
       },
       {
         path: "members",
-        element: <MembersInventory />,
+        element: <ProtectedRoute element={<MembersInventory />} />,
         children: [
           {
             path: "",
-            element: <AllMembers />,
+            element: <ProtectedRoute element={<AllMembers />} />,
           },
           {
             path: "singlemember/:id",
-            element: <SingleMember />,
+            element: <ProtectedRoute element={<SingleMember />} />,
           },
           {
             path: "update/:id",
-            element: <UpdateMember />,
+            element: <ProtectedRoute element={<UpdateMember />} />,
           },
         ],
       },
       {
         path: "bookrequest",
-        element: <PendingInventory />,
+        element: <ProtectedRoute element={<PendingInventory />} />,
         children: [
           {
             path: "",
-            element: <AllRequests />,
+            element: <ProtectedRoute element={<AllRequests />} />,
           },
         ],
       },
       {
         path: "borrowed",
-        element: <BooksOnLoanInventory />,
+        element: <ProtectedRoute element={<BooksOnLoanInventory />} />,
         children: [
           {
             path: "",
-            element: <BooksOnLoan />,
+            element: <ProtectedRoute element={<BooksOnLoan />} />,
           },
         ],
       },
       {
         path: "fine",
-        element: <LateFeesInventory />,
+        element: <ProtectedRoute element={<LateFeesInventory />} />,
         children: [
           {
             path: "",
-            element: <LateFeesBooks />,
+            element: <ProtectedRoute element={<LateFeesBooks />} />,
           },
         ],
       },
@@ -266,6 +265,7 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />

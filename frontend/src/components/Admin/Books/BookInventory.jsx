@@ -3,9 +3,9 @@ import { Link, Outlet } from "react-router-dom";
 // Navigation Part/Header
 export default function BookInventory() {
   return (
-    <div className="w-11/12">
+    <div className="w-full">
       {/* Book Inventory Header(Navigation Menu) */}
-      <div className="py-5 px-5 flex justify-start items-center gap-1 bg-slate-700">
+      <div className="py-5 px-20 md:px-5 flex md:justify-start justify-center items-center gap-1 bg-slate-700 flex-wrap-reverse ">
         <BookLink to={"/admin/books"} label="All Books" />
         <BookLink to={"/admin/books/school"} label="School" />
         <BookLink to={"/admin/books/college"} label="College" />
