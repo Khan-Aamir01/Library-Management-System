@@ -6,6 +6,7 @@ const API_URL = import.meta.env.VITE_APP_API_URL;
 const Registration = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [regiButton, setRegiButton] = useState(false);
   const [user, setUser] = useState({
     name: "",
     phoneNumber: "",
@@ -27,7 +28,14 @@ const Registration = () => {
     e.preventDefault();
 
     try {
+      setRegiButton(true);
       await axios.post(`${API_URL}/api/auth/register`, user);
+      if (response.status === 200) {
+        // Successful borrow
+        setTimeout(() => {
+          setRegiButton(false);
+        }, 2000);
+      }
       navigate("/lms/login");
     } catch (error) {
       setError(`Server error: ${error.message}`);
@@ -130,7 +138,7 @@ const Registration = () => {
           type="submit"
           className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
         >
-          Sign up
+          {regiButton ? "Please wait.." : "Sign up"}
         </button>
         {error && <b>Enter Correct Information</b>}
       </form>

@@ -44,8 +44,8 @@ export default function BookOnLoan() {
   // Function to handle the return process
   const handleReturn = async (borrowId) => {
     try {
-      await axios.put(`API_URL0/api/borrow/${borrowId}/changeStatustoReturn`);
-      const { data } = await axios.get(`API_URL0/api/borrow/status/Borrowed`);
+      await axios.put(`${API_URL}/api/borrow/${borrowId}/changeStatustoReturn`);
+      const { data } = await axios.get(`${API_URL}/api/borrow/status/Borrowed`);
       setLoanedBooks(data);
     } catch (e) {
       setError(e.message);

@@ -7,6 +7,7 @@ const API_URL = import.meta.env.VITE_APP_API_URL;
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+  const [loginButton, setLoginButton] = useState(false);
   const [admin, setAdmin] = useState({
     gmail: "",
     password: "",
@@ -14,16 +15,19 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!admin.gmail || !admin.password) {
-      setError("Please fill in all fields.");
-      return;
-    }
     try {
+      setLoginButton(true);
       localStorage.removeItem("adminAuth");
       const response = await axios.post(
         `${API_URL}/api/auth/adminlogin`,
         admin
       );
+      if (response.status === 200) {
+        // Successful borrow
+        setTimeout(() => {
+          setLoginButton(false);
+        }, 2000);
+      }
       const token = response.data.token;
       if (token) {
         localStorage.setItem("adminAuth", token);
@@ -86,7 +90,7 @@ export default function Login() {
           type="submit"
           className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
         >
-          Log in
+          {loginButton ? "Please wait.." : "Log in"}
         </button>
         {error && <b className="text-red-500">{error}</b>}
       </form>

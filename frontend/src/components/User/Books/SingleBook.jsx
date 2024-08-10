@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Loader from "../Loader/Loader";
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
-
 export default function SingleBook() {
   const { id } = useParams();
   const userId = localStorage.getItem("userId");

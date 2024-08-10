@@ -46,6 +46,12 @@ export default function SideBar() {
 
         {/* Navigation Links Section */}
         <div className="flex flex-col gap-3 mt-2 w-full">
+          <button
+            onClick={toggleMenu}
+            className="text-white text-left hover:bg-black bg-gray-700 px-4 py-2 rounded transition duration-300"
+          >
+            Cancel
+          </button>
           <SideBarLink to={"/admin"} label="Welcome" onClick={toggleMenu} />
           <SideBarLink
             to={"/admin/books"}
