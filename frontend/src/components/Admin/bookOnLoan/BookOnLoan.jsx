@@ -4,6 +4,8 @@ import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import { MdOutlineBookmarkRemove } from "react-icons/md";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function BookOnLoan() {
   const [loanedBooks, setLoanedBooks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,7 +16,7 @@ export default function BookOnLoan() {
     const fetchLoanedBooks = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/borrow/status/Borrowed`
+          `${API_URL}/api/borrow/status/Borrowed`
         );
         setLoanedBooks(data);
       } catch (err) {
@@ -42,12 +44,8 @@ export default function BookOnLoan() {
   // Function to handle the return process
   const handleReturn = async (borrowId) => {
     try {
-      await axios.put(
-        `http://localhost:3000/api/borrow/${borrowId}/changeStatustoReturn`
-      );
-      const { data } = await axios.get(
-        `http://localhost:3000/api/borrow/status/Borrowed`
-      );
+      await axios.put(`API_URL0/api/borrow/${borrowId}/changeStatustoReturn`);
+      const { data } = await axios.get(`API_URL0/api/borrow/status/Borrowed`);
       setLoanedBooks(data);
     } catch (e) {
       setError(e.message);

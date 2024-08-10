@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Loader from "../Loader/Loader";
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 // Functional component to display all members
 export default function AllMembers() {
@@ -17,7 +18,7 @@ export default function AllMembers() {
     const fetchAllUsers = async () => {
       try {
         // Make a GET request to the API to fetch all users
-        const response = await axios.get("http://localhost:3000/api/user");
+        const response = await axios.get(`${API_URL}/api/user`);
         const data = response.data;
         // Update the users state with the fetched data
         setUsers(data);

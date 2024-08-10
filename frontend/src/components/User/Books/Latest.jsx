@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import Loader from "../Loader/Loader";
-
+const API_URL = import.meta.env.VITE_APP_API_URL;
 export default function Latest() {
   const [latestBook, setLatestBook] = useState([]);
   const [error, setError] = useState(null);
@@ -13,9 +13,7 @@ export default function Latest() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/books/latest`
-        );
+        const response = await axios.get(`${API_URL}/api/books/latest`);
         const data = response.data;
         data.reverse();
         const onlySixBook = data.slice(0, 5);

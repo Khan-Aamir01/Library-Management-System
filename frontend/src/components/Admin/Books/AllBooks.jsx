@@ -4,6 +4,8 @@ import axios from "axios";
 
 import Loader from "../Loader/Loader";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function AllBooks() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
@@ -14,7 +16,7 @@ export default function AllBooks() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/books");
+        const response = await axios.get(`${API_URL}/api/books`);
         const bookData = response.data;
         setBooks(bookData);
         if (bookData.length === 0) {

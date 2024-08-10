@@ -6,6 +6,8 @@ import Loader from "../Loader/Loader";
 // Icons
 import { MdIncompleteCircle } from "react-icons/md";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function AllRequests() {
   const [requests, setRequests] = useState([]);
   const [loader, setLoader] = useState(true);
@@ -16,7 +18,7 @@ export default function AllRequests() {
     const fetchRequests = async () => {
       try {
         const borrowRes = await axios.get(
-          `http://localhost:3000/api/borrow/status/Waiting`
+          `${API_URL}/api/borrow/status/Waiting`
         );
         const data = borrowRes.data;
         setRequests(data);
@@ -36,13 +38,9 @@ export default function AllRequests() {
   // Function to handle the waiting to borrow process
   const handleBorrowRequest = async (id) => {
     try {
-      await axios.put(
-        `http://localhost:3000/api/borrow/${id}/changeStatustoBorrow`
-      );
+      await axios.put(`${API_URL}/api/borrow/${id}/changeStatustoBorrow`);
       // Fetch updated requests data
-      const { data } = await axios.get(
-        `http://localhost:3000/api/borrow/status/Waiting`
-      );
+      const { data } = await axios.get(`${API_URL}/api/borrow/status/Waiting`);
       setRequests(data);
     } catch (e) {
       setError("Error updating status: " + e.message);
@@ -51,8 +49,8 @@ export default function AllRequests() {
 
   // Function to handle the download count increase and availability to dicrease process
   const handleDownloadCount = (id) => {
-    axios.put(`http://localhost:3000/api/books/${id}/updateDownload`);
-    axios.put(`http://localhost:3000/api/books/${id}/decrement`);
+    axios.put(`${API_URL}/api/books/${id}/updateDownload`);
+    axios.put(`${API_URL}/api/books/${id}/decrement`);
   };
 
   // Function to handle the Waiting to Borrowed process

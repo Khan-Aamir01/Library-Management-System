@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function Categorised() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function Categorised() {
     const fetchBook = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/api/books/category/${categorise}`
+          `${API_URL}/api/books/category/${categorise}`
         );
         const data = response.data;
         // filter the books according to class example std = 5th then it gives only 5th class books

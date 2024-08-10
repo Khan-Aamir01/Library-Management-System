@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function Login() {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
@@ -19,7 +21,7 @@ export default function Login() {
     try {
       localStorage.removeItem("adminAuth");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/adminlogin",
+        `${API_URL}/api/auth/adminlogin`,
         admin
       );
       const token = response.data.token;

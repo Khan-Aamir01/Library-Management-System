@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function UpdateBook() {
   const { id } = useParams();
@@ -22,9 +23,7 @@ export default function UpdateBook() {
   useEffect(() => {
     const fetchBookData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/books/${id}`
-        );
+        const response = await axios.get(`${API_URL}/api/books/${id}`);
         const book = response.data;
         setName(book.Name);
         setAuthorName(book.Author_Name);
@@ -60,7 +59,7 @@ export default function UpdateBook() {
     };
 
     try {
-      await axios.put(`http://localhost:3000/api/books/${id}`, updatedBook);
+      await axios.put(`${API_URL}/api/books/${id}`, updatedBook);
       setLoading(false);
       navigate(`/admin/books/singlebook/${id}`);
     } catch (error) {

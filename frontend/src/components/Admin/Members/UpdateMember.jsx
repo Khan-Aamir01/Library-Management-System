@@ -2,12 +2,11 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function UpdateMember() {
   const { id } = useParams();
   const navigate = useNavigate();
-
-  // Old Value
-  const [user, setUser] = useState(null);
 
   // Value for Update
   const [image, setImage] = useState("");
@@ -25,9 +24,7 @@ export default function UpdateMember() {
   useEffect(() => {
     const fetchUserOldData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/user/${id}`
-        );
+        const response = await axios.get(`${API_URL}/api/user/${id}`);
         const data = response.data;
         setImage(data.image);
         setName(data.name);
@@ -56,7 +53,7 @@ export default function UpdateMember() {
     };
 
     try {
-      await axios.put(`http://localhost:3000/api/user/${id}`, updateMember);
+      await axios.put(`${API_URL}/api/user/${id}`, updateMember);
       navigate(`/admin/members/singlemember/${id}`);
     } catch (error) {
       console.log("Error Fetch: " + error.message);

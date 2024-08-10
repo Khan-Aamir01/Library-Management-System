@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function Login() {
   const navigate = useNavigate();
@@ -20,10 +21,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        user
-      );
+      const response = await axios.post(`${API_URL}/api/auth/login`, user);
       const { token, userId } = response.data;
       localStorage.setItem("userToken", token);
       localStorage.setItem("userId", userId);
@@ -78,7 +76,7 @@ export default function Login() {
           to={"/lms/registration"}
           className="text-blue-500 hover:text-blue-700 underline hover:no-underline dashed mb-2"
         >
-          Don't have an account? Create one
+          Don't have an account? Create
         </Link>
         <button
           type="submit"

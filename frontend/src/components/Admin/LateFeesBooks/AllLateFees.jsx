@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { useNavigate } from "react-router-dom";
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function LateFeesBooks() {
   const [fineBooks, setFineBooks] = useState([]);
@@ -12,7 +13,7 @@ export default function LateFeesBooks() {
   useEffect(() => {
     const fetchLoanedBooks = async () => {
       try {
-        const { data } = await axios.get(`http://localhost:3000/api/fine`);
+        const { data } = await axios.get(`${API_URL}/api/fine`);
         setFineBooks(data);
       } catch (err) {
         setError(err.message);
@@ -39,8 +40,8 @@ export default function LateFeesBooks() {
   // Function to handle the pay the late fee process
   const handlePay = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/api/fine/${id}`);
-      const { data } = await axios.get(`http://localhost:3000/api/fine`);
+      await axios.delete(`${API_URL}/api/fine/${id}`);
+      const { data } = await axios.get(`${API_URL}/api/fine`);
       setFineBooks(data);
     } catch (e) {
       setError(e.message);

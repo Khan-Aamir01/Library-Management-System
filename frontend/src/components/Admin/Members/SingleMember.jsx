@@ -2,9 +2,12 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
+
 import { TiUserDelete } from "react-icons/ti";
 import { GrUpdate } from "react-icons/gr";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function SingleMember() {
   const { id } = useParams();
@@ -19,9 +22,9 @@ export default function SingleMember() {
     const fetchUser = async () => {
       try {
         const [userRes, borrowRes, fineRes] = await Promise.all([
-          axios.get(`http://localhost:3000/api/user/${id}`),
-          axios.get(`http://localhost:3000/api/user/${id}/borrow`),
-          axios.get(`http://localhost:3000/api/user/${id}/fine`),
+          axios.get(`${API_URL}/api/user/${id}`),
+          axios.get(`${API_URL}/api/user/${id}/borrow`),
+          axios.get(`${API_URL}/api/user/${id}/fine`),
         ]);
 
         setUserData(userRes.data);
@@ -53,7 +56,7 @@ export default function SingleMember() {
   }
 
   const handleDelete = async () => {
-    await axios.delete(`http://localhost:3000/api/user/${userData._id}`);
+    await axios.delete(`API_URL0/api/user/${userData._id}`);
     navigate("/admin/members");
   };
 

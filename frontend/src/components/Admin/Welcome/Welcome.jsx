@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function Welcome() {
   const [admin, setAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -16,12 +18,9 @@ export default function Welcome() {
       }
 
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/auth/adminProfile",
-          {
-            headers: { "admin-Token": token },
-          }
-        );
+        const response = await axios.get(`${API_URL}/api/auth/adminProfile`, {
+          headers: { "admin-Token": token },
+        });
         setAdmin(response.data);
       } catch (error) {
         localStorage.removeItem("adminAuth");
@@ -32,7 +31,7 @@ export default function Welcome() {
     };
     adminProfile();
   }, [navigate]);
-  
+
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">

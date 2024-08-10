@@ -5,6 +5,8 @@ import { format } from "date-fns";
 
 import Loader from "../Loader/Loader";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function SingleBook() {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -16,9 +18,7 @@ export default function SingleBook() {
   useEffect(() => {
     const getSingleBook = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/api/books/${id}`
-        );
+        const response = await axios.get(`${API_URL}/api/books/${id}`);
         const singleBookData = response.data;
         setBook(singleBookData);
       } catch (error) {
@@ -34,7 +34,7 @@ export default function SingleBook() {
 
   const handleDelete = async (id) => {
     setDeleting(true);
-    await axios.delete(`http://localhost:3000/api/books/${id}`);
+    await axios.delete(`${API_URL}/api/books/${id}`);
     navigate("/admin/books");
   };
 

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function AddBooks() {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
@@ -32,7 +34,7 @@ export default function AddBooks() {
     };
 
     try {
-      await axios.post("http://localhost:3000/api/books", createBook);
+      await axios.post(`${API_URL}/api/books`, createBook);
       setLoading(false);
       navigate("/admin/books");
     } catch (error) {

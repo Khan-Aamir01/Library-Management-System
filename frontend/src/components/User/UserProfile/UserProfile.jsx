@@ -9,6 +9,8 @@ import { GrUpdate } from "react-icons/gr";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoLogOut } from "react-icons/io5";
 
+const API_URL = import.meta.env.VITE_APP_API_URL;
+
 export default function UserProfile() {
   const [userData, setUserData] = useState(null);
   const [borrowData, setBorrowData] = useState([]);
@@ -23,7 +25,7 @@ export default function UserProfile() {
       if (token) {
         try {
           const profileRes = await axios.get(
-            `http://localhost:3000/api/auth/userProfile`,
+            `${API_URL}/api/auth/userProfile`,
             {
               headers: { "user-Token": token },
             }
@@ -31,9 +33,9 @@ export default function UserProfile() {
           const id = profileRes.data._id;
 
           const [userRes, borrowRes, fineRes] = await Promise.all([
-            axios.get(`http://localhost:3000/api/user/${id}`),
-            axios.get(`http://localhost:3000/api/user/${id}/borrow`),
-            axios.get(`http://localhost:3000/api/user/${id}/fine`),
+            axios.get(`${API_URL}/api/user/${id}`),
+            axios.get(`${API_URL}/api/user/${id}/borrow`),
+            axios.get(`${API_URL}/api/user/${id}/fine`),
           ]);
           setUserData(userRes.data);
           setBorrowData(borrowRes.data);
@@ -72,7 +74,7 @@ export default function UserProfile() {
 
   const handleDelete = async () => {
     if (borrowData === "" && fines === "") {
-      await axios.delete(`http://localhost:3000/api/user/${userData._id}`);
+      await axios.delete(`API_URL0/api/user/${userData._id}`);
       navigate("/lms");
     } else {
       alert("Please return all books or pay the fine");

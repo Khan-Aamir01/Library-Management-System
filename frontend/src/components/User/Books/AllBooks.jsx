@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
 import { GiArchiveResearch } from "react-icons/gi";
 import Loader from "../Loader/Loader";
+
+const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function AllBooks() {
   const [books, setBooks] = useState([]);
@@ -15,7 +16,7 @@ export default function AllBooks() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/books");
+        const response = await axios.get(`${API_URL}/api/books`);
         const data = response.data;
 
         // Sort books by name in alphabetical order
@@ -28,7 +29,7 @@ export default function AllBooks() {
         }
       } catch (error) {
         setLoader(false);
-        setError("Server Problem");
+        setError("Server Problem " + error);
       }
     };
 
@@ -57,11 +58,10 @@ export default function AllBooks() {
 
   return (
     <div className="bg-slate-500 px-8 py-4 flex flex-col items-center justify-start min-h-screen">
-      {loader && <Loader />}
       <div className="flex justify-center items-center bg-white rounded-lg shadow-md">
         <input
           type="search"
-          placeholder="Search books..."
+          placeholder="Search books by name..."
           className="w-64 md:w-96 p-2 text-md border-none outline-none rounded-lg"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -70,8 +70,8 @@ export default function AllBooks() {
           <GiArchiveResearch className="text-3xl" />
         </button>
       </div>
-
       <h1 className="md:float-left md:w-11/12 md:ml-2 font-bold">All Books</h1>
+      {loader && <Loader />}
       <div className="mt-2 flex gap-4 flex-wrap md:justify-start justify-center w-11/12">
         {notFound && <p>{notFound}</p>}
         {error && <p>{error}</p>}
