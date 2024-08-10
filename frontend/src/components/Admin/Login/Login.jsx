@@ -33,9 +33,11 @@ export default function Login() {
         localStorage.setItem("adminAuth", token);
         navigate("/admin");
       } else {
+        setLoginButton(false);
         setError("Login failed. Please check your email and password.");
       }
     } catch (error) {
+      setLoginButton(false);
       setError("Login failed. Please check your email and password.");
     }
   };

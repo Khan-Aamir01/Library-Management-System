@@ -35,6 +35,7 @@ export default function Login() {
         }, 2000);
       }
     } catch (error) {
+      setLoginButton(false);
       localStorage.removeItem("userToken");
       localStorage.removeItem("userId");
       setError("Login failed. Please check your email and password.");

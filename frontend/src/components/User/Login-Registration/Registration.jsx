@@ -38,6 +38,7 @@ const Registration = () => {
       }
       navigate("/lms/login");
     } catch (error) {
+      setRegiButton(false);
       setError(`Server error: ${error.message}`);
     }
   };
