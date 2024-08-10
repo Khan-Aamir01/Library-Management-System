@@ -78,7 +78,7 @@ export default function Login() {
           to={"/lms/registration"}
           className="text-blue-500 hover:text-blue-700 underline hover:no-underline dashed mb-2"
         >
-          Don't have an account? Signup here
+          Don't have an account? Create one
         </Link>
         <button
           type="submit"

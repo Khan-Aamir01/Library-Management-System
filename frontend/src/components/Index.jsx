@@ -7,13 +7,13 @@ export default function Index() {
       <div className="space-x-4">
         <Link
           to="/lms"
-          className="px-6 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-200"
+          className="px-6 py-2 bg-blue-500 border border-black text-white rounded hover:bg-blue-600 transition duration-200"
         >
           User
         </Link>
         <Link
           to="/admin/login"
-          className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition duration-200"
+          className="px-6 py-2 bg-green-500 text-white rounded border border-black hover:bg-green-600 transition duration-200"
         >
           Admin
         </Link>

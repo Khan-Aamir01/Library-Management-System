@@ -6,14 +6,13 @@ export default function AddBooks() {
   const navigate = useNavigate();
   const [Name, setName] = useState("");
   const [Author_Name, setAuthorName] = useState("");
-  const [Categories, setCategories] = useState("");
+  const [Categories, setCategories] = useState("school");
   const [std, setStd] = useState("");
-  const [isPhysical, setIsPhysical] = useState("");
-  const [isEbook, setIsEbook] = useState("");
+  const [isPhysical, setIsPhysical] = useState("false");
+  const [isEbook, setIsEbook] = useState("false");
   const [Availability, setAvailability] = useState("");
   const [ImageUrl, setImageUrl] = useState("");
   const [DownloadUrl, setDownloadUrl] = useState("");
-  // to change the loading button text
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -23,10 +22,10 @@ export default function AddBooks() {
     const createBook = {
       Name,
       Author_Name,
-      Categories: Categories.toLowerCase().trim(),
-      std: std.toLowerCase().trim(),
-      isPhysical: isPhysical.toLowerCase().trim(),
-      isEbook: isEbook.toLowerCase().trim(),
+      Categories,
+      std,
+      isPhysical,
+      isEbook,
       Availability,
       ImageUrl,
       DownloadUrl,
@@ -89,35 +88,83 @@ export default function AddBooks() {
           <label htmlFor="categories" className={labelStyle}>
             Categories
           </label>
-          <input
-            type="text"
-            name="Categories"
+          <select
+            name="categories"
             id="categories"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 outline-none bg-blue-50"
             value={Categories}
-            placeholder="Categories (Ex: School, College, Higher or Others)"
-            required
-            className={inputStyle}
             onChange={(e) => {
               setCategories(e.target.value);
+              setStd("");
             }}
-          />
+          >
+            <option value="school">School</option>
+            <option value="college">College</option>
+            <option value="highereducation">Higher Education</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
         <div className="mb-4">
           <label htmlFor="std" className={labelStyle}>
             Standard
           </label>
-          <input
-            type="text"
-            name="std"
-            id="std"
-            value={std}
-            placeholder="Enter Standard (Ex: 10th) or Empty"
-            className={inputStyle}
-            onChange={(e) => {
-              setStd(e.target.value);
-            }}
-          />
+          {Categories === "school" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Standard</option>
+              <option value="5th">5th</option>
+              <option value="6th">6th</option>
+              <option value="7th">7th</option>
+              <option value="8th">8th</option>
+              <option value="9th">9th</option>
+              <option value="10th">10th</option>
+            </select>
+          )}
+          {Categories === "college" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Standard</option>
+              <option value="11th">11th</option>
+              <option value="12th">12th</option>
+            </select>
+          )}
+          {Categories === "highereducation" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Program</option>
+              <option value="mbbs">MBBS</option>
+              <option value="aiml">AI & ML</option>
+              <option value="be">B.E.</option>
+              <option value="bsc-it">B.Sc. IT</option>
+            </select>
+          )}
+          {Categories === "other" && (
+            <input
+              type="text"
+              name="std"
+              id="std"
+              value={std}
+              placeholder="Enter custom standard"
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            />
+          )}
         </div>
 
         <div className="mb-4">

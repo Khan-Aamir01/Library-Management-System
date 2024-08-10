@@ -32,7 +32,7 @@ export default function SingleBook() {
   }
 
   const handleBorrow = async (book) => {
-    if (book.isPhysical === true || book.Availability > 0) {
+    if (book.isPhysical === true && book.Availability > 0) {
       setBorrow(true);
       try {
         const response = await axios.post(`http://localhost:3000/api/borrow`, {

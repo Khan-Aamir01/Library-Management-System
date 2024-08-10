@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 export default function UpdateBook() {
   const { id } = useParams();
-
   const navigate = useNavigate();
 
   const [Name, setName] = useState("");
@@ -17,25 +16,38 @@ export default function UpdateBook() {
   const [ImageUrl, setImageUrl] = useState("");
   const [DownloadUrl, setDownloadUrl] = useState("");
 
-  // to hanle errors
   const [error, setError] = useState(null);
-
-  // if the net slow then it change the submit button
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchBookData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/api/books/${id}`
+        );
+        const book = response.data;
+        setName(book.Name);
+        setAuthorName(book.Author_Name);
+        setCategories(book.Categories);
+        setStd(book.std);
+        setIsPhysical(book.isPhysical.toString());
+        setIsEbook(book.isEbook.toString());
+        setAvailability(book.Availability);
+        setImageUrl(book.ImageUrl);
+        setDownloadUrl(book.DownloadUrl);
+      } catch (error) {
+        setError("Error fetching book data: " + error.message);
+      }
+    };
+    fetchBookData();
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if (
-      !["true", "false", ""].includes(isPhysical.toLowerCase()) ||
-      !["true", "false", ""].includes(isEbook.toLowerCase())
-    ) {
-      alert("Enter 'True' or 'False' for P-Book and E-Book Availability.");
-      setLoading(false);
-      return;
-    }
+    setError(null);
 
-    const createBook = {
+    const updatedBook = {
       Name,
       Author_Name,
       Categories,
@@ -48,11 +60,11 @@ export default function UpdateBook() {
     };
 
     try {
-      await axios.put(`http://localhost:3000/api/books/${id}`, createBook);
-      setError("Update Successful");
+      await axios.put(`http://localhost:3000/api/books/${id}`, updatedBook);
+      setLoading(false);
       navigate(`/admin/books/singlebook/${id}`);
     } catch (error) {
-      setError("Update Unsuccessful " + error.message);
+      setError("Update Unsuccessful: " + error.message);
       setLoading(false);
     }
   };
@@ -64,7 +76,7 @@ export default function UpdateBook() {
         className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
         onSubmit={handleSubmit}
       >
-        {error && alert({ error })}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
         <div className="mb-4">
           <label htmlFor="name" className={labelStyle}>
             Name
@@ -76,9 +88,7 @@ export default function UpdateBook() {
             value={Name}
             placeholder="Book Name"
             className={inputStyle}
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
 
@@ -93,9 +103,7 @@ export default function UpdateBook() {
             value={Author_Name}
             placeholder="Author Name"
             className={inputStyle}
-            onChange={(e) => {
-              setAuthorName(e.target.value);
-            }}
+            onChange={(e) => setAuthorName(e.target.value)}
           />
         </div>
 
@@ -103,68 +111,135 @@ export default function UpdateBook() {
           <label htmlFor="categories" className={labelStyle}>
             Categories
           </label>
-          <input
-            type="text"
-            name="Categories"
+          <select
+            name="categories"
             id="categories"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 outline-none bg-blue-50"
             value={Categories}
-            placeholder="Categories (Ex: School)"
-            className={inputStyle}
             onChange={(e) => {
               setCategories(e.target.value);
+              setStd("");
             }}
-          />
+          >
+            <option value="school">School</option>
+            <option value="college">College</option>
+            <option value="highereducation">Higher Education</option>
+            <option value="other">Other</option>
+          </select>
         </div>
 
         <div className="mb-4">
           <label htmlFor="std" className={labelStyle}>
             Standard
           </label>
-          <input
-            type="text"
-            name="std"
-            id="std"
-            value={std}
-            placeholder="Enter Standar (Ex: 10th) or Empty"
-            className={inputStyle}
-            onChange={(e) => {
-              setStd(e.target.value);
-            }}
-          />
+          {Categories === "school" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Standard</option>
+              <option value="5th">5th</option>
+              <option value="6th">6th</option>
+              <option value="7th">7th</option>
+              <option value="8th">8th</option>
+              <option value="9th">9th</option>
+              <option value="10th">10th</option>
+            </select>
+          )}
+          {Categories === "college" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Standard</option>
+              <option value="11th">11th</option>
+              <option value="12th">12th</option>
+            </select>
+          )}
+          {Categories === "highereducation" && (
+            <select
+              name="std"
+              id="std"
+              value={std}
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            >
+              <option value="">Select Program</option>
+              <option value="mbbs">MBBS</option>
+              <option value="aiml">AI & ML</option>
+              <option value="be">B.E.</option>
+              <option value="bsc-it">B.Sc. IT</option>
+            </select>
+          )}
+          {Categories === "other" && (
+            <input
+              type="text"
+              name="std"
+              id="std"
+              value={std}
+              placeholder="Enter custom standard"
+              className={inputStyle}
+              onChange={(e) => setStd(e.target.value)}
+            />
+          )}
         </div>
 
         <div className="mb-4">
-          <label htmlFor="isPhysical" className={labelStyle}>
-            P-Book Available
-          </label>
-          <input
-            type="text"
-            name="isPhysical"
-            id="isPhysical"
-            value={isPhysical}
-            placeholder="Enter True or False"
-            className={inputStyle}
-            onChange={(e) => {
-              setIsPhysical(e.target.value);
-            }}
-          />
+          <label className={labelStyle}>P-Book Available</label>
+          <div className="flex">
+            <label className="mr-4">
+              <input
+                type="radio"
+                name="isPhysical"
+                value="true"
+                checked={isPhysical === "true"}
+                onChange={(e) => setIsPhysical(e.target.value)}
+              />{" "}
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isPhysical"
+                value="false"
+                checked={isPhysical === "false"}
+                onChange={(e) => setIsPhysical(e.target.value)}
+              />{" "}
+              No
+            </label>
+          </div>
         </div>
 
         <div className="mb-4">
-          <label htmlFor="isEbook" className={labelStyle}>
-            E-Book Available
-          </label>
-          <input
-            type="text"
-            name="isEbook"
-            id="isEbook"
-            value={isEbook}
-            placeholder="Enter True or False"
-            className={inputStyle}
-            onChange={(e) => {
-              setIsEbook(e.target.value);
-            }}
-          />
+          <label className={labelStyle}>E-Book Available</label>
+          <div className="flex">
+            <label className="mr-4">
+              <input
+                type="radio"
+                name="isEbook"
+                value="true"
+                checked={isEbook === "true"}
+                onChange={(e) => setIsEbook(e.target.value)}
+              />{" "}
+              Yes
+            </label>
+            <label>
+              <input
+                type="radio"
+                name="isEbook"
+                value="false"
+                checked={isEbook === "false"}
+                onChange={(e) => setIsEbook(e.target.value)}
+              />{" "}
+              No
+            </label>
+          </div>
         </div>
 
         <div className="mb-4">
@@ -178,9 +253,7 @@ export default function UpdateBook() {
             value={Availability}
             placeholder="Total books"
             className={inputStyle}
-            onChange={(e) => {
-              setAvailability(e.target.value);
-            }}
+            onChange={(e) => setAvailability(e.target.value)}
           />
         </div>
 
@@ -195,9 +268,7 @@ export default function UpdateBook() {
             value={ImageUrl}
             placeholder="Enter Image Link"
             className={inputStyle}
-            onChange={(e) => {
-              setImageUrl(e.target.value);
-            }}
+            onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
 
@@ -210,20 +281,19 @@ export default function UpdateBook() {
             name="DownloadUrl"
             id="downloadUrl"
             value={DownloadUrl}
-            placeholder="Enter Pdf Link"
+            placeholder="Enter PDF Link"
             className={inputStyle}
-            onChange={(e) => {
-              setDownloadUrl(e.target.value);
-            }}
+            onChange={(e) => setDownloadUrl(e.target.value)}
           />
         </div>
 
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            disabled={loading}
           >
-            {loading ? "Updating.." : "Submit"}
+            {loading ? "Updating..." : "Update"}
           </button>
         </div>
       </form>
@@ -231,7 +301,7 @@ export default function UpdateBook() {
   );
 }
 
-// Common Styles for label and input tags
-const labelStyle = "block text-gray-700 text-sm font-bold mb-2";
+const labelStyle =
+  "block text-gray-700 text-sm font-bold mb-2 text-start tracking-wider";
 const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-blue-50";

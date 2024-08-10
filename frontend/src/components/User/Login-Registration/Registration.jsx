@@ -123,7 +123,7 @@ const Registration = () => {
           to={"/lms/login"}
           className="text-blue-500 hover:text-blue-700 underline hover:no-underline dashed mb-2"
         >
-          Already have an account? Login here
+          Already have an account? Login
         </Link>
         <button
           type="submit"
