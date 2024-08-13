@@ -43,7 +43,9 @@ export default function SingleBook() {
           setTimeout(() => {
             setBorrow(false);
           }, 2000);
-          alert("Book borrowed successfully");
+          alert(
+            "Book borrowed successfully. Please remember to bring proof of address when you come to borrow the book"
+          );
         }
       } catch (error) {
         if (error.response && error.response.status === 400) {

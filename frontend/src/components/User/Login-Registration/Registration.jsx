@@ -29,7 +29,7 @@ const Registration = () => {
 
     try {
       setRegiButton(true);
-      await axios.post(`${API_URL}/api/auth/register`, user);
+      const response = await axios.post(`${API_URL}/api/auth/register`, user);
       if (response.status === 200) {
         // Successful borrow
         setTimeout(() => {
@@ -141,7 +141,7 @@ const Registration = () => {
         >
           {regiButton ? "Please wait.." : "Sign up"}
         </button>
-        {error && <b>Enter Correct Information</b>}
+        {error && <b>Enter Correct Information {error}</b>}
       </form>
     </div>
   );

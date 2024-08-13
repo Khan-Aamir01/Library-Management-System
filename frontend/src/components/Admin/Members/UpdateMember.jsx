@@ -115,6 +115,7 @@ export default function UpdateMember() {
           name="password"
           id="password"
           placeholder="Member Password"
+          minLength={8}
           className={inputStyle}
           value={password}
           onChange={(e) => setPassword(e.target.value)}

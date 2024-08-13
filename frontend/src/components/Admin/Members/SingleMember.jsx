@@ -56,7 +56,11 @@ export default function SingleMember() {
   }
 
   const handleDelete = async () => {
-    await axios.delete(`API_URL0/api/user/${userData._id}`);
+    if (borrowData.length > 0 || fines.length > 0) {
+      alert("User has not returned all the books or paid the fine");
+      return;
+    }
+    await axios.delete(`${API_URL}/api/user/${userData._id}`);
     navigate("/admin/members");
   };
 
