@@ -34,23 +34,20 @@ export default function Categorised() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-2 text-white">
-        {`${categorise.charAt(0).toUpperCase()}${categorise.slice(1)}`} Books
-      </h1>
+    <div className="flex flex-col items-center py-4 bg-slate-500">
+      <h1 className="text-3xl font-bold mb-2 text-white">{classId} Books</h1>
       {message && <b className="mb-1">{message}</b>}
-      <div className="px-2 mt-2 flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         {books.map((book, index) => (
           <div
             onClick={() => singleBookHandler(book._id)}
             key={index}
-            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all"
-            style={{ minWidth: "150px", maxWidth: "150px" }}
+            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all flex gap-2 min-w-full md:min-w-36"
           >
             <img
               src={book.ImageUrl}
               alt={book.Name}
-              className="w-36 h-48 object-cover rounded-t-lg "
+              className="h-28 object-cover rounded-t-lg "
             />
             <div className="p-2">
               <b>Name:</b> {book.Name}

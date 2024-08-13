@@ -31,7 +31,7 @@ export default function SideBar() {
 
       {/* Sidebar for small devices */}
       <div
-        className={`fixed top-0 left-0 w-3/4 h-full bg-gray-600 p-6 flex flex-col gap-10 transition-transform duration-300 md:hidden overflow-y-auto ${
+        className={`fixed top-0 left-0 w-3/4 h-full bg-slate-600 p-6 flex flex-col gap-10 transition-transform duration-300 md:hidden overflow-y-auto border-r ${
           isMenuOpen ? "transform translate-x-0" : "transform -translate-x-full"
         }`}
       >
@@ -90,7 +90,7 @@ export default function SideBar() {
       </div>
 
       {/* Sidebar for large devices */}
-      <div className="w-1/4 bg-gray-600 md:flex flex-col gap-10 p-6 justify-start items-center min-h-screen hidden">
+      <div className="w-1/4 bg-slate-600 border-r md:flex flex-col gap-10 p-6 justify-start items-center min-h-screen hidden">
         {/* Application Logo and Name Section */}
         <div className="flex flex-col items-center justify-center">
           {/* Application Icon */}

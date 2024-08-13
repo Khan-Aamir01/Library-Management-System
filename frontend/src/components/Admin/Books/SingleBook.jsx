@@ -92,10 +92,6 @@ export default function SingleBook() {
           <br />
           <b>Available:</b> {book.Availability}
           <br />
-          <b>ImageUrl:</b> {book.ImageUrl}
-          <br />
-          <b>DownloadUrl:</b> {book.DownloadUrl}
-          <br />
           <b>Date:</b> {format(new Date(book.Date), "dd-MM-yyyy")}
           <br />
         </div>

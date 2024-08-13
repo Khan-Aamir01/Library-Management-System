@@ -45,12 +45,23 @@ const createBorrow = async (req, res) => {
     const existingBorrow = await Borrow.findOne({
       userId,
       bookId,
-      status: { $ne: "Returned" },
+      status: { $ne: "Returned", $ne: "Expired" },
     });
     if (existingBorrow) {
-      return res
-        .status(400)
-        .json({ message: "Book already borrowed by this user" });
+      if (existingBorrow.status === "Waiting") {
+        return res.status(400).json({
+          message: "Please collect the book from the library",
+        });
+      } else if (existingBorrow.status === "Borrowed") {
+        return res.status(400).json({
+          message: "You have already borrowed this book",
+        });
+      } else {
+        return res.status(400).json({
+          message:
+            "Please collect the book from the library " + existingBorrow.status,
+        });
+      }
     }
     // Create Borrow
     const borrow = new Borrow({
