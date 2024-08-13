@@ -29,17 +29,25 @@ const Registration = () => {
 
     try {
       setRegiButton(true);
+
       const response = await axios.post(`${API_URL}/api/auth/register`, user);
-      if (response.status === 200) {
-        // Successful borrow
+
+      if (response.status === 201) {
+        // Successful registration
         setTimeout(() => {
           setRegiButton(false);
         }, 2000);
+        navigate("/lms/login");
+      } else if (response.status === 409) {
+        // User already exists
+        setError("User already exists");
       }
-      navigate("/lms/login");
     } catch (error) {
+      // Handle server errors
       setRegiButton(false);
-      setError(`Server error: ${error.message}`);
+      setError(`${error.response.data.message}`);
+    } finally {
+      setRegiButton(false);
     }
   };
 
@@ -141,7 +149,7 @@ const Registration = () => {
         >
           {regiButton ? "Please wait.." : "Sign up"}
         </button>
-        {error && <b>Enter Correct Information {error}</b>}
+        {error && <b>{error}</b>}
       </form>
     </div>
   );
@@ -150,6 +158,6 @@ const Registration = () => {
 // CSS classes
 const labelStyle = "block text-gray-700 text-sm font-bold mb-2";
 const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none";
 
 export default Registration;

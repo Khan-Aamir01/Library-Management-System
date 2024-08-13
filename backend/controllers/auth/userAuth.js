@@ -16,7 +16,7 @@ const login = async (req, res) => {
 
     // Geberate jwt token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "30d",
     });
     res.status(200).json({ token, userId: user._id });
   } catch (error) {
@@ -45,13 +45,19 @@ const userProfile = async (req, res) => {
 
 const register = async (req, res) => {
   const { name, image, gmail, password, address, phoneNumber } = req.body;
+
+  if (!name || !gmail || !password || !address || !phoneNumber) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
   try {
-    const checkGmail = await User.find({ gmail: gmail });
-    if (checkGmail.length > 0) {
-      console.log(checkGmail);
-      return res.status(200).json({ message: "Email Already Exist" });
+    const existingUser = await User.findOne({ gmail: gmail });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
     }
+
     const hashedPassword = await hashPassword(password);
+
     const newUser = new User({
       name,
       image,
@@ -60,24 +66,28 @@ const register = async (req, res) => {
       address,
       phoneNumber,
     });
+
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
-    res.status(500).json({ message: "server error due to " + error });
+    console.error("Server error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
-// Funtion to hash the passord
+
+// Function to hash the password
 const hashPassword = async (password) => {
-  const saltRound = 10;
+  const saltRounds = 10;
   try {
-    const salt = await bcrypt.genSalt(saltRound);
+    const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(password, salt);
     return hashedPassword;
   } catch (error) {
     console.error("Error hashing password:", error);
-    throw error; //Add throw error for security
+    throw error;
   }
 };
+
 module.exports = {
   register,
   userProfile,

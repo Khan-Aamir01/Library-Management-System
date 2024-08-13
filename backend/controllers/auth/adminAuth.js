@@ -15,7 +15,7 @@ const loginAdmin = async (req, res) => {
 
     // Generate jwt token
     const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "30d",
     });
 
     res.status(200).json({ token });
