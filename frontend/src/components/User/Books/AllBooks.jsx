@@ -57,7 +57,7 @@ export default function AllBooks() {
   };
 
   return (
-    <div className="bg-slate-500 px-8 py-4 flex flex-col items-center justify-start min-h-screen">
+    <div className="bg-slate-500 px-4 py-4 flex flex-col items-center justify-start">
       <div className="flex justify-center items-center bg-white rounded-lg shadow-md">
         <input
           type="search"
@@ -70,22 +70,21 @@ export default function AllBooks() {
           <GiArchiveResearch className="text-3xl" />
         </button>
       </div>
-      <h1 className="md:float-left md:w-11/12 md:ml-2 font-bold">All Books</h1>
+      <h1 className="font-bold mt-2">All Books</h1>
       {loader && <Loader />}
-      <div className="mt-2 flex gap-4 flex-wrap md:justify-start justify-center w-11/12">
+      <div className="mt-2 flex gap-4 flex-wrap justify-center w-full">
         {notFound && <p>{notFound}</p>}
         {error && <p>{error}</p>}
         {filteredBooks.map((book) => (
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
             key={book._id}
-            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all"
-            style={{ minWidth: "150px", maxWidth: "150px" }}
+            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all flex gap-2 min-w-full md:min-w-36"
           >
             <img
               src={book.ImageUrl}
               alt={book.Name}
-              className="w-36 h-48 object-cover rounded-t-lg "
+              className="h-28 object-cover rounded-t-lg "
             />
             <div className="p-2">
               <b>Name:</b> {book.Name}

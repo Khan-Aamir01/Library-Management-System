@@ -48,13 +48,12 @@ export default function Popular() {
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
             key={index}
-            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all"
-            style={{ minWidth: "150px", maxWidth: "150px" }}
+            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all flex gap-2 min-w-full md:min-w-36"
           >
             <img
               src={book.ImageUrl}
               alt={book.Name}
-              className="w-36 h-48 object-cover rounded-t-lg"
+              className="h-28 object-cover rounded-t-lg"
             />
             <div className="p-2">
               <b>Name:</b> {book.Name}
