@@ -6,13 +6,17 @@ const API_URL = import.meta.env.VITE_APP_API_URL;
 const Registration = () => {
   const navigate = useNavigate();
   const [error, setError] = useState(null);
+
+  // to change the registration button text
   const [regiButton, setRegiButton] = useState(false);
+  const [otp, setOtp] = useState("");
   const [user, setUser] = useState({
     name: "",
     phoneNumber: "",
     image:
       "https://static.vecteezy.com/system/resources/previews/000/578/616/original/vector-book-reading-logo-and-symbols-template-icons-app.jpg",
     gmail: "",
+    otp: "",
     password: "",
     address: "",
   });
@@ -52,7 +56,7 @@ const Registration = () => {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col items-center py-8 bg-slate-500">
       <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white">
         Account Registration
       </h1>
@@ -95,15 +99,36 @@ const Registration = () => {
           <label htmlFor="email" className={labelStyle}>
             Email
           </label>
+          <div className=" flex md:flex-row flex-col">
+            <input
+              type="email"
+              name="gmail"
+              value={user.gmail}
+              id="email"
+              placeholder="Enter Email"
+              required
+              className={inputStyle}
+              onChange={handleChange}
+            />
+            <input
+              type="button"
+              value="Send OTP"
+              className="bg-blue-50 hover:bg-blue-100 px-4 md:ml-1 rounded border border-teal-700 font-bold cursor-pointer hover:text-red-700 hover:border-red-600 transition-all duration-300 animate-pulse md:w-auto w-full py-2 mt-2 md:mt-0 hover:animate-none"
+            />
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="otp" className={labelStyle}>
+            OTP
+          </label>
           <input
-            type="email"
-            name="gmail"
-            value={user.gmail}
-            id="email"
-            placeholder="Enter Email"
+            type="number"
+            name="otp"
+            value={otp}
+            id="otp"
+            placeholder="Enter OTP"
             required
             className={inputStyle}
-            onChange={handleChange}
           />
         </div>
         <div className="mb-4">
@@ -137,15 +162,17 @@ const Registration = () => {
             onChange={handleChange}
           />
         </div>
+        Already have an account?{" "}
         <Link
           to={"/lms/login"}
-          className="text-blue-500 hover:text-blue-700 underline hover:no-underline dashed mb-2"
+          className="text-blue-500 hover:text-blue-700 hover:underline no-underline dashed mb-2"
         >
-          Already have an account? Login
+          {" "}
+          Login
         </Link>
         <button
           type="submit"
-          className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+          className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full border border-purple-900 transition-all duration-300"
         >
           {regiButton ? "Please wait.." : "Sign up"}
         </button>
@@ -158,6 +185,6 @@ const Registration = () => {
 // CSS classes
 const labelStyle = "block text-gray-700 text-sm font-bold mb-2";
 const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none";
+  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-black border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300";
 
 export default Registration;
