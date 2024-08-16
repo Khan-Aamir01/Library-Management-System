@@ -34,9 +34,7 @@ export default function Welcome() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        Loading...
-      </div>
+      <div className="flex justify-center items-center w-full">Loading...</div>
     );
   }
 

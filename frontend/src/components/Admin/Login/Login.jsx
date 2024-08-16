@@ -90,7 +90,7 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+          className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full  border border-purple-900 transition-all duration-300"
         >
           {loginButton ? "Please wait.." : "Log in"}
         </button>
@@ -103,4 +103,4 @@ export default function Login() {
 // CSS classes
 const labelStyle = "block text-gray-700 text-sm font-bold mb-2";
 const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline";
+  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline border border-black border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300";
