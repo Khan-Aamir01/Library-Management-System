@@ -124,7 +124,6 @@ const Registration = () => {
           <input
             type="number"
             name="otp"
-            value={otp}
             id="otp"
             placeholder="Enter OTP"
             required
