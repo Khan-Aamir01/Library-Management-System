@@ -84,7 +84,7 @@ const register = async (req, res) => {
   const otpUser = await Otp.findOne({ email: gmail });
   if (!otpUser || otpUser.otp !== otp) {
     return res.status(400).json({
-      message: "OTP has expired or is invalid. " + otp + "and " + otpUser.otp,
+      message: "OTP has expired or is invalid.",
     });
   }
 
