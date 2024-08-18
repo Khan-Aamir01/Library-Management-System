@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  sendOTP,
   register,
   userProfile,
   login,
@@ -9,6 +10,7 @@ const {
 const { loginAdmin, adminProfile } = require("../controllers/auth/adminAuth");
 
 // user
+router.post("/sendotp", sendOTP);
 router.post("/register", register);
 router.get("/userProfile", userProfile);
 router.post("/login", login);

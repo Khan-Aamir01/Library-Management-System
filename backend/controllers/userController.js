@@ -53,15 +53,33 @@ const updateUser = async (req, res) => {
 
 // Delete User
 const deleteUser = async (req, res) => {
+  const userId = req.params.id;
+
+  const checkBorrowStatus = await Borrow.find({
+    userId,
+    status: { $ne: "Returned" },
+  });
+
+  if (checkBorrowStatus.length > 0) {
+    return res.status(401).json({ message: "Please return all books" });
+  }
+
+  const checkFine = await Fine.find({ userId });
+  if (checkFine.length > 0) {
+    return res.status(401).json({ message: "Please pay fine" });
+  }
+
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(userId);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
     await user.deleteOne();
     res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error due to " + error });
+    console.log(error);
+    res.status(500).json({ message: "Server error due to " + error.message });
+    return;
   }
 };
 
@@ -91,8 +109,9 @@ const getUserFineStatus = async (req, res) => {
 // Get user Borrow History
 // Can make both function as a single function
 const getUserBorrow = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const borrow = await Borrow.find({ userId: req.params.id });
+    const borrow = await Borrow.find({ userId });
     res.status(200).json(borrow);
   } catch (error) {
     res.status(500).json({ message: "Server error due to " + error });

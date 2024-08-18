@@ -1,14 +1,8 @@
 const User = require("../../models/user");
+const Otp = require("../../models/otp");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const sendMail = require("../../services/emailService");
-
-let getOTP = null;
-let expireOTP = null;
-
-const generateOTP = () => {
-  return Math.floor(1000 + Math.random * 9000).toString();
-};
 
 const login = async (req, res) => {
   const { gmail, password } = req.body;
@@ -51,50 +45,71 @@ const userProfile = async (req, res) => {
   }
 };
 
-const sendOTP = (req, res) => {
+const sendOTP = async (req, res) => {
   const { email } = req.body;
-  const otp = generateOTP();
-  expireOTP = Date.now() + 3600000; // 1 hour expiration
-  getOTP = otp;
+  if (email) {
+    const user = await User.findOne({ gmail: email });
+    if (user) {
+      return res.status(401).json({ message: "User already exists" });
+    }
 
-  // send OTP to user email
-  sendMail(otp, email);
-  res.status(200).json({ message: "OTP has been sent to your email" });
+    const otpUser = await Otp.findOne({ email });
+    if (!otpUser) {
+      const generateOtp = () => {
+        return Math.floor(1000 + Math.random() * 9000).toString();
+      };
+      const otp = generateOtp();
+
+      const newUserOtp = new Otp({ email, otp });
+      await newUserOtp.save();
+
+      // send OTP to user email
+      sendMail(otp, email);
+      res.status(200).json({ message: "OTP has been sent to your email" });
+    } else {
+      return res.status(401).json({ message: "OTP Already send to the eamil" });
+    }
+  } else {
+    return res.status(400).json({ message: "Please provide email" });
+  }
 };
 
 const register = async (req, res) => {
-  const { name, image, gmail, password, address, phoneNumber, otp } = req.body;
+  const { name, image, gmail, otp, password, address, phoneNumber } = req.body;
 
-  if (otp === 123) {
-    if (!name || !gmail || !password || !address || !phoneNumber) {
-      return res.status(400).json({ message: "All fields are required" });
+  if (!name || !gmail || !otp || !password || !address || !phoneNumber) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const otpUser = await Otp.findOne({ email: gmail });
+  if (!otpUser || otpUser.otp !== otp) {
+    return res.status(400).json({
+      message: "OTP has expired or is invalid. " + otp + "and " + otpUser.otp,
+    });
+  }
+
+  try {
+    const existingUser = await User.findOne({ gmail });
+    if (existingUser) {
+      return res.status(409).json({ message: "User already exists" });
     }
 
-    try {
-      const existingUser = await User.findOne({ gmail: gmail });
-      if (existingUser) {
-        return res.status(409).json({ message: "User already exists" });
-      }
+    const hashedPassword = await hashPassword(password);
 
-      const hashedPassword = await hashPassword(password);
+    const newUser = new User({
+      name,
+      image,
+      gmail,
+      password: hashedPassword,
+      address,
+      phoneNumber,
+    });
 
-      const newUser = new User({
-        name,
-        image,
-        gmail,
-        password: hashedPassword,
-        address,
-        phoneNumber,
-      });
-
-      await newUser.save();
-      res.status(201).json({ message: "User registered successfully" });
-    } catch (error) {
-      console.error("Server error:", error);
-      res.status(500).json({ message: "Server error" });
-    }
-  } else {
-    return res.status(404).json({ message: "Please enter correct OTP" });
+    await newUser.save();
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (error) {
+    console.error("Server error:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
@@ -112,6 +127,7 @@ const hashPassword = async (password) => {
 };
 
 module.exports = {
+  sendOTP,
   register,
   userProfile,
   login,
