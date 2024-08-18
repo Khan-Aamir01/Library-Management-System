@@ -46,31 +46,38 @@ const userProfile = async (req, res) => {
 };
 
 const sendOTP = async (req, res) => {
-  const { email } = req.body;
-  if (email) {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ message: "Please provide email" });
+    }
+
     const user = await User.findOne({ gmail: email });
     if (user) {
-      return res.status(401).json({ message: "User already exists" });
+      return res.status(409).json({ message: "User already exists" });
     }
 
-    const otpUser = await Otp.findOne({ email });
+    let otpUser = await Otp.findOne({ email });
     if (!otpUser) {
-      const generateOtp = () => {
-        return Math.floor(1000 + Math.random() * 9000).toString();
-      };
+      const generateOtp = () =>
+        Math.floor(1000 + Math.random() * 9000).toString();
       const otp = generateOtp();
 
-      const newUserOtp = new Otp({ email, otp });
-      await newUserOtp.save();
+      otpUser = new Otp({ email, otp });
+      await otpUser.save();
 
-      // send OTP to user email
-      sendMail(otp, email);
-      res.status(200).json({ message: "OTP has been sent to your email" });
+      // Send OTP to user email
+      await sendMail(otp, email);
+      return res
+        .status(200)
+        .json({ message: "OTP has been sent to your email" });
     } else {
-      return res.status(401).json({ message: "OTP Already send to the eamil" });
+      return res.status(409).json({ message: "OTP already sent to the email" });
     }
-  } else {
-    return res.status(400).json({ message: "Please provide email" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
@@ -84,7 +91,7 @@ const register = async (req, res) => {
   const otpUser = await Otp.findOne({ email: gmail });
   if (!otpUser || otpUser.otp !== otp) {
     return res.status(400).json({
-      message: "OTP has expired or is invalid.",
+      message: "OTP has expired or is invalid. " + otp + "and " + otpUser.otp,
     });
   }
 
