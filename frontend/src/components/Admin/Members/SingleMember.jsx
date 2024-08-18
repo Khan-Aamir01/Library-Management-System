@@ -56,12 +56,22 @@ export default function SingleMember() {
   }
 
   const handleDelete = async () => {
-    if (borrowData.length > 0 || fines.length > 0) {
-      alert("User has not returned all the books or paid the fine");
-      return;
+    try {
+      await axios.delete(`${API_URL}/api/user/${userData._id}`);
+      navigate("/lms");
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server sends a specific message display that
+        alert(error.response.data.message);
+      } else {
+        // If no specific message, fall back to the error message
+        alert("Please Contact With Librarian");
+      }
     }
-    await axios.delete(`${API_URL}/api/user/${userData._id}`);
-    navigate("/admin/members");
   };
 
   const handleUpdate = () => {

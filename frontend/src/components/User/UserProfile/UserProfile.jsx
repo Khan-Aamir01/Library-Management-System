@@ -44,7 +44,6 @@ export default function UserProfile() {
         } catch (e) {
           setError("User Not Found");
           setLoading(false);
-          console.log("Error : ", e.message);
           localStorage.removeItem("userToken");
           localStorage.removeItem("userId");
           navigate("/lms/login");
@@ -73,11 +72,21 @@ export default function UserProfile() {
   }
 
   const handleDelete = async () => {
-    if (borrowData === "" && fines === "") {
-      await axios.delete(`API_URL0/api/user/${userData._id}`);
+    try {
+      await axios.delete(`${API_URL}/api/user/${userData._id}`);
       navigate("/lms");
-    } else {
-      alert("Please return all books or pay the fine");
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        // If the server sends a specific message display that
+        alert(error.response.data.message);
+      } else {
+        // If no specific message, fall back to the error message
+        alert("Please Contact With Librarian");
+      }
     }
   };
 

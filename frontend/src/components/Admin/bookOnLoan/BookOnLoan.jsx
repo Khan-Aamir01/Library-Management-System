@@ -53,7 +53,7 @@ export default function BookOnLoan() {
   };
 
   return (
-    <div className="flex flex-col md:justify-start justify-center items-center py-8 bg-slate-500 px-2">
+    <div className="flex flex-col md:justify-start justify-center items-center py-8 bg-slate-500 px-2 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-white">All Loaned Books</h1>
       <div className="bg-slate-300 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-full flex flex-col text-center">
         <table className="w-full">
