@@ -34,7 +34,11 @@ const Registration = () => {
     try {
       setRegiButton(true);
 
-      const response = await axios.post(`${API_URL}/api/auth/register`, user);
+      const response = await axios.post(
+        `${API_URL}/api/auth/register`,
+        user,
+        otp
+      );
 
       if (response.status === 201) {
         // Successful registration
@@ -54,6 +58,8 @@ const Registration = () => {
       setRegiButton(false);
     }
   };
+
+  console.log(otp);
 
   return (
     <div className="flex flex-col items-center py-8 bg-slate-500">
@@ -128,6 +134,7 @@ const Registration = () => {
             placeholder="Enter OTP"
             required
             className={inputStyle}
+            onChange={(e) => setOtp(e.target.value)}
           />
         </div>
         <div className="mb-4">
@@ -171,11 +178,11 @@ const Registration = () => {
         </Link>
         <button
           type="submit"
-          className="bg-blue-500 mt-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full border border-purple-900 transition-all duration-300"
+          className="bg-blue-500 mt-4 mb-2 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full border border-purple-900 transition-all duration-300"
         >
           {regiButton ? "Please wait.." : "Sign up"}
         </button>
-        {error && <b>{error}</b>}
+        {error && <b className="text-red-500">{error}</b>}
       </form>
     </div>
   );

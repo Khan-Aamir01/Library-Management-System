@@ -1,6 +1,14 @@
 const User = require("../../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const sendMail = require("../../services/emailService");
+
+let getOTP = null;
+let expireOTP = null;
+
+const generateOTP = () => {
+  return Math.floor(1000 + Math.random * 9000).toString();
+};
 
 const login = async (req, res) => {
   const { gmail, password } = req.body;
@@ -43,35 +51,50 @@ const userProfile = async (req, res) => {
   }
 };
 
+const sendOTP = (req, res) => {
+  const { email } = req.body;
+  const otp = generateOTP();
+  expireOTP = Date.now() + 3600000; // 1 hour expiration
+  getOTP = otp;
+
+  // send OTP to user email
+  sendMail(otp, email);
+  res.status(200).json({ message: "OTP has been sent to your email" });
+};
+
 const register = async (req, res) => {
-  const { name, image, gmail, password, address, phoneNumber } = req.body;
+  const { name, image, gmail, password, address, phoneNumber, otp } = req.body;
 
-  if (!name || !gmail || !password || !address || !phoneNumber) {
-    return res.status(400).json({ message: "All fields are required" });
-  }
-
-  try {
-    const existingUser = await User.findOne({ gmail: gmail });
-    if (existingUser) {
-      return res.status(409).json({ message: "User already exists" });
+  if (otp === 123) {
+    if (!name || !gmail || !password || !address || !phoneNumber) {
+      return res.status(400).json({ message: "All fields are required" });
     }
 
-    const hashedPassword = await hashPassword(password);
+    try {
+      const existingUser = await User.findOne({ gmail: gmail });
+      if (existingUser) {
+        return res.status(409).json({ message: "User already exists" });
+      }
 
-    const newUser = new User({
-      name,
-      image,
-      gmail,
-      password: hashedPassword,
-      address,
-      phoneNumber,
-    });
+      const hashedPassword = await hashPassword(password);
 
-    await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
-  } catch (error) {
-    console.error("Server error:", error);
-    res.status(500).json({ message: "Server error" });
+      const newUser = new User({
+        name,
+        image,
+        gmail,
+        password: hashedPassword,
+        address,
+        phoneNumber,
+      });
+
+      await newUser.save();
+      res.status(201).json({ message: "User registered successfully" });
+    } catch (error) {
+      console.error("Server error:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  } else {
+    return res.status(404).json({ message: "Please enter correct OTP" });
   }
 };
 
