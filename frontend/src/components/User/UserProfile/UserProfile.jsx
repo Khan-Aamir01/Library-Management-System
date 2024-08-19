@@ -18,6 +18,14 @@ export default function UserProfile() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  // data to send otp and reset password
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [updateError, setUpdateError] = useState(null);
+
+  const [otpButton, setOtpButton] = useState(false);
+
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("userToken");
@@ -95,9 +103,51 @@ export default function UserProfile() {
     }
   };
 
-  const handleUpdate = () => {
-    setShowUpdate(!showUpdate);
-    alert("Please Contact With Librarian");
+  const sendResetPasswordOtp = async () => {
+    try {
+      setOtpButton(true);
+      const response = await axios.post(`${API_URL}/api/sendpasswordotp`, {
+        email,
+      });
+      setUpdateError(response.data.message);
+      setOtpButton(false);
+    } catch (error) {
+      setOtpButton(false);
+      if (error.response.data.message) {
+        // If the server sent a specific error message
+        setUpdateError(error.response.data.message);
+      } else {
+        // For other errors, show a general message
+        setOtpButton(true);
+        setUpdateError("An error occurred. Please try again.");
+      }
+    } finally {
+      setOtpButton(false);
+      setTimeout(() => setUpdateError(null), 3000); // Clear the message after 3 seconds
+    }
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const response = await axios.put(`${API_URL}/api/resetuserpassword`, {
+        email,
+        otp,
+        newPassword,
+      });
+      alert(response.data.message);
+      setShowUpdate(!showUpdate);
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("userId");
+      navigate("/lms/login");
+    } catch (error) {
+      if (error.response.data) {
+        setUpdateError(error.response.data.message);
+      } else {
+        setUpdateError("An error occurred. Please try again.");
+      }
+    } finally {
+      setTimeout(() => setUpdateError(null), 3000);
+    } // Clear the message after 3 seconds}
   };
 
   const handleShowUpdate = () => {
@@ -146,8 +196,14 @@ export default function UserProfile() {
 
       {/* update password */}
       {showUpdate && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-100/[0.5] m-2">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100/[0.5] p-2">
           <div className="flex flex-col items-start justify-center max-w-sm p-6 bg-white rounded-lg shadow-md">
+            {updateError && (
+              <div className="fixed top-0 left-1/2 transform -translate-x-1/2 bg-red-500 text-white py-2 px-4 rounded z-50">
+                <p>{updateError}</p>
+              </div>
+            )}
+
             <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
               Update Password
             </h1>
@@ -158,11 +214,14 @@ export default function UserProfile() {
               type="text"
               id="email"
               placeholder="Enter Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
             />
             <input
+              onClick={sendResetPasswordOtp}
               type="button"
-              value="Send OTP"
+              value={otpButton ? "Sending" : "Send OTP"}
               className="bg-blue-50 hover:bg-blue-100 px-4 rounded border border-teal-700 font-bold cursor-pointer hover:text-red-700 hover:border-red-600 transition-all duration-300 animate-pulse w-full py-2 my-2 hover:animate-none"
             />
             <label htmlFor="otp" className="text-gray-700 font-semibold">
@@ -172,6 +231,7 @@ export default function UserProfile() {
               type="text"
               id="otp"
               placeholder="Enter OTP"
+              onChange={(e) => setOtp(e.target.value)}
               className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
             />
             <label
@@ -183,7 +243,9 @@ export default function UserProfile() {
             <input
               type="password"
               id="new-password"
+              minLength={8}
               placeholder="New Password"
+              onChange={(e) => setNewPassword(e.target.value)}
               className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
             />
             <div className="flex space-x-4 w-full mt-4">
