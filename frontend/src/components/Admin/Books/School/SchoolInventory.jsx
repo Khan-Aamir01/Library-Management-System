@@ -8,7 +8,7 @@ export default function SchoolInventory() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col items-center py-8">
       <h1 className="text-3xl font-bold mb-6 text-white">Select Class</h1>
       <div className="px-2 mt-2 flex flex-wrap justify-center">
         <SchoolNavigation

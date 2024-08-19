@@ -53,24 +53,18 @@ export default function AllMembers() {
   }
 
   return (
-    <div className="flex flex-col justify-start items-center px-4 py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">All Members</h1>
-      <div className="bg-slate-300 shadow-md rounded px-4 py-4 md:px-8 md:pt-6 md:pb-8 mb-4 w-full max-w-11/12 flex justify-around gap-4 flex-col text-center">
+    <div className="flex flex-col justify-start items-center px-4 py-8">
+      <div className="bg-[rgb(14,30,49)] shadow-md rounded px-4 py-4 md:px-8 md:pt-6 md:pb-8 mb-4 w-full max-w-11/12 flex justify-around gap-4 flex-col text-center text-white">
+        <h1 className="text-3xl font-bold mb-2 text-white">All Members</h1>
         <table className="w-full">
           <caption className="font-bold mb-2">
             Total {users.length} Members
           </caption>
           <thead>
             <tr>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
-                Profile
-              </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
-                Name
-              </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
-                Phone No
-              </th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border">Profile</th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border">Name</th>
+              <th className="px-2 py-1 md:px-4 md:py-2 border">Phone No</th>
             </tr>
           </thead>
           <tbody>

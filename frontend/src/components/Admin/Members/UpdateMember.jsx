@@ -37,7 +37,7 @@ export default function UpdateMember() {
       }
     };
     fetchUserOldData();
-  }, []);
+  }, [id]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,101 +64,122 @@ export default function UpdateMember() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">Update Member</h1>
+    <div className="flex flex-col items-center py-8 bg-slate-800 min-h-screen">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white">
+        Update Member
+      </h1>
       {message && <p className="text-red-500 mb-4">{message}</p>}
       <form
-        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
+        className="bg-[rgb(14,30,49)] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
         onSubmit={handleSubmit}
       >
-        <label htmlFor="image" className={labelStyle}>
-          Image:
-        </label>
-        <input
-          type="text"
-          name="image"
-          id="image"
-          placeholder="Member Image Link"
-          className={inputStyle}
-          value={image}
-          onChange={(e) => setImage(e.target.value)}
-        />
-        <label htmlFor="name" className={labelStyle}>
-          Name:
-        </label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Member Name"
-          className={inputStyle}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label htmlFor="gmail" className={labelStyle}>
-          Gmail:
-        </label>
-        <input
-          type="email"
-          name="gmail"
-          id="gmail"
-          placeholder="Member Gmail"
-          className={inputStyle}
-          value={gmail}
-          onChange={(e) => setGmail(e.target.value)}
-        />
-        <label htmlFor="password" className={labelStyle}>
-          Password:
-        </label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Member Password"
-          minLength={8}
-          className={inputStyle}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <label htmlFor="address" className={labelStyle}>
-          Address:
-        </label>
-        <input
-          type="text"
-          name="address"
-          id="address"
-          placeholder="Member Address"
-          className={inputStyle}
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <label htmlFor="phoneNumber" className={labelStyle}>
-          Phone Number:
-        </label>
-        <input
-          type="text"
-          name="phoneNumber"
-          id="phoneNumber"
-          placeholder="Member Phone Number"
-          className={inputStyle}
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
+        <div className="mb-4">
+          <label htmlFor="image" className="block text-gray-200 text-sm font-bold mb-2">
+            Image
+          </label>
+          <input
+            type="text"
+            name="image"
+            id="image"
+            placeholder="Member Image Link"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-gray-200 text-sm font-bold mb-2">
+            Name
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Member Name"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="gmail" className="block text-gray-200 text-sm font-bold mb-2">
+            Gmail
+          </label>
+          <input
+            type="email"
+            name="gmail"
+            id="gmail"
+            placeholder="Member Gmail"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={gmail}
+            onChange={(e) => setGmail(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-gray-200 text-sm font-bold mb-2">
+            Password
+          </label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Member Password"
+            minLength={8}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="address" className="block text-gray-200 text-sm font-bold mb-2">
+            Address
+          </label>
+          <input
+            type="text"
+            name="address"
+            id="address"
+            placeholder="Member Address"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+          />
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="phoneNumber" className="block text-gray-200 text-sm font-bold mb-2">
+            Phone Number
+          </label>
+          <input
+            type="text"
+            name="phoneNumber"
+            id="phoneNumber"
+            placeholder="Member Phone Number"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </div>
 
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+            className="bg-teal-600 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
           >
-            {loading ? "Updating.." : "Submit"}
+            {loading ? "Updating..." : "Submit"}
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("/admin/members")}
+            className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
+          >
+            Cancel
           </button>
         </div>
       </form>
     </div>
   );
 }
-
-// Common Styles for label and input tags
-const labelStyle = "block text-gray-700 text-sm font-bold mb-2";
-const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mb-4";

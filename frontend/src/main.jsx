@@ -86,8 +86,9 @@ const UserCategorised = withSuspense(
 import AdminLogin from "./components/Admin/Login/Login.jsx";
 
 // User Login
-import UserLogin from "./components/User/Login-Registration/Login.jsx";
-import UserRegistration from "./components/User/Login-Registration/Registration.jsx";
+import UserLogin from "./components/User/auth/Login.jsx";
+import UserRegistration from "./components/User/auth/Registration.jsx";
+import ForgetPassword from "./components/User/auth/ForgetPassword.jsx";
 
 // UserProfile
 import UserProfile from "./components/User/UserProfile/UserProfile.jsx";
@@ -261,6 +262,10 @@ const router = createBrowserRouter([
       {
         path: "profile",
         element: <UserProfile />,
+      },
+      {
+        path: "forgetpassword",
+        element: <ForgetPassword />,
       },
     ],
   },

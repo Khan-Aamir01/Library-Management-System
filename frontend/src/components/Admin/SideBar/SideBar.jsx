@@ -6,7 +6,6 @@ import { Outlet } from "react-router-dom";
 
 export default function SideBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selected, setSelected] = useState("welcome");
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -20,7 +19,7 @@ export default function SideBar() {
   };
 
   return (
-    <div className="flex relative">
+    <div className="flex relative min-h-screen">
       {/* for small devices */}
       <div className="absolute p-6 md:hidden">
         <button
@@ -33,7 +32,7 @@ export default function SideBar() {
 
       {/* Sidebar for small devices */}
       <div
-        className={`fixed top-0 left-0 w-64 h-full bg-slate-600 p-6 flex flex-col gap-10 transition-transform duration-300 md:hidden overflow-y-auto border-r ${
+        className={`fixed top-0 left-0 w-64 h-full bg-[rgb(0,23,57)] p-6 flex flex-col gap-10 transition-transform duration-300 md:hidden overflow-y-auto border-r ${
           isMenuOpen ? "transform translate-x-0" : "transform -translate-x-full"
         }`}
       >
@@ -50,7 +49,7 @@ export default function SideBar() {
         <div className="flex flex-col gap-3 mt-2 w-full">
           <button
             onClick={toggleMenu}
-            className="text-white text-left px-4 py-2 rounded bg-gray-700 hover:bg-black border border-teal-300 hover:border-red-500"
+            className="text-white text-left px-4 py-2 rounded bg-gray-800 hover:bg-black border border-teal-300 hover:border-red-500"
           >
             Cancel
           </button>
@@ -103,7 +102,7 @@ export default function SideBar() {
       </div>
 
       {/* Sidebar for large devices */}
-      <div className="w-1/4 bg-slate-600 border-r border-violet-500 md:flex flex-col gap-10 p-6 justify-start items-center hidden">
+      <div className="w-1/4 border-r border-violet-500 md:flex flex-col gap-10 p-6 justify-start items-center hidden bg-[rgb(0,23,57)]  ">
         {/* Application Logo and Name Section */}
         <div className="flex flex-col items-center justify-center">
           {/* Application Icon */}
@@ -115,40 +114,15 @@ export default function SideBar() {
 
         {/* Navigation Links Section */}
         <div className="flex flex-col gap-3 mt-2 w-full">
-          <SideBarLink
-            to={"/admin"}
-            label="Welcome"
-            selected={location.pathname === "/admin"}
-          />
-          <SideBarLink
-            to={"/admin/books"}
-            label="Book Inventory"
-            selected={location.pathname === "/admin/books"}
-          />
-          <SideBarLink
-            to={"/admin/members"}
-            label="Library Members"
-            selected={location.pathname === "/admin/members"}
-          />
-          <SideBarLink
-            to={"/admin/bookrequest"}
-            label="Pending Requests"
-            selected={location.pathname === "/admin/bookrequest"}
-          />
-          <SideBarLink
-            to={"/admin/borrowed"}
-            label="Loaned Books"
-            selected={location.pathname === "/admin/borrowed"}
-          />
-          <SideBarLink
-            to={"/admin/fine"}
-            label="Late Fees"
-            selected={location.pathname === "/admin/fine"}
-          />
+          <SideBarLink to={"/admin"} label="Welcome" />
+          <SideBarLink to={"/admin/books"} label="Book Inventory" />
+          <SideBarLink to={"/admin/members"} label="Library Members" />
+          <SideBarLink to={"/admin/bookrequest"} label="Pending Requests" />
+          <SideBarLink to={"/admin/borrowed"} label="Loaned Books" />
+          <SideBarLink to={"/admin/fine"} label="Late Fees" />
           <SideBarLink
             to={"/admin/login"}
             label="Logout"
-            selected={location.pathname === "/admin/login"}
             onClick={handleLogout}
           />
         </div>
@@ -164,11 +138,7 @@ const SideBarLink = ({ to, label, onClick, selected }) => {
     <Link
       to={to}
       onClick={onClick}
-      className={`text-white px-4 py-2 border rounded transition-all duration-300 ${
-        selected
-          ? "bg-black border-red-700"
-          : "bg-gray-700 border-teal-300 hover:bg-black hover:border-red-500"
-      }`}
+      className={`text-white px-4 py-2 border rounded transition-all duration-300 bg-gray-800 border-teal-300 hover:bg-black hover:border-red-500`}
     >
       {label}
     </Link>

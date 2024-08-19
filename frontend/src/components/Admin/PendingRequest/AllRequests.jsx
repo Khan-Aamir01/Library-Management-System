@@ -74,9 +74,9 @@ export default function AllRequests() {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center py-8 bg-slate-500 px-2 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">All Requests</h1>
-      <div className="bg-slate-300 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-full flex flex-col text-center">
+    <div className="flex flex-col justify-start items-center py-8 px-2">
+      <div className="shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 w-full flex flex-col text-center bg-[rgb(14,25,40)] text-white">
+        <h1 className="text-3xl font-bold mb-6 text-white">All Requests</h1>
         <table className="w-full">
           <caption className="font-bold mb-2">
             Total {requests.length} Requests
@@ -84,13 +84,13 @@ export default function AllRequests() {
           </caption>
           <thead>
             <tr>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Book
               </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Member
               </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Status
               </th>
             </tr>
@@ -99,18 +99,18 @@ export default function AllRequests() {
             {requests.map((request) => (
               <tr key={request._id}>
                 <td
-                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
+                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-500 cursor-pointer"
                   onClick={() => showBookDetails(request.bookId)}
                 >
                   {request.bookName}
                 </td>
                 <td
-                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-400 cursor-pointer"
+                  className="border px-2 py-1 md:px-4 md:py-2 border-slate-500 cursor-pointer"
                   onClick={() => showProfile(request.userId)}
                 >
                   {request.userName}
                 </td>
-                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-500">
                   <MdIncompleteCircle
                     className="cursor-pointer w-full text-4xl"
                     onClick={() => handleStatusClick(request)}

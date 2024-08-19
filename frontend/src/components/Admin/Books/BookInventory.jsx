@@ -5,7 +5,7 @@ export default function BookInventory() {
   return (
     <div className="w-full">
       {/* Book Inventory Header(Navigation Menu) */}
-      <div className="py-5 px-20 md:px-5 flex md:justify-start justify-center items-center gap-1 bg-slate-700 flex-wrap-reverse ">
+      <div className="py-5 px-20 md:px-5 flex md:justify-start justify-center items-center gap-1 bg-[rgb(24,37,53)] flex-wrap-reverse ">
         <BookLink to={"/admin/books"} label="All Books" />
         <BookLink to={"/admin/books/school"} label="School" />
         <BookLink to={"/admin/books/college"} label="College" />
@@ -23,7 +23,7 @@ const BookLink = ({ to, label }) => {
   return (
     <Link
       to={to}
-      className="text-gray-50 text-lg rounded-md bg-slate-600 hover:bg-slate-900 py-2 px-4 transition"
+      className="text-gray-50 text-lg rounded-md bg-[rgb(40,55,73)] hover:bg-slate-900 py-2 px-4 transition"
     >
       {label}
     </Link>

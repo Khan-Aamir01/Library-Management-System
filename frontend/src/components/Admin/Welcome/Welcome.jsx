@@ -34,25 +34,25 @@ export default function Welcome() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center w-full">Loading...</div>
+      <div className="flex justify-center items-center w-full text-white">Loading...</div>
     );
   }
 
   return admin ? (
-    <div className="bg-slate-500 min-h-screen flex items-center justify-center w-full p-5">
-      <div className="px-6 py-8 bg-slate-400 shadow-lg rounded-lg">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+    <div className=" flex items-center justify-center w-full">
+      <div className="px-6 py-8 text-white bg-[rgb(14,25,40)] shadow-lg rounded-lg">
+        <h2 className="text-2xl font-semibold text-white mb-4">
           Welcome, {admin.name}!
         </h2>
-        <p className="text-gray-800 mb-6">
+        <p className="mb-6">
           You are now logged in as an administrator of the library management
           system.
         </p>
         <div className="mb-6">
-          <p className="text-gray-800 mb-2">
+          <p className="mb-2">
             Here are some tasks you can perform:
           </p>
-          <ul className="list-disc list-inside text-gray-800">
+          <ul className="list-disc list-inside">
             <li>Manage books: Add, edit, or remove books from the library.</li>
             <li>
               Manage users: View and manage user accounts and permissions.
@@ -60,7 +60,7 @@ export default function Welcome() {
             <li>Other Tasks</li>
           </ul>
         </div>
-        <p className="text-gray-800">
+        <p>
           Explore the navigation menu to get started!
         </p>
       </div>

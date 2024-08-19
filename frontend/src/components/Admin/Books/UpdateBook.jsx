@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
 export default function UpdateBook() {
@@ -69,15 +70,21 @@ export default function UpdateBook() {
   };
 
   return (
-    <div className="flex flex-col items-center py-8 bg-slate-500 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6 text-white">Update Book</h1>
+    <div className="flex flex-col items-center py-8 bg-slate-800">
+      <h1 className="text-2xl md:text-3xl font-bold mb-6 text-white">
+        Update Book
+      </h1>
       <form
-        className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
+        className="bg-[rgb(14,30,49)] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12"
         onSubmit={handleSubmit}
       >
-        {error && <div className="text-red-500 mb-4">{error}</div>}
+        {error && <div className="text-red-400 mb-4">{error}</div>}
+
         <div className="mb-4">
-          <label htmlFor="name" className={labelStyle}>
+          <label
+            htmlFor="name"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
             Name
           </label>
           <input
@@ -86,13 +93,16 @@ export default function UpdateBook() {
             id="name"
             value={Name}
             placeholder="Book Name"
-            className={inputStyle}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
             onChange={(e) => setName(e.target.value)}
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="author_name" className={labelStyle}>
+          <label
+            htmlFor="author_name"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
             Author Name
           </label>
           <input
@@ -101,19 +111,22 @@ export default function UpdateBook() {
             id="author_name"
             value={Author_Name}
             placeholder="Author Name"
-            className={inputStyle}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
             onChange={(e) => setAuthorName(e.target.value)}
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="categories" className={labelStyle}>
+          <label
+            htmlFor="categories"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
             Categories
           </label>
           <select
             name="categories"
             id="categories"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 outline-none bg-blue-50"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 bg-[rgb(14,30,49)] leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300"
             value={Categories}
             onChange={(e) => {
               setCategories(e.target.value);
@@ -128,7 +141,10 @@ export default function UpdateBook() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="std" className={labelStyle}>
+          <label
+            htmlFor="std"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
             Standard
           </label>
           {Categories === "school" && (
@@ -136,7 +152,7 @@ export default function UpdateBook() {
               name="std"
               id="std"
               value={std}
-              className={inputStyle}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 bg-[rgb(14,30,49)] leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300"
               onChange={(e) => setStd(e.target.value)}
             >
               <option value="">Select Standard</option>
@@ -153,7 +169,7 @@ export default function UpdateBook() {
               name="std"
               id="std"
               value={std}
-              className={inputStyle}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 bg-[rgb(14,30,49)] leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300"
               onChange={(e) => setStd(e.target.value)}
             >
               <option value="">Select Standard</option>
@@ -166,7 +182,7 @@ export default function UpdateBook() {
               name="std"
               id="std"
               value={std}
-              className={inputStyle}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 bg-[rgb(14,30,49)] leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300"
               onChange={(e) => setStd(e.target.value)}
             >
               <option value="">Select Program</option>
@@ -183,14 +199,16 @@ export default function UpdateBook() {
               id="std"
               value={std}
               placeholder="Enter custom standard"
-              className={inputStyle}
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 bg-transparent leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300"
               onChange={(e) => setStd(e.target.value)}
             />
           )}
         </div>
 
-        <div className="mb-4">
-          <label className={labelStyle}>P-Book Available</label>
+        <div className="mb-4 text-white">
+          <label className="block text-gray-200 text-sm font-bold mb-2">
+            P-Book Available
+          </label>
           <div className="flex">
             <label className="mr-4">
               <input
@@ -199,7 +217,8 @@ export default function UpdateBook() {
                 value="true"
                 checked={isPhysical === "true"}
                 onChange={(e) => setIsPhysical(e.target.value)}
-              />{" "}
+                className="mr-2"
+              />
               Yes
             </label>
             <label>
@@ -209,14 +228,17 @@ export default function UpdateBook() {
                 value="false"
                 checked={isPhysical === "false"}
                 onChange={(e) => setIsPhysical(e.target.value)}
-              />{" "}
+                className="mr-2"
+              />
               No
             </label>
           </div>
         </div>
 
-        <div className="mb-4">
-          <label className={labelStyle}>E-Book Available</label>
+        <div className="mb-4 text-white">
+          <label className="block text-gray-200 text-sm font-bold mb-2">
+            E-Book Available
+          </label>
           <div className="flex">
             <label className="mr-4">
               <input
@@ -225,7 +247,8 @@ export default function UpdateBook() {
                 value="true"
                 checked={isEbook === "true"}
                 onChange={(e) => setIsEbook(e.target.value)}
-              />{" "}
+                className="mr-2"
+              />
               Yes
             </label>
             <label>
@@ -235,53 +258,63 @@ export default function UpdateBook() {
                 value="false"
                 checked={isEbook === "false"}
                 onChange={(e) => setIsEbook(e.target.value)}
-              />{" "}
+                className="mr-2"
+              />
               No
             </label>
           </div>
         </div>
 
         <div className="mb-4">
-          <label htmlFor="availability" className={labelStyle}>
-            Book Qty
+          <label
+            htmlFor="availability"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
+            Availability
           </label>
           <input
-            type="number"
+            type="text"
             name="Availability"
             id="availability"
             value={Availability}
-            placeholder="Total books"
-            className={inputStyle}
+            placeholder="Availability"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
             onChange={(e) => setAvailability(e.target.value)}
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="imageUrl" className={labelStyle}>
-            Book Image
+          <label
+            htmlFor="image_url"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
+            Image URL
           </label>
           <input
             type="text"
             name="ImageUrl"
-            id="imageUrl"
+            id="image_url"
             value={ImageUrl}
-            placeholder="Enter Image Link"
-            className={inputStyle}
+            placeholder="Image URL"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
 
         <div className="mb-4">
-          <label htmlFor="downloadUrl" className={labelStyle}>
-            Book PDF
+          <label
+            htmlFor="download_url"
+            className="block text-gray-200 text-sm font-bold mb-2"
+          >
+            Download URL
           </label>
           <input
             type="text"
             name="DownloadUrl"
-            id="downloadUrl"
+            id="download_url"
             value={DownloadUrl}
-            placeholder="Enter PDF Link"
-            className={inputStyle}
+            placeholder="Download URL"
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline border-gray-600 focus:border-blue-500 hover:border-blue-400 transition-all duration-300 bg-transparent"
             onChange={(e) => setDownloadUrl(e.target.value)}
           />
         </div>
@@ -289,18 +322,20 @@ export default function UpdateBook() {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
             disabled={loading}
           >
             {loading ? "Updating..." : "Update"}
+          </button>
+          <button
+            type="button"
+            onClick={() => navigate("/admin/books")}
+            className="bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all duration-300"
+          >
+            Cancel
           </button>
         </div>
       </form>
     </div>
   );
 }
-
-const labelStyle =
-  "block text-gray-700 text-sm font-bold mb-2 text-start tracking-wider";
-const inputStyle =
-  "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-blue-50";

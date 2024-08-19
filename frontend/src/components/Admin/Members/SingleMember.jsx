@@ -37,11 +37,11 @@ export default function SingleMember() {
       }
     };
     fetchUser();
-  }, []);
+  }, [id]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center">
+      <div className="flex justify-center items-center min-h-screen bg-slate-800">
         <AiOutlineLoading3Quarters className="animate-spin text-4xl text-white" />
       </div>
     );
@@ -79,9 +79,10 @@ export default function SingleMember() {
   };
 
   return (
-    <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
+    <div className="flex flex-col justify-start items-center py-8">
+      {/* User Info */}
       <h1 className="text-3xl font-bold mb-6 text-white">User Information</h1>
-      <div className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-2xl flex flex-wrap md:items-start justify-center gap-4 md:justify-normal">
+      <div className="bg-[rgb(14,30,49)] shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-2xl flex flex-wrap md:items-start justify-center gap-4 md:justify-normal text-white">
         <div>
           <img
             className="w-52 object-cover"
@@ -113,38 +114,41 @@ export default function SingleMember() {
           <div className="flex flex-wrap md:items-center md:flex-row flex-col gap-4 mt-2">
             <button
               onClick={handleUpdate}
-              className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+              className="bg-teal-500 hover:bg-teal-600 text-white transition px-3 py-2 font-semibold rounded md:w-auto w-full"
               aria-label="Update User"
             >
+              <GrUpdate className="inline-block mr-2" />
               Update
             </button>
             <button
               onClick={handleDelete}
-              className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+              className="bg-red-500 hover:bg-red-600 text-white transition px-3 py-2 font-semibold rounded md:w-auto w-full"
               aria-label="Delete User"
             >
+              <TiUserDelete className="inline-block mr-2" />
               Delete
             </button>
           </div>
         </div>
       </div>
-      <div className="bg-slate-300 w-11/12 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 flex flex-col text-center">
+      {/* Borrowed Books Table */}
+      <div className="bg-[rgb(14,25,40)] w-11/12 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 flex flex-col text-center text-white">
         <table className="w-full">
           <caption className="font-bold mb-2">
             Total {borrowData.length} Books
           </caption>
           <thead>
             <tr>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Book
               </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Start
               </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 End
               </th>
-              <th className="px-2 py-1 md:px-4 md:py-2 border border-black">
+              <th className="px-2 py-1 md:px-4 md:py-2 border border-slate-500">
                 Fine
               </th>
             </tr>
@@ -156,20 +160,20 @@ export default function SingleMember() {
               );
               return (
                 <tr key={borrow._id}>
-                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-500">
                     {borrow.bookName}
                   </td>
-                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-500">
                     {borrow.borrowDate
                       ? format(new Date(borrow.borrowDate), "dd-MM-yy")
                       : borrow.status}
                   </td>
-                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-500">
                     {borrow.returnDate
                       ? format(new Date(borrow.returnDate), "dd-MM-yy")
                       : borrow.status}
                   </td>
-                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-400">
+                  <td className="border px-2 py-1 md:px-4 md:py-2 border-slate-500">
                     {fine ? `₹${fine.amount}` : "N/A"}
                   </td>
                 </tr>

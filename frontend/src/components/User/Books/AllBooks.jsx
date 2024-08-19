@@ -57,16 +57,17 @@ export default function AllBooks() {
   };
 
   return (
-    <div className="bg-slate-500 px-4 py-4 flex flex-col items-center justify-start">
-      <div className="flex justify-center items-center bg-white rounded-lg shadow-md">
+    <div className="px-4 py-4 flex flex-col items-center justify-start text-white">
+      <div className="border w-full max-w-md flex justify-center items-center bg-[rgb(14,30,49)] rounded-lg shadow-md">
         <input
           type="search"
           placeholder="Search books by name..."
-          className="w-64 md:w-96 p-2 text-md border-none outline-none rounded-lg"
+          autoFocus
+          className="w-full p-2 rounded-l-lg outline-none bg-slate-900 border-none text-white text-md bg-transparent"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button className="p-2 bg-white text-black rounded-full hover:bg-gray-200 transition duration-300 ease-in-out">
+        <button className="p-2 bg-teal-500 text-white rounded-r-lg hover:bg-teal-600 transition duration-300 ease-in-out">
           <GiArchiveResearch className="text-3xl" />
         </button>
       </div>
@@ -79,7 +80,7 @@ export default function AllBooks() {
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
             key={book._id}
-            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all flex gap-2 min-w-full md:min-w-36"
+            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 min-w-full md:min-w-36"
           >
             <img
               src={book.ImageUrl}

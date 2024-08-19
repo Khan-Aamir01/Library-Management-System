@@ -47,7 +47,7 @@ export default function Latest() {
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
             key={index}
-            className="py-2 m-1 px-2 bg-slate-300 bg-opacity-50 rounded-lg border-2 border-slate-300 hover:border-red-400 transition-all flex gap-2 min-w-full md:min-w-36"
+            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 min-w-full md:min-w-36"
           >
             <img
               src={book.ImageUrl}
