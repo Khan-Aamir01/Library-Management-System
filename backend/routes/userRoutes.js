@@ -5,6 +5,8 @@ const {
   getAllUser,
   getUserbyID,
   updateUser,
+  sendOtp,
+  updateUserPassword,
   deleteUser,
   getUserFine,
   getUserBorrow,
@@ -25,6 +27,10 @@ router.get("/user/:id/borrow", getUserBorrow); // Return all borrow History of g
 router.get("/user/:id", getUserbyID);
 
 router.put("/user/:id", updateUser);
+
+router.post("/sendpasswordotp", sendOtp);
+
+router.put("/resetuserpassword", updateUserPassword);
 
 router.delete("/user/:id", deleteUser);
 

@@ -68,7 +68,7 @@ const sendOTP = async (req, res) => {
       await otpUser.save();
 
       // Send OTP to user email
-      await sendMail(otp, email);
+      sendMail(otp, email);
       return res
         .status(200)
         .json({ message: "OTP has been sent to your email" });
@@ -76,7 +76,6 @@ const sendOTP = async (req, res) => {
       return res.status(409).json({ message: "OTP already sent to the email" });
     }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -91,7 +90,7 @@ const register = async (req, res) => {
   const otpUser = await Otp.findOne({ email: gmail });
   if (!otpUser || otpUser.otp !== otp) {
     return res.status(400).json({
-      message: "OTP has expired or is invalid. " + otp + "and " + otpUser.otp,
+      message: "OTP has expired or is invalid.",
     });
   }
 
@@ -113,7 +112,11 @@ const register = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+
+    // Delete the OTP entry after successful password update
+    await Otp.deleteOne({ email: gmail });
+
+    return res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
     console.error("Server error:", error);
     res.status(500).json({ message: "Server error" });
