@@ -4,10 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { format } from "date-fns";
 
 // icons
-import { TiUserDelete } from "react-icons/ti";
-import { GrUpdate } from "react-icons/gr";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { IoLogOut } from "react-icons/io5";
 
 const API_URL = import.meta.env.VITE_APP_API_URL;
 
@@ -15,6 +12,8 @@ export default function UserProfile() {
   const [userData, setUserData] = useState(null);
   const [borrowData, setBorrowData] = useState([]);
   const [fines, setFines] = useState([]);
+  const [showDelete, setShowDelete] = useState(false);
+  const [showUpdate, setShowUpdate] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -71,9 +70,14 @@ export default function UserProfile() {
     );
   }
 
+  const handleShowDelete = () => {
+    setShowDelete(!showDelete);
+  };
+
   const handleDelete = async () => {
     try {
       await axios.delete(`${API_URL}/api/user/${userData._id}`);
+      setShowDelete(!showDelete);
       navigate("/lms");
     } catch (error) {
       if (
@@ -83,6 +87,7 @@ export default function UserProfile() {
       ) {
         // If the server sends a specific message display that
         alert(error.response.data.message);
+        setShowDelete(!showDelete);
       } else {
         // If no specific message, fall back to the error message
         alert("Please Contact With Librarian");
@@ -91,7 +96,12 @@ export default function UserProfile() {
   };
 
   const handleUpdate = () => {
+    setShowUpdate(!showUpdate);
     alert("Please Contact With Librarian");
+  };
+
+  const handleShowUpdate = () => {
+    setShowUpdate(!showUpdate);
   };
 
   const handleLogout = () => {
@@ -102,6 +112,102 @@ export default function UserProfile() {
 
   return (
     <div className="flex flex-col justify-start items-center py-8 bg-slate-500 min-h-screen">
+      {/* delete account  */}
+      {showDelete && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100/[0.5]">
+          <div className="max-w-xs bg-white shadow-lg rounded-lg overflow-hidden">
+            <img
+              className="w-full h-56 object-cover"
+              src="https://static.vecteezy.com/system/resources/previews/007/696/083/non_2x/sad-faced-boy-raising-one-hand-flat-character-illustration-don-t-leave-me-alone-please-don-t-go-away-ill-be-missing-you-free-vector.jpg"
+              alt="Sad face"
+            />
+            <div className="p-4 text-center">
+              <p className="text-gray-800 font-semibold mb-4">
+                Are you sure you want to leave?
+              </p>
+              <div className="flex justify-center space-x-4">
+                <button
+                  onClick={handleDelete}
+                  className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={() => setShowDelete(!showDelete)}
+                  className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* update password */}
+      {showUpdate && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-100/[0.5] m-2">
+          <div className="flex flex-col items-start justify-center max-w-sm p-6 bg-white rounded-lg shadow-md">
+            <h1 className="text-2xl font-semibold text-gray-800 mb-4 text-center">
+              Update Password
+            </h1>
+            <label htmlFor="email" className="text-gray-700 font-semibold">
+              Email
+            </label>
+            <input
+              type="text"
+              id="email"
+              placeholder="Enter Email"
+              className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
+            />
+            <input
+              type="button"
+              value="Send OTP"
+              className="bg-blue-50 hover:bg-blue-100 px-4 rounded border border-teal-700 font-bold cursor-pointer hover:text-red-700 hover:border-red-600 transition-all duration-300 animate-pulse w-full py-2 my-2 hover:animate-none"
+            />
+            <label htmlFor="otp" className="text-gray-700 font-semibold">
+              OTP
+            </label>
+            <input
+              type="text"
+              id="otp"
+              placeholder="Enter OTP"
+              className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
+            />
+            <label
+              htmlFor="new-password"
+              className="text-gray-700 font-semibold mt-2"
+            >
+              New Password
+            </label>
+            <input
+              type="password"
+              id="new-password"
+              placeholder="New Password"
+              className="shadow appearance-none rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none border border-green-600 focus:border-red-700 hover:border-violet-600 transition-all duration-300"
+            />
+            <div className="flex space-x-4 w-full mt-4">
+              <input
+                onClick={handleShowUpdate}
+                type="button"
+                value="Cancel"
+                className="w-full bg-red-500 text-white font-semibold py-2 rounded cursor-pointer hover:bg-red-600 transition"
+              />
+              <input
+                onClick={handleUpdate}
+                type="button"
+                value="Submit"
+                className="w-full bg-green-500 text-white font-semibold py-2 rounded cursor-pointer hover:bg-green-600 transition"
+              />
+            </div>
+            <p className="mt-4 text-center text-gray-600">
+              For further assistance or updates, please reach out to the
+              librarian.
+            </p>
+          </div>
+        </div>
+      )}
+
       <h1 className="text-3xl font-bold mb-6 text-white">User Information</h1>
       <div className="bg-slate-300 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-11/12 max-w-2xl flex flex-wrap md:items-start justify-center gap-4 md:justify-normal">
         <div>
@@ -132,27 +238,29 @@ export default function UserProfile() {
             <strong>Date of Join:</strong>{" "}
             {format(new Date(userData.dateOfJoin), "dd-MM-yyyy")}
           </p>
-          <button
-            title="Update Account"
-            onClick={handleUpdate}
-            className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-bold mt-2 mb-2 rounded"
-          >
-            <GrUpdate />
-          </button>
-          <button
-            title="Delete Account"
-            onClick={handleDelete}
-            className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-bold m-2 rounded"
-          >
-            <TiUserDelete />
-          </button>
-          <button
-            title="Logout"
-            onClick={handleLogout}
-            className="bg-yellow-400 hover:bg-yellow-600 transition px-3 py-2 font-bold rounded"
-          >
-            <IoLogOut />
-          </button>
+          <div className="flex flex-wrap md:items-center md:flex-row flex-col gap-4 mt-2">
+            <button
+              title="Update Account"
+              onClick={handleShowUpdate}
+              className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+            >
+              Update
+            </button>
+            <button
+              title="Delete Account"
+              onClick={handleShowDelete}
+              className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+            >
+              Delete
+            </button>
+            <button
+              title="Logout"
+              onClick={handleLogout}
+              className="bg-yellow-400 hover:bg-yellow-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </div>
       <div className="bg-slate-300 w-11/12 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 flex flex-col text-center">

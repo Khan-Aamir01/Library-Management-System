@@ -110,20 +110,22 @@ export default function SingleMember() {
             <strong>Date of Join:</strong>{" "}
             {format(new Date(userData.dateOfJoin), "dd-MM-yyyy")}
           </p>
-          <button
-            onClick={handleUpdate}
-            className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-bold mt-2 mb-2 rounded"
-            aria-label="Update User"
-          >
-            <GrUpdate />
-          </button>
-          <button
-            onClick={handleDelete}
-            className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-bold m-2 rounded"
-            aria-label="Delete User"
-          >
-            <TiUserDelete />
-          </button>
+          <div className="flex flex-wrap md:items-center md:flex-row flex-col gap-4 mt-2">
+            <button
+              onClick={handleUpdate}
+              className="bg-green-400 hover:bg-green-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+              aria-label="Update User"
+            >
+              Update
+            </button>
+            <button
+              onClick={handleDelete}
+              className="bg-red-400 hover:bg-red-600 transition px-3 py-2 font-semibold rounded md:w-auto w-full"
+              aria-label="Delete User"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
       <div className="bg-slate-300 w-11/12 shadow-md rounded px-2 py-2 md:px-8 md:pt-6 md:pb-8 mb-4 flex flex-col text-center">
