@@ -37,12 +37,12 @@ export default function Categorised() {
     <div className="flex flex-col items-center py-4 text-white">
       <h1 className="text-3xl font-bold mb-2 text-white">{classId} Books</h1>
       {message && <b className="mb-1">{message}</b>}
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center px-2">
         {books.map((book, index) => (
           <div
             onClick={() => singleBookHandler(book._id)}
             key={index}
-            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 min-w-full md:min-w-36"
+            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 min-w-full"
           >
             <img
               src={book.ImageUrl}

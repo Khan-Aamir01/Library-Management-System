@@ -80,7 +80,7 @@ export default function AllBooks() {
           <div
             onClick={() => singleBookHandler(book.Name, book._id)}
             key={book._id}
-            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 min-w-full md:min-w-36"
+            className="py-2 m-1 px-2 bg-[rgb(97,151,139)] bg-opacity-50 hover:bg-opacity-40 cursor-pointer text-white rounded-lg border-2 border-slate-300 hover:border-slate-400 transition-all flex gap-2 w-full"
           >
             <img
               src={book.ImageUrl}
