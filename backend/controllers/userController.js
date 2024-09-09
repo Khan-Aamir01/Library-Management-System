@@ -138,7 +138,7 @@ const deleteUser = async (req, res) => {
 
   const checkBorrowStatus = await Borrow.find({
     userId,
-    status: { $ne: "Returned" },
+    status: { $ne: "Returned", $ne: "Expired" },
   });
 
   if (checkBorrowStatus.length > 0) {

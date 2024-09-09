@@ -79,7 +79,7 @@ const Registration = () => {
   return (
     <div className="flex flex-col items-center py-6 bg-slate-800">
       {otpMessage && (
-        <p className="sticky top-0 bg-blue-500 text-white p-2 rounded shadow-md">
+        <p className="sticky top-0 z-50 bg-blue-500 text-white p-2 rounded shadow-md">
           {otpMessage}
         </p>
       )}
